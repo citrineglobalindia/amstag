@@ -22,7 +22,7 @@ import {
 
 type Service = {
   label: string;
-  href: string;
+  slug: string;
   icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   /** Tailwind classes for the icon tile background + border + glow. */
   tone: string;
@@ -31,14 +31,14 @@ type Service = {
 };
 
 const services: Service[] = [
-  { label: "Data Center", href: "/services", icon: Server,         tone: "from-sky-500/20 to-sky-500/5 border-sky-400/40 shadow-[0_0_20px_-6px_oklch(0.7_0.18_240/0.6)]",        text: "text-sky-200" },
-  { label: "Networking",  href: "/services", icon: Network,        tone: "from-cyan-500/20 to-cyan-500/5 border-cyan-400/40 shadow-[0_0_20px_-6px_oklch(0.78_0.16_200/0.6)]",     text: "text-cyan-200" },
-  { label: "Cloud",       href: "/services", icon: Cloud,          tone: "from-violet-500/20 to-violet-500/5 border-violet-400/40 shadow-[0_0_20px_-6px_oklch(0.7_0.2_290/0.6)]", text: "text-violet-200" },
-  { label: "Cybersecurity", href: "/services", icon: ShieldCheck, tone: "from-rose-500/20 to-rose-500/5 border-rose-400/40 shadow-[0_0_20px_-6px_oklch(0.7_0.2_15/0.6)]",         text: "text-rose-200" },
-  { label: "Managed IT",  href: "/services", icon: HeadphonesIcon, tone: "from-emerald-500/20 to-emerald-500/5 border-emerald-400/40 shadow-[0_0_20px_-6px_oklch(0.78_0.16_165/0.6)]", text: "text-emerald-200" },
-  { label: "Compliance",  href: "/services", icon: Workflow,       tone: "from-amber-500/20 to-amber-500/5 border-amber-400/40 shadow-[0_0_20px_-6px_oklch(0.78_0.18_75/0.6)]",   text: "text-amber-200" },
-  { label: "Backup & DR", href: "/services", icon: Database,       tone: "from-fuchsia-500/20 to-fuchsia-500/5 border-fuchsia-400/40 shadow-[0_0_20px_-6px_oklch(0.72_0.2_330/0.6)]", text: "text-fuchsia-200" },
-  { label: "Workplace",   href: "/services", icon: Cpu,            tone: "from-teal-500/20 to-teal-500/5 border-teal-400/40 shadow-[0_0_20px_-6px_oklch(0.78_0.14_185/0.6)]",     text: "text-teal-200" },
+  { label: "Data Center",  slug: "data-center",  icon: Server,         tone: "from-sky-500/20 to-sky-500/5 border-sky-400/40 shadow-[0_0_20px_-6px_oklch(0.7_0.18_240/0.6)]",        text: "text-sky-200" },
+  { label: "Networking",   slug: "networking",   icon: Network,        tone: "from-cyan-500/20 to-cyan-500/5 border-cyan-400/40 shadow-[0_0_20px_-6px_oklch(0.78_0.16_200/0.6)]",     text: "text-cyan-200" },
+  { label: "Cloud",        slug: "cloud",        icon: Cloud,          tone: "from-violet-500/20 to-violet-500/5 border-violet-400/40 shadow-[0_0_20px_-6px_oklch(0.7_0.2_290/0.6)]", text: "text-violet-200" },
+  { label: "Cybersecurity", slug: "cybersecurity", icon: ShieldCheck, tone: "from-rose-500/20 to-rose-500/5 border-rose-400/40 shadow-[0_0_20px_-6px_oklch(0.7_0.2_15/0.6)]",         text: "text-rose-200" },
+  { label: "Managed IT",   slug: "managed-it",   icon: HeadphonesIcon, tone: "from-emerald-500/20 to-emerald-500/5 border-emerald-400/40 shadow-[0_0_20px_-6px_oklch(0.78_0.16_165/0.6)]", text: "text-emerald-200" },
+  { label: "Compliance",   slug: "compliance",   icon: Workflow,       tone: "from-amber-500/20 to-amber-500/5 border-amber-400/40 shadow-[0_0_20px_-6px_oklch(0.78_0.18_75/0.6)]",   text: "text-amber-200" },
+  { label: "Backup & DR",  slug: "backup-dr",    icon: Database,       tone: "from-fuchsia-500/20 to-fuchsia-500/5 border-fuchsia-400/40 shadow-[0_0_20px_-6px_oklch(0.72_0.2_330/0.6)]", text: "text-fuchsia-200" },
+  { label: "Workplace",    slug: "workplace",    icon: Cpu,            tone: "from-teal-500/20 to-teal-500/5 border-teal-400/40 shadow-[0_0_20px_-6px_oklch(0.78_0.14_185/0.6)]",     text: "text-teal-200" },
 ];
 
 const RADIUS = 180; // px from centre to icon tile
@@ -193,7 +193,8 @@ export function ServicesRadialMenu({
                   className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
                 >
                   <Link
-                    to="/services"
+                    to="/services/$slug"
+                    params={{ slug: s.slug }}
                     onClick={onClose}
                     className="group flex flex-col items-center gap-2 outline-none"
                   >

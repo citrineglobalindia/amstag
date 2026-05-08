@@ -32,17 +32,17 @@ const nav: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-// Mobile sub-menu for Services — same icon set as the desktop radial menu,
-// presented as a 2-col grid that's thumb-friendly.
+// Mobile sub-menu for Services — pulls from the canonical SERVICES catalogue
+// so links go straight to each individual service page (/services/$slug).
 const mobileServices = [
-  { icon: Server, label: "Data Center", href: "/services", tone: "from-sky-500/20 to-sky-500/5 border-sky-400/40", text: "text-sky-200" },
-  { icon: Network, label: "Networking", href: "/services", tone: "from-cyan-500/20 to-cyan-500/5 border-cyan-400/40", text: "text-cyan-200" },
-  { icon: Cloud, label: "Cloud", href: "/services", tone: "from-violet-500/20 to-violet-500/5 border-violet-400/40", text: "text-violet-200" },
-  { icon: ShieldCheck, label: "Cybersecurity", href: "/services", tone: "from-rose-500/20 to-rose-500/5 border-rose-400/40", text: "text-rose-200" },
-  { icon: HeadphonesIcon, label: "Managed IT", href: "/services", tone: "from-emerald-500/20 to-emerald-500/5 border-emerald-400/40", text: "text-emerald-200" },
-  { icon: Workflow, label: "Compliance", href: "/services", tone: "from-amber-500/20 to-amber-500/5 border-amber-400/40", text: "text-amber-200" },
-  { icon: Database, label: "Backup & DR", href: "/services", tone: "from-fuchsia-500/20 to-fuchsia-500/5 border-fuchsia-400/40", text: "text-fuchsia-200" },
-  { icon: Cpu, label: "Workplace", href: "/services", tone: "from-teal-500/20 to-teal-500/5 border-teal-400/40", text: "text-teal-200" },
+  { icon: Server, label: "Data Center", slug: "data-center", tone: "from-sky-500/20 to-sky-500/5 border-sky-400/40", text: "text-sky-200" },
+  { icon: Network, label: "Networking", slug: "networking", tone: "from-cyan-500/20 to-cyan-500/5 border-cyan-400/40", text: "text-cyan-200" },
+  { icon: Cloud, label: "Cloud", slug: "cloud", tone: "from-violet-500/20 to-violet-500/5 border-violet-400/40", text: "text-violet-200" },
+  { icon: ShieldCheck, label: "Cybersecurity", slug: "cybersecurity", tone: "from-rose-500/20 to-rose-500/5 border-rose-400/40", text: "text-rose-200" },
+  { icon: HeadphonesIcon, label: "Managed IT", slug: "managed-it", tone: "from-emerald-500/20 to-emerald-500/5 border-emerald-400/40", text: "text-emerald-200" },
+  { icon: Workflow, label: "Compliance", slug: "compliance", tone: "from-amber-500/20 to-amber-500/5 border-amber-400/40", text: "text-amber-200" },
+  { icon: Database, label: "Backup & DR", slug: "backup-dr", tone: "from-fuchsia-500/20 to-fuchsia-500/5 border-fuchsia-400/40", text: "text-fuchsia-200" },
+  { icon: Cpu, label: "Workplace", slug: "workplace", tone: "from-teal-500/20 to-teal-500/5 border-teal-400/40", text: "text-teal-200" },
 ];
 
 export function Header() {
@@ -321,7 +321,8 @@ export function Header() {
                                     transition={{ duration: 0.3, delay: i * 0.04 }}
                                   >
                                     <Link
-                                      to={s.href}
+                                      to="/services/$slug"
+                                      params={{ slug: s.slug }}
                                       onClick={() => setOpen(false)}
                                       className={`flex items-center gap-2.5 rounded-xl border bg-gradient-to-br ${s.tone} p-3 active:scale-[0.97] transition-transform`}
                                     >

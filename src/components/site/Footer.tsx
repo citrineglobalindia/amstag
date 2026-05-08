@@ -27,12 +27,12 @@ const columns = [
   {
     title: "Services",
     links: [
-      { label: "Data Center", href: "/services" },
-      { label: "Networking", href: "/services" },
-      { label: "Cloud & Hosting", href: "/services" },
-      { label: "Managed IT", href: "/services" },
-      { label: "Cybersecurity", href: "/services" },
-      { label: "Compliance", href: "/services" },
+      { label: "Data Center", href: "/services/data-center" },
+      { label: "Networking", href: "/services/networking" },
+      { label: "Cloud & Hosting", href: "/services/cloud" },
+      { label: "Managed IT", href: "/services/managed-it" },
+      { label: "Cybersecurity", href: "/services/cybersecurity" },
+      { label: "Compliance", href: "/services/compliance" },
     ],
   },
   {
