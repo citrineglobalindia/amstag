@@ -1,5 +1,18 @@
-import { motion } from "framer-motion";
-import { ArrowRight, Shield, Activity, TicketCheck } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  ArrowRight,
+  Activity,
+  TicketCheck,
+  Cloud,
+  Cpu,
+  Database,
+  HeadphonesIcon,
+  Network,
+  Server,
+  ShieldCheck,
+  Workflow,
+  Zap,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function Hero() {
@@ -24,13 +37,13 @@ export function Hero() {
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--innovation)] animate-pulse" />
             Act · Accelerate · Ace
           </div>
-          <h1 className="mt-6 font-display text-[clamp(2.25rem,5.5vw,4.5rem)] font-bold leading-[1.05] text-white text-balance">
+          <h1 className="mt-6 font-display text-[clamp(2rem,5.5vw,4.5rem)] font-bold leading-[1.05] text-white text-balance">
             Mission-critical IT,{" "}
             <span className="bg-gradient-to-r from-white via-white to-[var(--innovation)] bg-clip-text text-transparent">
               engineered for India's most demanding enterprises.
             </span>
           </h1>
-          <p className="mt-6 text-lg text-white/70 max-w-xl">
+          <p className="mt-6 text-base md:text-lg text-white/70 max-w-xl">
             Managed services, cybersecurity, cloud and 24×7 support — delivered with the rigor, partnerships, and uptime
             India's leaders in BFSI, healthcare, government and manufacturing depend on.
           </p>
@@ -58,7 +71,7 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.2 }}
           className="lg:col-span-5 relative h-[420px] lg:h-[520px]"
         >
-          <NetworkMesh />
+          <ServicesOrbit />
           <FloatingStat
             className="top-6 left-2 lg:left-0"
             icon={<Activity className="h-4 w-4 text-[var(--innovation)]" />}
@@ -68,7 +81,7 @@ export function Hero() {
           />
           <FloatingStat
             className="top-1/2 right-0 -translate-y-1/2"
-            icon={<Shield className="h-4 w-4 text-[var(--innovation)]" />}
+            icon={<ShieldCheck className="h-4 w-4 text-[var(--innovation)]" />}
             label="Threats blocked / 24h"
             value="1,284,317"
             delay={0.6}
@@ -104,41 +117,172 @@ function FloatingStat({
   );
 }
 
-function NetworkMesh() {
-  // Animated SVG nodes/edges
-  const nodes = [
-    { x: 50, y: 50 }, { x: 200, y: 80 }, { x: 340, y: 60 },
-    { x: 100, y: 200 }, { x: 240, y: 220 }, { x: 380, y: 180 },
-    { x: 60, y: 360 }, { x: 200, y: 380 }, { x: 360, y: 340 },
-  ];
-  const edges = [
-    [0,1],[1,2],[0,3],[1,3],[1,4],[2,5],[3,4],[4,5],[3,6],[4,7],[5,8],[6,7],[7,8],
-  ];
+/* ───────────────────── ServicesOrbit ─────────────────────
+ * Replaces the abstract NetworkMesh with a services-themed orbital system.
+ * 8 service icons orbit a central AMSTAG core; each icon counter-rotates so
+ * it stays upright. Pulses, dashed orbital paths, and a beating brand-glow
+ * on the core sell the "always-on, multi-discipline" story without being
+ * literal about any one product.
+ */
+
+const ORBIT_SERVICES = [
+  { icon: ShieldCheck, color: "rgb(244 114 182)" },   // pink
+  { icon: Cloud, color: "rgb(167 139 250)" },         // violet
+  { icon: Server, color: "rgb(56 189 248)" },         // sky
+  { icon: HeadphonesIcon, color: "rgb(52 211 153)" },// emerald
+  { icon: Network, color: "rgb(34 211 238)" },        // cyan
+  { icon: Workflow, color: "rgb(251 191 36)" },       // amber
+  { icon: Database, color: "rgb(217 70 239)" },       // fuchsia
+  { icon: Cpu, color: "rgb(45 212 191)" },            // teal
+];
+
+function ServicesOrbit() {
+  const reduce = useReducedMotion();
   return (
-    <svg viewBox="0 0 420 440" className="absolute inset-0 w-full h-full" aria-hidden>
-      <defs>
-        <radialGradient id="node" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#00D9A6" />
-          <stop offset="100%" stopColor="#0066FF" />
-        </radialGradient>
-      </defs>
-      {edges.map(([a, b], i) => (
-        <line
-          key={i}
-          x1={nodes[a].x} y1={nodes[a].y}
-          x2={nodes[b].x} y2={nodes[b].y}
-          stroke="rgba(255,255,255,0.15)" strokeWidth="1"
+    <div className="absolute inset-0 grid place-items-center" aria-hidden>
+      {/* Concentric orbital rings */}
+      <svg
+        viewBox="0 0 480 480"
+        className="absolute inset-0 w-full h-full"
+        aria-hidden
+      >
+        <defs>
+          <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="oklch(0.78 0.16 175)" stopOpacity="0.6" />
+            <stop offset="40%" stopColor="oklch(0.58 0.22 258)" stopOpacity="0.2" />
+            <stop offset="100%" stopColor="oklch(0.58 0.22 258)" stopOpacity="0" />
+          </radialGradient>
+          <linearGradient id="ringStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="white" stopOpacity="0.18" />
+            <stop offset="100%" stopColor="white" stopOpacity="0.04" />
+          </linearGradient>
+        </defs>
+
+        {/* Soft core glow */}
+        <circle cx="240" cy="240" r="160" fill="url(#coreGlow)" />
+
+        {/* Three orbital rings */}
+        <circle cx="240" cy="240" r="100" fill="none" stroke="url(#ringStroke)" strokeWidth="1" />
+        <circle cx="240" cy="240" r="160" fill="none" stroke="url(#ringStroke)" strokeWidth="1" strokeDasharray="2 6" />
+        <circle cx="240" cy="240" r="220" fill="none" stroke="url(#ringStroke)" strokeWidth="1" />
+
+        {/* Particle dots that drift along the inner ring */}
+        {!reduce &&
+          Array.from({ length: 12 }).map((_, i) => {
+            const angle = (i / 12) * 360;
+            return (
+              <motion.circle
+                key={`p-${i}`}
+                cx="240"
+                cy="240"
+                r="2"
+                fill="oklch(0.78 0.16 175)"
+                style={{ transformOrigin: "240px 240px" }}
+                initial={{ rotate: angle, scale: 0.5, opacity: 0.2 }}
+                animate={{ rotate: angle + 360, scale: [0.5, 1.2, 0.5], opacity: [0.2, 0.9, 0.2] }}
+                transition={{
+                  rotate: { duration: 22, repeat: Infinity, ease: "linear" },
+                  scale: { duration: 3, repeat: Infinity, delay: i * 0.2 },
+                  opacity: { duration: 3, repeat: Infinity, delay: i * 0.2 },
+                }}
+                cy={140}
+              />
+            );
+          })}
+      </svg>
+
+      {/* Centre core — pulses through brand and innovation glow */}
+      <motion.div
+        className="relative grid place-items-center w-24 h-24 rounded-full bg-gradient-to-br from-[var(--brand)] to-[var(--innovation)] text-white"
+        animate={
+          reduce
+            ? undefined
+            : {
+                boxShadow: [
+                  "0 0 30px oklch(0.58 0.22 258 / 0.45)",
+                  "0 0 70px oklch(0.78 0.16 175 / 0.6)",
+                  "0 0 30px oklch(0.58 0.22 258 / 0.45)",
+                ],
+                scale: [1, 1.04, 1],
+              }
+        }
+        transition={reduce ? undefined : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Zap className="h-10 w-10" strokeWidth={2.4} />
+        {/* Inner orbiting halo */}
+        <motion.span
+          aria-hidden
+          className="absolute inset-0 rounded-full ring-2 ring-white/20"
+          animate={reduce ? undefined : { scale: [1, 1.4], opacity: [0.6, 0] }}
+          transition={reduce ? undefined : { duration: 2.4, repeat: Infinity, ease: "easeOut" }}
         />
-      ))}
-      {nodes.map((n, i) => (
-        <g key={i}>
-          <circle cx={n.x} cy={n.y} r="14" fill="url(#node)" opacity="0.15">
-            <animate attributeName="r" values="14;22;14" dur={`${3 + (i % 4)}s`} repeatCount="indefinite" />
-            <animate attributeName="opacity" values="0.15;0;0.15" dur={`${3 + (i % 4)}s`} repeatCount="indefinite" />
-          </circle>
-          <circle cx={n.x} cy={n.y} r="4" fill="url(#node)" />
-        </g>
-      ))}
-    </svg>
+      </motion.div>
+
+      {/* Two orbiting rings of service icons (4 each, opposite directions) */}
+      <Orbit
+        radius={140}
+        duration={28}
+        services={ORBIT_SERVICES.slice(0, 4)}
+        startAngle={0}
+        reverse={false}
+        reduce={reduce ?? false}
+      />
+      <Orbit
+        radius={210}
+        duration={42}
+        services={ORBIT_SERVICES.slice(4, 8)}
+        startAngle={45}
+        reverse
+        reduce={reduce ?? false}
+      />
+    </div>
+  );
+}
+
+function Orbit({
+  radius,
+  duration,
+  services,
+  startAngle,
+  reverse,
+  reduce,
+}: {
+  radius: number;
+  duration: number;
+  services: { icon: React.ComponentType<{ className?: string; strokeWidth?: number }>; color: string }[];
+  startAngle: number;
+  reverse: boolean;
+  reduce: boolean;
+}) {
+  return (
+    <motion.div
+      className="absolute"
+      style={{ width: radius * 2, height: radius * 2, transformOrigin: "center" }}
+      animate={reduce ? undefined : { rotate: reverse ? -360 : 360 }}
+      transition={reduce ? undefined : { duration, repeat: Infinity, ease: "linear" }}
+    >
+      {services.map((s, i) => {
+        const angle = ((i / services.length) * 360 + startAngle) * (Math.PI / 180);
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+        return (
+          <div
+            key={i}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{ transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))` }}
+          >
+            {/* Counter-rotate so the icon stays upright while the orbit rotates */}
+            <motion.div
+              animate={reduce ? undefined : { rotate: reverse ? 360 : -360 }}
+              transition={reduce ? undefined : { duration, repeat: Infinity, ease: "linear" }}
+              className="grid h-12 w-12 place-items-center rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md text-white shadow-[0_6px_24px_rgba(0,0,0,0.25)]"
+              style={{ boxShadow: `0 0 24px -6px ${s.color}` }}
+            >
+              <s.icon className="h-5 w-5" strokeWidth={1.8} />
+            </motion.div>
+          </div>
+        );
+      })}
+    </motion.div>
   );
 }

@@ -86,6 +86,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f01b1778-4d7d-4330-8b97-b8d034d784d3/id-preview-9593faee--b6655e22-9517-464b-97dc-91ece4fe48bb.lovable.app-1778208101688.png" },
     ],
     links: [
+      // Preconnect + font CSS in document <head> — most reliable way to load
+      // Google Fonts (avoids reliance on the in-CSS @import which can be
+      // silently dropped if it ever ends up after another rule).
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,

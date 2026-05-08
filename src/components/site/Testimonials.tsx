@@ -1,7 +1,9 @@
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Quote } from "lucide-react";
+import { motion } from "framer-motion";
 import { SectionHeader } from "./Offerings";
+import { Reveal, StaggerContainer, StaggerItem } from "./motion";
 
 const items = [
   { quote: "AMSTAG runs our DC like clockwork. Their NOC catches incidents before our internal teams even page.", name: "Rajiv Menon", title: "CTO", company: "Aarav Capital", industry: "BFSI" },
@@ -19,26 +21,41 @@ export function Testimonials() {
   return (
     <section className="bg-[var(--surface)] py-20 md:py-28">
       <div className="container-x">
-        <SectionHeader eyebrow="Testimonials" title="What enterprise leaders say." />
-        <div className="mt-12 overflow-hidden" ref={ref}>
-          <div className="flex gap-5">
-            {items.map((t, i) => (
-              <div key={i} className="shrink-0 basis-full md:basis-1/2 lg:basis-1/3">
-                <figure className="h-full rounded-xl border border-border bg-card p-6 flex flex-col">
-                  <Quote className="h-6 w-6 text-[var(--brand)]" />
-                  <blockquote className="mt-4 text-[15px] text-foreground/90 leading-relaxed">
-                    "{t.quote}"
-                  </blockquote>
-                  <figcaption className="mt-6 pt-4 border-t border-border">
-                    <div className="font-display font-semibold text-[var(--ink)]">{t.name}</div>
-                    <div className="text-sm text-muted-foreground">{t.title} · {t.company}</div>
-                    <div className="mt-1 text-xs font-mono uppercase tracking-widest text-[var(--brand)]">{t.industry}</div>
-                  </figcaption>
-                </figure>
-              </div>
-            ))}
+        <Reveal>
+          <SectionHeader eyebrow="Testimonials" title="What enterprise leaders say." />
+        </Reveal>
+        <StaggerContainer stagger={0.1} delayChildren={0.1} className="mt-12 overflow-hidden" amount={0.1}>
+          <div className="overflow-hidden" ref={ref}>
+            <div className="flex gap-5">
+              {items.map((t, i) => (
+                <StaggerItem key={i} className="shrink-0 basis-full md:basis-1/2 lg:basis-1/3">
+                  <motion.figure
+                    whileHover={{ y: -6, scale: 1.01 }}
+                    transition={{ type: "spring", stiffness: 240, damping: 20 }}
+                    className="h-full rounded-xl border border-border bg-card p-6 flex flex-col shadow-[0_2px_12px_rgba(10,22,40,0.04)] hover:shadow-[0_18px_40px_rgba(10,22,40,0.10)] transition-shadow"
+                  >
+                    <motion.div
+                      initial={{ scale: 0, rotate: -30 }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.15 + i * 0.05, type: "spring", stiffness: 200, damping: 15 }}
+                    >
+                      <Quote className="h-6 w-6 text-[var(--brand)]" />
+                    </motion.div>
+                    <blockquote className="mt-4 text-[15px] text-foreground/90 leading-relaxed">
+                      "{t.quote}"
+                    </blockquote>
+                    <figcaption className="mt-6 pt-4 border-t border-border">
+                      <div className="font-display font-semibold text-[var(--ink)]">{t.name}</div>
+                      <div className="text-sm text-muted-foreground">{t.title} · {t.company}</div>
+                      <div className="mt-1 text-xs font-mono uppercase tracking-widest text-[var(--brand)]">{t.industry}</div>
+                    </figcaption>
+                  </motion.figure>
+                </StaggerItem>
+              ))}
+            </div>
           </div>
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

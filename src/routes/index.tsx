@@ -14,7 +14,8 @@ import { Certifications } from "@/components/site/Certifications";
 import { Insights } from "@/components/site/Insights";
 import { CtaContact } from "@/components/site/CtaContact";
 import { Footer } from "@/components/site/Footer";
-import { WhatsAppFab } from "@/components/site/WhatsAppFab";
+import { FloatingActions } from "@/components/site/FloatingActions";
+import { LeadPopup } from "@/components/site/LeadPopup";
 import { Toaster } from "@/components/ui/sonner";
 
 const orgJsonLd = {
@@ -75,7 +76,8 @@ function Index() {
         <CtaContact />
       </main>
       <Footer />
-      <WhatsAppFab />
+      <FloatingActions />
+      <LeadPopup delayMs={3000} />
       <Toaster richColors position="top-right" />
     </div>
   );
