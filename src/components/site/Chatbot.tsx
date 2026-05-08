@@ -360,7 +360,7 @@ export function Chatbot() {
         transition={{ delay: 1.4, type: "spring", stiffness: 260, damping: 18 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.92 }}
-        className="relative grid h-12 w-12 sm:h-14 sm:w-14 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[var(--brand)] to-[var(--ink-soft)] text-white shadow-[0_10px_30px_rgba(0,102,255,0.40)] outline-none ring-offset-2 focus-visible:ring-2 focus-visible:ring-[var(--brand)]"
+        className="relative grid h-11 w-11 sm:h-14 sm:w-14 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[var(--brand)] to-[var(--ink-soft)] text-white shadow-[0_10px_30px_rgba(0,102,255,0.40)] outline-none ring-offset-2 focus-visible:ring-2 focus-visible:ring-[var(--brand)]"
       >
         <AnimatePresence mode="wait" initial={false}>
           {open ? (
@@ -372,7 +372,7 @@ export function Chatbot() {
               transition={{ duration: 0.18 }}
               className="inline-block"
             >
-              <X className="h-5 w-5 sm:h-6 sm:w-6" />
+              <X className="h-[18px] w-[18px] sm:h-6 sm:w-6" />
             </motion.span>
           ) : (
             <motion.span
@@ -383,14 +383,14 @@ export function Chatbot() {
               transition={{ duration: 0.18 }}
               className="inline-block"
             >
-              <Bot className="h-5 w-5 sm:h-6 sm:w-6" />
+              <Bot className="h-[18px] w-[18px] sm:h-6 sm:w-6" />
             </motion.span>
           )}
         </AnimatePresence>
         {hasUnread && !open && (
           <motion.span
             aria-hidden
-            className="absolute -top-1 -right-1 grid h-5 w-5 place-items-center rounded-full bg-[var(--innovation)] text-[10px] font-bold text-[var(--ink)]"
+            className="absolute -top-1 -right-1 grid h-4 w-4 sm:h-5 sm:w-5 place-items-center rounded-full bg-[var(--innovation)] text-[9px] sm:text-[10px] font-bold text-[var(--ink)]"
             animate={
               reduce
                 ? undefined

@@ -5,9 +5,15 @@
 // overflows the screen because the form column scrolls internally.
 // On tablet+ it's a centred modal card with the same content.
 //
-// Triggers: 25-second dwell timer OR exit-intent (cursor leaves the top of
-// the viewport). Dismissal AND submission both persist in localStorage so
-// the popup is shown at most once per browser, ever.
+// Triggers: dwell timer (delayMs prop, default 25s) OR exit-intent.
+//
+// Dismissal model:
+//   - SUBMITTED → localStorage 30-day cooldown (don't bother fresh leads)
+//   - DISMISSED → sessionStorage only (resets per browser session, so
+//     visitors get another chance on a fresh visit)
+//
+// Storage keys are version-suffixed; bumping invalidates older entries
+// without us having to write any migration logic.
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,14 +24,12 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const STORAGE_KEY = "amstag.leadPopup.v1";
+const SUBMITTED_KEY = "amstag.leadPopup.submitted.v2";
+const DISMISSED_KEY = "amstag.leadPopup.dismissed.v2";
+const SUBMISSION_COOLDOWN_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
 // Default dwell delay (used on secondary pages); home page overrides via prop.
 const APPEAR_DELAY_MS = 25_000;
-
-type Stored =
-  | { dismissedAt: number }
-  | { submittedAt: number; email: string }
-  | undefined;
 
 const schema = z.object({
   name: z.string().trim().min(2, "Enter your name").max(100),
@@ -35,22 +39,49 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
-function readStored(): Stored {
-  if (typeof window === "undefined") return undefined;
+function shouldShow(): boolean {
+  if (typeof window === "undefined") return false;
+  // Check submission cooldown (localStorage, 30-day TTL)
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as Stored) : undefined;
+    const raw = window.localStorage.getItem(SUBMITTED_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as { submittedAt: number };
+      if (parsed?.submittedAt && Date.now() - parsed.submittedAt < SUBMISSION_COOLDOWN_MS) {
+        return false;
+      }
+      // Cooldown elapsed → drop the entry
+      window.localStorage.removeItem(SUBMITTED_KEY);
+    }
   } catch {
-    return undefined;
+    // ignore
+  }
+  // Check session dismissal (resets when browser tab closes)
+  try {
+    if (window.sessionStorage.getItem(DISMISSED_KEY)) return false;
+  } catch {
+    // ignore
+  }
+  return true;
+}
+
+function recordDismissed(): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.sessionStorage.setItem(DISMISSED_KEY, String(Date.now()));
+  } catch {
+    // ignore privacy mode
   }
 }
 
-function writeStored(value: Stored): void {
-  if (typeof window === "undefined" || !value) return;
+function recordSubmitted(email: string): void {
+  if (typeof window === "undefined") return;
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+    window.localStorage.setItem(
+      SUBMITTED_KEY,
+      JSON.stringify({ submittedAt: Date.now(), email })
+    );
   } catch {
-    // ignore quota / privacy mode
+    // ignore
   }
 }
 
@@ -59,8 +90,7 @@ export function LeadPopup({ delayMs }: { delayMs?: number } = {}) {
   const armedRef = useRef<boolean>(false);
 
   useEffect(() => {
-    const stored = readStored();
-    if (stored) return; // already dismissed or submitted
+    if (!shouldShow()) return;
     armedRef.current = true;
 
     const timer = window.setTimeout(() => {
@@ -86,7 +116,7 @@ export function LeadPopup({ delayMs }: { delayMs?: number } = {}) {
 
   const close = () => {
     setOpen(false);
-    writeStored({ dismissedAt: Date.now() });
+    recordDismissed();
   };
 
   // Lock background scroll while open so the body doesn't peek past the sheet
@@ -127,7 +157,7 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
   const onSubmit = async (data: FormData) => {
     if (data.website) return;
     await new Promise((r) => setTimeout(r, 600));
-    writeStored({ submittedAt: Date.now(), email: data.email });
+    recordSubmitted(data.email);
     toast.success("Got it — a senior architect will reach out within one business day.");
     onClose();
   };

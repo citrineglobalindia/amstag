@@ -8,9 +8,9 @@
 import { MessageCircle } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
-// Mobile keeps a tighter 48px target (still within Apple HIG / Material spec
-// for tappable buttons), desktop expands to 56px for visual presence.
-const SIZE_CLASS = "h-12 w-12 sm:h-14 sm:w-14";
+// Mobile uses a 44px tap target (Apple HIG minimum for accessible buttons),
+// desktop expands to 56px for visual presence.
+const SIZE_CLASS = "h-11 w-11 sm:h-14 sm:w-14";
 
 export function WhatsAppFab() {
   const reduce = useReducedMotion();
@@ -54,7 +54,7 @@ export function WhatsAppFab() {
               }
         }
       >
-        <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2.2} />
+        <MessageCircle className="h-[18px] w-[18px] sm:h-6 sm:w-6" strokeWidth={2.2} />
       </motion.span>
 
       {/* Expanding pulse ring — confirms the button is "live" */}
@@ -68,9 +68,9 @@ export function WhatsAppFab() {
       {/* Online dot — small green sentinel in the corner */}
       <span
         aria-hidden
-        className="absolute -top-0.5 -right-0.5 grid h-3.5 w-3.5 place-items-center rounded-full bg-white"
+        className="absolute -top-0.5 -right-0.5 grid h-3 w-3 sm:h-3.5 sm:w-3.5 place-items-center rounded-full bg-white"
       >
-        <span className="h-2 w-2 rounded-full bg-[#25D366]" />
+        <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-[#25D366]" />
       </span>
     </motion.a>
   );

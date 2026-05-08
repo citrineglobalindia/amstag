@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Linkedin,
   Twitter,
@@ -7,8 +8,9 @@ import {
   Phone,
   MapPin,
   ArrowUpRight,
+  ChevronDown,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { FooterGlow, type FooterGlowSocial } from "@/components/ui/footer-glow";
 import { Button } from "@/components/ui/button";
@@ -192,15 +194,19 @@ export function Footer() {
 
       {/* Bottom legal bar — shared across both layouts */}
       <div className="border-t border-white/10 relative z-10">
-        <div className="container-x py-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-xs text-white/50">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-            <span>ISO 27001</span>
-            <span className="opacity-30">|</span>
-            <span>ISO 9001</span>
-            <span className="opacity-30">|</span>
-            <span>CMMI Level 3</span>
+        <div className="container-x py-4 md:py-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-[11px] md:text-xs text-white/50">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1">
+            <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5">
+              ISO 27001
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5">
+              ISO 9001
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5">
+              CMMI L3
+            </span>
           </div>
-          <div className="flex flex-wrap gap-x-5 gap-y-1">
+          <div className="flex flex-wrap justify-center md:justify-end gap-x-5 gap-y-1">
             {["Privacy", "Terms", "Sitemap"].map((label) => (
               <motion.a
                 key={label}
@@ -236,27 +242,36 @@ export function Footer() {
 
 /* ───────────────────────── Mobile compact footer ───────────────────────── */
 
+// Accordion-driven mobile footer. Heavy link clusters live behind tap-to-
+// expand sections so the footer stays short by default. Visual hierarchy
+// (top → bottom): brand, primary CTAs, contact card, expandable nav sections,
+// social row, copyright. Bottom legal + Stepstones share a single panel
+// rendered separately below this component.
 function CompactMobileFooter() {
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+
   return (
     <div className="md:hidden relative z-10">
       <Reveal direction="up">
-        <div className="container-x pt-12 pb-6">
-          {/* Brand mini-card */}
+        <div className="container-x pt-10 pb-2">
+          {/* Brand block */}
           <div className="flex items-center gap-3">
-            <motion.span whileTap={{ scale: 0.95 }} className="inline-flex">
-              <AmstagLogo size="md" />
-            </motion.span>
-            <div>
-              <div className="font-display text-lg font-bold">AMSTAG</div>
-              <div className="text-[10px] font-mono uppercase tracking-widest text-[var(--innovation)] flex items-center gap-1.5">
+            <AmstagLogo size="md" />
+            <div className="min-w-0">
+              <div className="font-display text-lg font-bold leading-tight">AMSTAG</div>
+              <div className="mt-0.5 inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-[var(--innovation)]">
                 <span className="relative flex size-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--innovation)] opacity-75" />
                   <span className="relative inline-flex size-1.5 rounded-full bg-[var(--innovation)]" />
                 </span>
-                NOC · 24×7
+                NOC online · 24×7
               </div>
             </div>
           </div>
+
+          <p className="mt-4 text-sm text-white/65 leading-relaxed">
+            Mission-critical IT, engineered for India's enterprises.
+          </p>
 
           {/* Primary CTAs */}
           <div className="mt-5 grid grid-cols-2 gap-2">
@@ -265,58 +280,122 @@ function CompactMobileFooter() {
               target="_blank"
               rel="noreferrer"
               whileTap={{ scale: 0.97 }}
-              className="flex items-center justify-center gap-2 rounded-lg bg-[#25D366] px-3 py-2.5 text-sm font-medium text-white"
+              className="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-3 py-3 text-sm font-medium text-white shadow-[0_6px_18px_rgba(37,211,102,0.35)]"
             >
               <MessageCircle className="h-4 w-4" /> WhatsApp
             </motion.a>
             <motion.a
               href="tel:+919945645909"
               whileTap={{ scale: 0.97 }}
-              className="flex items-center justify-center gap-2 rounded-lg bg-white/5 border border-white/15 px-3 py-2.5 text-sm font-medium text-white"
+              className="flex items-center justify-center gap-2 rounded-xl bg-[var(--brand)] px-3 py-3 text-sm font-medium text-white shadow-[0_6px_18px_rgba(0,102,255,0.35)]"
             >
-              <Phone className="h-4 w-4" /> Call
+              <Phone className="h-4 w-4" /> Call sales
             </motion.a>
           </div>
 
-          {/* Quick links — chip rows */}
-          <nav aria-label="Footer navigation" className="mt-6 space-y-3">
-            {columns.map((col) => (
-              <div key={col.title}>
-                <div className="mb-2 text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--innovation)]">
-                  {col.title}
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {col.links.map((l) => (
-                    <Link
-                      key={l.label}
-                      to={l.href}
-                      className="inline-block rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-white/75 active:bg-white/10"
-                    >
-                      {l.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </nav>
-
-          {/* Contact strip */}
-          <div className="mt-6 rounded-xl border border-white/10 bg-white/5 p-4">
-            <div className="flex items-start gap-2 text-xs">
+          {/* Contact card — single source of address + email */}
+          <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.04] p-4 space-y-3">
+            <div className="flex items-start gap-2.5 text-sm">
               <MapPin className="h-4 w-4 text-[var(--innovation)] shrink-0 mt-0.5" />
-              <span className="text-white/70 leading-relaxed">
-                217, 8th Cross, BHEL Layout, II Stage, Pattanagere,
-                R.R. Nagar, Bangalore 560098
+              <span className="text-white/75 leading-relaxed">
+                217, 8th Cross, BHEL Layout, II Stage,<br />
+                Pattanagere, R.R. Nagar, Bangalore 560098
               </span>
             </div>
             <a
               href="mailto:sales@amstag.in"
-              className="mt-2 flex items-center gap-2 text-xs text-white/70 hover:text-white"
+              className="flex items-center gap-2.5 text-sm text-white/75 hover:text-white"
             >
               <Mail className="h-4 w-4 text-[var(--innovation)] shrink-0" />
               sales@amstag.in
             </a>
           </div>
+
+          {/* Accordion nav — Services / Industries / Company */}
+          <nav aria-label="Footer navigation" className="mt-5 rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden">
+            {columns.map((col, i) => {
+              const isOpen = openIdx === i;
+              return (
+                <div
+                  key={col.title}
+                  className={i > 0 ? "border-t border-white/10" : undefined}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenIdx(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    className="w-full flex items-center justify-between gap-3 px-4 py-3.5 text-left active:bg-white/[0.03]"
+                  >
+                    <span className="font-display text-sm font-semibold text-white">
+                      {col.title}
+                    </span>
+                    <motion.span
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                      className={`grid h-6 w-6 shrink-0 place-items-center rounded-full transition-colors ${
+                        isOpen
+                          ? "bg-[var(--innovation)] text-[var(--ink)]"
+                          : "bg-white/[0.06] text-white/60"
+                      }`}
+                    >
+                      <ChevronDown className="h-3 w-3" />
+                    </motion.span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key="content"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <ul className="pb-3 px-4 grid grid-cols-2 gap-x-3 gap-y-1.5">
+                          {col.links.map((l) => (
+                            <li key={l.label}>
+                              <Link
+                                to={l.href}
+                                className="block py-1 text-sm text-white/70 active:text-white"
+                              >
+                                {l.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </nav>
+
+          {/* Newsletter — compact 1-line form */}
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="mt-5 rounded-xl border border-white/10 bg-white/[0.04] p-3"
+          >
+            <div className="text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--innovation)] mb-2">
+              Quarterly insights for IT leaders
+            </div>
+            <div className="flex gap-2">
+              <Input
+                type="email"
+                required
+                placeholder="you@company.com"
+                className="bg-white/5 border-white/15 text-white placeholder:text-white/40 h-10 text-base"
+              />
+              <Button
+                type="submit"
+                size="icon"
+                aria-label="Subscribe"
+                className="bg-[var(--brand)] hover:bg-[var(--brand-hover)] h-10 w-10 shrink-0"
+              >
+                <Mail className="h-4 w-4" />
+              </Button>
+            </div>
+          </form>
 
           {/* Socials */}
           <div className="mt-6 flex items-center justify-center gap-2">
@@ -328,8 +407,8 @@ function CompactMobileFooter() {
                 rel="noreferrer"
                 aria-label={s.label}
                 whileTap={{ scale: 0.92 }}
-                whileHover={{ y: -3 }}
-                className="grid h-9 w-9 place-items-center rounded-md bg-white/5 border border-white/10 text-white/70 hover:bg-[var(--brand)] hover:text-white hover:border-transparent transition-colors"
+                whileHover={{ y: -2 }}
+                className="grid h-10 w-10 place-items-center rounded-lg bg-white/[0.04] border border-white/10 text-white/70 active:bg-[var(--brand)] active:text-white active:border-transparent transition-colors"
               >
                 <s.icon className="h-4 w-4" />
               </motion.a>
