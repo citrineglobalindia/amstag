@@ -12,6 +12,9 @@ import { CaseStudies } from "@/components/site/CaseStudies";
 import { Testimonials } from "@/components/site/Testimonials";
 import { Certifications } from "@/components/site/Certifications";
 import { Insights } from "@/components/site/Insights";
+import { EngagementModels } from "@/components/site/EngagementModels";
+import { Recognition } from "@/components/site/Recognition";
+import { Faq } from "@/components/site/Faq";
 import { CtaContact } from "@/components/site/CtaContact";
 import { Footer } from "@/components/site/Footer";
 import { FloatingActions } from "@/components/site/FloatingActions";
@@ -69,9 +72,12 @@ function Index() {
         <Industries />
         <WhyAmstag />
         <Process />
+        <EngagementModels />
         <CaseStudies />
         <Testimonials />
         <Certifications />
+        <Recognition />
+        <Faq />
         <Insights />
         <CtaContact />
       </main>
