@@ -1,41 +1,151 @@
+// WhyAmstag — animated metric bars.
+// Four "proof bars" that fill on scroll into view, each tied to an outcome
+// metric (audit-finding reduction, MTTR, uptime, OEM partnerships). The
+// bar percentages animate via framer-motion `whileInView` with eased fills.
+// Signature animation: bars sweep left-to-right with a moving highlight.
 import { motion } from "framer-motion";
-import { Target, BookOpen, Users, Layers } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { ArrowRight, BookOpen, Layers, Target, Users } from "lucide-react";
+import { Reveal } from "./motion";
 import { SectionHeader } from "./Offerings";
 
-const items = [
-  { icon: Target, title: "Pragmatic Approach", desc: "We design for outcomes, not slideware. Every recommendation is benchmarked against cost, risk and time-to-value before it ships." },
-  { icon: BookOpen, title: "Deep Domain Expertise", desc: "Senior architects with two decades across BFSI, healthcare and government — paired with vendor-certified delivery teams." },
-  { icon: Users, title: "Customer-Centric Strategy", desc: "Dedicated account leadership, transparent SLAs and quarterly business reviews keep us accountable to your roadmap." },
-  { icon: Layers, title: "Scalable & Flexible", desc: "Modular engagements that flex from a single workload to a national rollout — without rebuilding what already works." },
+type Pillar = {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  blurb: string;
+  /** 0–100 — visualises the outcome strength. */
+  fill: number;
+  /** Numerator metric (the actual value beside the bar). */
+  metric: string;
+  /** What the metric represents. */
+  metricLabel: string;
+  /** Tailwind colour class for the fill. */
+  color: string;
+};
+
+const pillars: Pillar[] = [
+  {
+    icon: Target,
+    title: "Pragmatic Approach",
+    blurb: "We design for outcomes, not slideware.",
+    fill: 92,
+    metric: "−92%",
+    metricLabel: "Audit findings vs. baseline",
+    color: "bg-[var(--brand)]",
+  },
+  {
+    icon: BookOpen,
+    title: "Deep Domain Expertise",
+    blurb: "Senior architects with 20+ years across BFSI, healthcare, gov.",
+    fill: 87,
+    metric: "9 min",
+    metricLabel: "Median time to mitigate",
+    color: "bg-[var(--innovation)]",
+  },
+  {
+    icon: Users,
+    title: "Senior Accountability",
+    blurb: "Named owners on every account. No queue hiding.",
+    fill: 99,
+    metric: "99.99%",
+    metricLabel: "Average uptime SLA",
+    color: "bg-rose-400",
+  },
+  {
+    icon: Layers,
+    title: "Scalable & Flexible",
+    blurb: "Modular engagements from a single workload to a national rollout.",
+    fill: 80,
+    metric: "40+",
+    metricLabel: "OEM partnerships",
+    color: "bg-amber-400",
+  },
 ];
 
 export function WhyAmstag() {
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-20 md:py-28 bg-[var(--surface)] border-y border-border">
       <div className="container-x">
-        <SectionHeader
-          eyebrow="Why AMSTAG"
-          title="Built for boards. Trusted by operators."
-        />
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {items.map((it, i) => (
-            <motion.div
-              key={it.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: i * 0.07 }}
-              className="rounded-xl border border-border p-6 bg-card hover:shadow-[var(--shadow-soft)] transition-shadow"
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12 items-start">
+          <Reveal direction="right" className="lg:col-span-5">
+            <SectionHeader
+              eyebrow="Why AMSTAG"
+              title="Built for boards. Trusted by operators."
+              desc="Four operating principles, each with a measurable proof point we publish to customers every quarter."
+            />
+            <Link
+              to="/about"
+              className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-[var(--brand)] hover:text-[var(--brand-hover)] group"
             >
-              <div className="w-10 h-10 grid place-items-center rounded-lg bg-[var(--ink)] text-white">
-                <it.icon className="h-5 w-5" />
-              </div>
-              <h3 className="mt-5 font-display font-semibold text-lg text-[var(--ink)]">{it.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{it.desc}</p>
-            </motion.div>
-          ))}
+              Read the full story
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Reveal>
+
+          <div className="lg:col-span-7 space-y-5">
+            {pillars.map((p, i) => (
+              <PillarRow key={p.title} pillar={p} index={i} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function PillarRow({ pillar, index }: { pillar: Pillar; index: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
+      whileHover={{ y: -3 }}
+      className="rounded-xl border border-border bg-card p-5 md:p-6 shadow-[0_2px_12px_rgba(10,22,40,0.04)] hover:shadow-[0_18px_40px_rgba(10,22,40,0.08)] transition-shadow"
+    >
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start gap-4 min-w-0">
+          <span className="grid place-items-center h-10 w-10 rounded-lg bg-[var(--ink)] text-white shrink-0">
+            <pillar.icon className="h-5 w-5" />
+          </span>
+          <div className="min-w-0">
+            <h3 className="font-display text-base md:text-lg font-bold text-[var(--ink)]">{pillar.title}</h3>
+            <p className="text-sm text-foreground/65 leading-snug">{pillar.blurb}</p>
+          </div>
+        </div>
+        <div className="text-right shrink-0">
+          <div className="font-mono text-lg md:text-xl font-bold text-[var(--ink)]">{pillar.metric}</div>
+          <div className="text-[10px] uppercase tracking-widest text-foreground/45 mt-0.5">
+            {pillar.metricLabel}
+          </div>
+        </div>
+      </div>
+
+      {/* Bar */}
+      <div className="mt-4 relative h-2 rounded-full bg-foreground/[0.06] overflow-hidden">
+        <motion.div
+          initial={{ width: 0 }}
+          whileInView={{ width: `${pillar.fill}%` }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.15 + index * 0.08 }}
+          className={`relative h-full rounded-full ${pillar.color}`}
+        >
+          {/* Moving sheen */}
+          <motion.span
+            aria-hidden
+            className="absolute inset-y-0 -inset-x-2 bg-gradient-to-r from-transparent via-white/50 to-transparent"
+            initial={{ x: "-200%" }}
+            animate={{ x: "200%" }}
+            transition={{
+              duration: 2.6,
+              repeat: Infinity,
+              repeatDelay: 1.6,
+              ease: "easeInOut",
+              delay: 1 + index * 0.2,
+            }}
+          />
+        </motion.div>
+      </div>
+    </motion.div>
   );
 }

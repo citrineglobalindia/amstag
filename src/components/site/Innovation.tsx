@@ -1,86 +1,183 @@
-import { motion } from "framer-motion";
-import { Cpu, Radio, BarChart3 } from "lucide-react";
-import { SectionHeader } from "./Offerings";
+// Innovation — terminal-typewriter section.
+// A faux-terminal panel cycles through three "deploy" lines that type
+// themselves out character-by-character; the right column shows the
+// short pitch with a single "Read more →" CTA into /case-studies.
+// Signature animation: typewriter cursor + line-by-line cycle.
+import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, Terminal } from "lucide-react";
+import { Reveal } from "./motion";
 
-const points = [
-  { icon: Cpu, title: "AI in operations", desc: "Predictive ops, intelligent ticket routing, and anomaly detection that catches incidents before users do." },
-  { icon: Radio, title: "IoT at scale", desc: "Edge gateways, secure MQTT brokers and lifecycle management for fleets in the millions." },
-  { icon: BarChart3, title: "Analytics that ship", desc: "From data lakes to executive dashboards — productionized in weeks, not quarters." },
+const TERMINAL_LINES = [
+  {
+    cmd: "amstag deploy --landing-zone aws-multi-account",
+    out: ["✓ 12 accounts provisioned", "✓ Guard-rails applied · CIS 1.5", "✓ 0 policy drift detected"],
+  },
+  {
+    cmd: "amstag soc tail --severity high",
+    out: ["⚠ 47 events triaged", "✓ 4 isolated · 0 escalated", "✓ MTTR 9m · within SLA"],
+  },
+  {
+    cmd: "amstag dr drill --tier-1",
+    out: ["✓ 17 workloads recovered", "✓ RTO 3m 42s (target ≤ 4m)", "✓ Audit evidence captured"],
+  },
 ];
 
-export function Innovation() {
-  return (
-    <section className="relative bg-ink-gradient text-white py-24 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 grid-mesh pointer-events-none opacity-50" />
-      <div className="container-x relative grid lg:grid-cols-12 gap-12 items-center">
-        <div className="lg:col-span-6">
-          <SectionHeader
-            light
-            eyebrow="Innovation Driven"
-            title="AI, IoT and advanced analytics — productionized."
-            desc="We don't pilot for years. AMSTAG ships modern workloads on production rails, with security, governance and SRE built in from day one."
-          />
-          <ul className="mt-10 space-y-6">
-            {points.map((p, i) => (
-              <motion.li
-                key={p.title}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="flex gap-4"
-              >
-                <div className="shrink-0 w-10 h-10 grid place-items-center rounded-lg bg-white/10 border border-white/15 text-[var(--innovation)]">
-                  <p.icon className="h-5 w-5" />
-                </div>
-                <div>
-                  <div className="font-display font-semibold text-white">{p.title}</div>
-                  <p className="text-white/70">{p.desc}</p>
-                </div>
-              </motion.li>
-            ))}
-          </ul>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="lg:col-span-6"
-        >
-          <DataFlowVisual />
-        </motion.div>
-      </div>
-    </section>
-  );
+function useTypedLine(text: string, active: boolean, charsPerSec = 40) {
+  const [chars, setChars] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    setChars(0);
+    const start = performance.now();
+    let raf = 0;
+    const tick = () => {
+      const elapsed = (performance.now() - start) / 1000;
+      const next = Math.min(text.length, Math.floor(elapsed * charsPerSec));
+      setChars(next);
+      if (next < text.length) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [text, active, charsPerSec]);
+  return text.slice(0, chars);
 }
 
-function DataFlowVisual() {
+export function Innovation() {
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  // Auto-cycle every ~5s
+  useEffect(() => {
+    const t = setInterval(() => {
+      setActiveIdx((i) => (i + 1) % TERMINAL_LINES.length);
+    }, 5200);
+    return () => clearInterval(t);
+  }, []);
+
+  const active = TERMINAL_LINES[activeIdx];
+  const typedCmd = useTypedLine(active.cmd, true);
+  const cmdDone = typedCmd === active.cmd;
+
   return (
-    <div className="relative aspect-square max-w-[520px] mx-auto rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6 overflow-hidden">
-      <svg viewBox="0 0 400 400" className="w-full h-full" aria-hidden>
-        <defs>
-          <linearGradient id="flow" x1="0" x2="1">
-            <stop offset="0%" stopColor="#0066FF" />
-            <stop offset="100%" stopColor="#00D9A6" />
-          </linearGradient>
-        </defs>
-        {[...Array(8)].map((_, i) => (
-          <circle key={i} cx="200" cy="200" r={40 + i * 20} fill="none" stroke="url(#flow)" strokeOpacity={0.15 + i * 0.04} strokeWidth="1">
-            <animateTransform attributeName="transform" type="rotate" from={`0 200 200`} to={`${i % 2 ? -360 : 360} 200 200`} dur={`${20 + i * 4}s`} repeatCount="indefinite" />
-          </circle>
-        ))}
-        {[0, 60, 120, 180, 240, 300].map((deg, i) => (
-          <g key={i} transform={`rotate(${deg} 200 200)`}>
-            <circle cx="200" cy="60" r="6" fill="url(#flow)">
-              <animate attributeName="r" values="6;9;6" dur="3s" repeatCount="indefinite" begin={`${i * 0.3}s`} />
-            </circle>
-          </g>
-        ))}
-        <circle cx="200" cy="200" r="32" fill="url(#flow)" opacity="0.85" />
-        <text x="200" y="206" textAnchor="middle" fill="white" fontFamily="JetBrains Mono" fontSize="14" fontWeight="700">AI/Edge</text>
-      </svg>
-    </div>
+    <section className="relative bg-[var(--ink)] text-white py-20 md:py-28 overflow-hidden">
+      <div aria-hidden className="absolute inset-0 grid-mesh opacity-30 pointer-events-none" />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 left-1/3 h-[420px] w-[420px] rounded-full bg-[var(--brand)]/30 blur-[120px]"
+        animate={{ scale: [1, 1.18, 1], opacity: [0.55, 0.85, 0.55] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-40 right-1/3 h-[380px] w-[380px] rounded-full bg-[var(--innovation)]/20 blur-[120px]"
+        animate={{ scale: [1.1, 1, 1.1], opacity: [0.4, 0.7, 0.4] }}
+        transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="container-x relative z-10 grid gap-10 lg:grid-cols-12 lg:gap-14 items-center">
+        {/* Left — pitch */}
+        <Reveal direction="right" className="lg:col-span-5">
+          <div className="text-xs font-mono uppercase tracking-[0.25em] text-[var(--innovation)]">
+            Innovation Lab
+          </div>
+          <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold leading-tight text-balance">
+            We ship runbooks{" "}
+            <span className="bg-gradient-to-r from-white via-white to-[var(--innovation)] bg-clip-text text-transparent">
+              like product teams ship code.
+            </span>
+          </h2>
+          <p className="mt-4 text-base md:text-lg text-white/70 leading-relaxed">
+            Every operational playbook lives in version control, runs through
+            CI, and gets re-validated quarterly. The result: ops you can
+            audit, repeat, and improve.
+          </p>
+          <Link
+            to="/case-studies"
+            className="mt-7 inline-flex items-center gap-1 text-sm font-medium text-[var(--innovation)] hover:text-white group"
+          >
+            Read how this plays out in production
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </Reveal>
+
+        {/* Right — terminal */}
+        <Reveal direction="left" delay={0.1} className="lg:col-span-7">
+          <div className="relative">
+            {/* Halo */}
+            <motion.div
+              aria-hidden
+              className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-[var(--brand)]/30 to-[var(--innovation)]/30 blur-2xl"
+              animate={{ opacity: [0.4, 0.7, 0.4] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div className="relative rounded-2xl border border-white/10 bg-[#0b1224] shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden font-mono">
+              {/* Window chrome */}
+              <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/5 bg-white/[0.02]">
+                <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+                <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
+                <span className="h-3 w-3 rounded-full bg-[#28c840]" />
+                <span className="ml-3 inline-flex items-center gap-1.5 text-[11px] text-white/45">
+                  <Terminal className="h-3 w-3" /> ops@amstag-noc · zsh
+                </span>
+              </div>
+              {/* Body */}
+              <div className="px-5 py-5 min-h-[260px] text-[13px] md:text-sm leading-relaxed">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeIdx}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="flex">
+                      <span className="text-[var(--innovation)] mr-2 select-none">$</span>
+                      <span className="text-white whitespace-pre-wrap break-all">
+                        {typedCmd}
+                        {!cmdDone && (
+                          <span className="inline-block w-2 h-4 align-middle bg-white/80 animate-pulse" />
+                        )}
+                      </span>
+                    </div>
+                    {cmdDone && (
+                      <div className="mt-3 space-y-1">
+                        {active.out.map((line, i) => (
+                          <motion.div
+                            key={`${activeIdx}-${i}`}
+                            initial={{ opacity: 0, y: 4 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.25, delay: i * 0.18 }}
+                            className={`whitespace-pre ${
+                              line.startsWith("✓")
+                                ? "text-[var(--innovation)]"
+                                : line.startsWith("⚠")
+                                ? "text-amber-300"
+                                : "text-white/75"
+                            }`}
+                          >
+                            {line}
+                          </motion.div>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              {/* Bottom strip */}
+              <div className="flex items-center justify-between px-4 py-2 border-t border-white/5 bg-white/[0.02] text-[10px] text-white/40">
+                <span>SOC · NOC · Cloud Ops</span>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="relative flex size-1.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--innovation)] opacity-75" />
+                    <span className="relative inline-flex size-1.5 rounded-full bg-[var(--innovation)]" />
+                  </span>
+                  Live
+                </span>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
   );
 }

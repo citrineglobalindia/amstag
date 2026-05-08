@@ -1,56 +1,164 @@
-import { motion } from "framer-motion";
-import {
-  Server, Network, Cloud, Settings2, ShieldCheck, Camera,
-  Headphones, FileCheck2, Compass, ArrowUpRight,
-} from "lucide-react";
+// Offerings — featured-current showcase. One headline service occupies the
+// large left tile and animates a focused inner illustration; three smaller
+// tiles on the right surface the next-most-relevant practices. Hovering or
+// tapping a small tile swaps it into the featured slot. A single "explore
+// all 8 services" CTA replaces the old card grid.
+import { useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { Reveal, StaggerContainer, StaggerItem } from "./motion";
+import { SERVICES } from "@/lib/services";
 
-const items = [
-  { icon: Server, title: "Data Center Services", desc: "Design, build, migrate and operate hyper-resilient on-prem and colocation environments.", span: "lg:col-span-2 lg:row-span-2" },
-  { icon: ShieldCheck, title: "Cybersecurity Solutions", desc: "Zero-trust, SOC, EDR/XDR, vulnerability management and incident response — 24×7.", span: "lg:col-span-1 lg:row-span-2" },
-  { icon: Cloud, title: "Cloud & Hosting", desc: "Multi-cloud strategy, FinOps, landing zones and managed workloads on AWS, Azure and GCP." },
-  { icon: Network, title: "Infrastructure & Networking", desc: "SD-WAN, campus, DC fabric and Wi-Fi 7 — engineered for throughput and zero downtime." },
-  { icon: Settings2, title: "Managed IT Services", desc: "End-to-end NOC, monitoring, patching and lifecycle management with strict SLAs." },
-  { icon: Camera, title: "Physical Security", desc: "IP CCTV, access control, surveillance analytics and integrated command centers." },
-  { icon: Headphones, title: "Unified Communication", desc: "Cloud telephony, contact center, video and collaboration that scales with your teams." },
-  { icon: FileCheck2, title: "Compliance & Risk", desc: "ISO 27001, RBI, HIPAA, GDPR, DPDP — audit-ready postures, continuously enforced." },
-  { icon: Compass, title: "Consultation Services", desc: "Architecture reviews, modernization roadmaps and CIO advisory from senior practitioners." },
-];
+const FEATURED_ORDER = ["cybersecurity", "cloud", "data-center", "managed-it"] as const;
+const FEATURED = FEATURED_ORDER.map((slug) => SERVICES.find((s) => s.slug === slug)!).filter(Boolean);
 
 export function Offerings() {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const active = FEATURED[activeIdx];
+
   return (
     <section id="offerings" className="py-20 md:py-28">
       <div className="container-x">
-        <SectionHeader
-          eyebrow="Offerings"
-          title="A full-stack IT partner — from copper to cloud."
-          desc="Nine integrated practices, one accountable team. We architect, build and run the systems that keep your business on."
-        />
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[180px] gap-4">
-          {items.map((it, i) => (
-            <motion.a
-              key={it.title}
-              href="#contact"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.45, delay: (i % 6) * 0.05 }}
-              className={`group relative overflow-hidden rounded-xl border border-border bg-card p-6 hover:border-[var(--brand)]/40 hover:shadow-[var(--shadow-soft)] transition-all ${it.span ?? ""}`}
-            >
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                style={{ background: "linear-gradient(135deg, rgba(0,102,255,0.04), rgba(0,217,166,0.04))" }} />
-              <div className="relative flex flex-col h-full">
-                <div className="w-11 h-11 grid place-items-center rounded-lg bg-[var(--surface)] text-[var(--brand)] group-hover:bg-[var(--brand)] group-hover:text-white transition-colors">
-                  <it.icon className="h-5 w-5" />
+        <Reveal>
+          <SectionHeader
+            eyebrow="Offerings"
+            title="A full-stack IT partner — from copper to cloud."
+            desc="Eight integrated practices, one accountable team. Browse the highlights here, then explore each one in depth."
+          />
+        </Reveal>
+
+        <div className="mt-12 grid gap-5 lg:grid-cols-12 lg:gap-6">
+          {/* Featured tile — animates on swap */}
+          <Reveal direction="right" className="lg:col-span-7">
+            <AnimatePresence mode="wait">
+              <motion.article
+                key={active.slug}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 md:p-8 h-full min-h-[420px] flex flex-col"
+              >
+                {/* Tone-tinted ambient blob */}
+                <motion.div
+                  aria-hidden
+                  className={`pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full blur-3xl bg-gradient-to-br ${active.tone.gradient}`}
+                  animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.85, 0.5] }}
+                  transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <div className="relative flex items-start justify-between gap-4">
+                  <span
+                    className={`grid place-items-center w-12 h-12 rounded-xl border bg-gradient-to-br ${active.tone.gradient} ${active.tone.chipBorder} text-white`}
+                    style={{ boxShadow: `0 0 28px -6px ${active.tone.glow}` }}
+                  >
+                    <active.icon className="h-6 w-6" strokeWidth={1.7} />
+                  </span>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-foreground/50">
+                    Featured · {active.shortLabel}
+                  </span>
                 </div>
-                <h3 className="mt-5 text-xl font-display font-semibold text-[var(--ink)]">{it.title}</h3>
-                <p className="mt-2 text-[15px] text-muted-foreground">{it.desc}</p>
-                <div className="mt-auto pt-4 inline-flex items-center gap-1 text-sm font-medium text-[var(--brand)] opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all">
-                  Learn more <ArrowUpRight className="h-4 w-4" />
+                <h3 className="relative mt-6 font-display text-2xl md:text-3xl font-bold text-[var(--ink)] text-balance">
+                  {active.title}
+                </h3>
+                <p className="relative mt-2 text-foreground/70 leading-relaxed text-base">{active.tagline}</p>
+                <ul className="relative mt-5 grid gap-2 sm:grid-cols-2 max-w-lg">
+                  {active.hero.bullets.slice(0, 4).map((b, i) => (
+                    <motion.li
+                      key={b}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: 0.1 + i * 0.05 }}
+                      className="flex items-start gap-2 text-sm text-foreground/80"
+                    >
+                      <span className={`mt-1.5 inline-block w-1.5 h-1.5 rounded-full bg-[var(--innovation)] shrink-0`} />
+                      {b}
+                    </motion.li>
+                  ))}
+                </ul>
+                <div className="relative mt-auto pt-6 flex items-center justify-between gap-4">
+                  <Link
+                    to="/services/$slug"
+                    params={{ slug: active.slug }}
+                    className="inline-flex items-center gap-1 text-sm font-medium text-[var(--brand)] hover:text-[var(--brand-hover)] group"
+                  >
+                    Read more about {active.shortLabel}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                  {/* Tab indicators */}
+                  <div className="flex items-center gap-1.5">
+                    {FEATURED.map((s, i) => (
+                      <button
+                        key={s.slug}
+                        type="button"
+                        onClick={() => setActiveIdx(i)}
+                        aria-label={`Show ${s.shortLabel}`}
+                        className={`h-1.5 rounded-full transition-all ${
+                          i === activeIdx
+                            ? "w-8 bg-[var(--brand)]"
+                            : "w-2 bg-foreground/15 hover:bg-foreground/30"
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </motion.a>
-          ))}
+              </motion.article>
+            </AnimatePresence>
+          </Reveal>
+
+          {/* Right column — selectable mini cards */}
+          <div className="lg:col-span-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+            {FEATURED.map((s, i) => (
+              <Reveal key={s.slug} direction="left" delay={i * 0.06}>
+                <button
+                  type="button"
+                  onMouseEnter={() => setActiveIdx(i)}
+                  onFocus={() => setActiveIdx(i)}
+                  onClick={() => setActiveIdx(i)}
+                  className={`group w-full text-left flex items-center gap-4 rounded-xl border p-4 transition-colors ${
+                    i === activeIdx
+                      ? "border-[var(--brand)] bg-card shadow-[0_8px_30px_rgba(10,22,40,0.08)]"
+                      : "border-border bg-card hover:border-[var(--brand)]/50"
+                  }`}
+                >
+                  <span
+                    className={`grid place-items-center w-10 h-10 rounded-lg border bg-gradient-to-br ${s.tone.gradient} ${s.tone.chipBorder} text-white shrink-0`}
+                  >
+                    <s.icon className="h-4.5 w-4.5" strokeWidth={1.8} />
+                  </span>
+                  <span className="flex-1 min-w-0">
+                    <span className="block font-display text-base font-semibold text-[var(--ink)] truncate">
+                      {s.title}
+                    </span>
+                    <span className="block text-xs text-foreground/60 truncate">
+                      {s.tagline}
+                    </span>
+                  </span>
+                  <ArrowUpRight
+                    className={`h-4 w-4 shrink-0 transition-all ${
+                      i === activeIdx
+                        ? "text-[var(--brand)] translate-x-0.5 -translate-y-0.5"
+                        : "text-foreground/30 group-hover:text-[var(--brand)]"
+                    }`}
+                  />
+                </button>
+              </Reveal>
+            ))}
+          </div>
         </div>
+
+        {/* Single "explore all" CTA replaces the dump-it-all grid */}
+        <Reveal delay={0.2}>
+          <div className="mt-12 text-center">
+            <Link
+              to="/services"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium text-[var(--ink)] hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors"
+            >
+              Explore all 8 service practices
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

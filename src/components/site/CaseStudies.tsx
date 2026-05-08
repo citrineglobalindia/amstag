@@ -1,94 +1,141 @@
+// CaseStudies — featured engagement + 3 thumbnail tiles.
+// One large card with a generative gradient backdrop highlights the
+// signature case; three compact tiles tease additional outcomes. A single
+// "Read all case studies →" CTA goes to /case-studies.
+// Signature animation: number counter + drifting gradient mesh on the
+// featured card, hover lift on each thumbnail.
+import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ShieldCheck, TrendingUp, Clock } from "lucide-react";
+import { Reveal, StaggerContainer, StaggerItem } from "./motion";
 import { SectionHeader } from "./Offerings";
 
 const featured = {
   industry: "BFSI",
-  client: "Top-5 Indian Private Bank",
-  challenge: "Legacy DC fabric struggled to meet RBI's resilience guidelines and digital banking growth.",
-  outcome: "Reduced unplanned downtime by 78% across 1,400+ branches",
-  image:
-    "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1400&q=70",
+  client: "Top-15 NBFC, ₹40,000 Cr AUM",
+  title: "From quarterly RBI scrambles to weekly green dashboards.",
+  body: "Replaced an evidence-by-screenshot regime with continuous control collection across endpoint, identity, network and cloud.",
+  metrics: [
+    { icon: ShieldCheck, label: "Audit findings", value: "−92%" },
+    { icon: Clock, label: "Audit prep time", value: "12w → 3w" },
+    { icon: TrendingUp, label: "Posture score", value: "87/100" },
+  ],
 };
 
-const others = [
+const thumbs = [
   {
     industry: "Healthcare",
-    client: "Multi-specialty Hospital Network",
-    outcome: "Cut threat dwell time from 14 days to 4 hours",
-    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=70",
+    title: "ICU-grade uptime for a 1,400-bed hospital network",
+    metric: "99.992% HIS uptime",
   },
   {
     industry: "Manufacturing",
-    client: "Tier-1 Auto Component Maker",
-    outcome: "Migrated 240 workloads to cloud with zero data loss",
-    image: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=900&q=70",
+    title: "Plant-floor visibility without forklift upgrades",
+    metric: "0 line stoppages on cutover",
+  },
+  {
+    industry: "Retail",
+    title: "Black-Friday-grade infra on a year-round budget",
+    metric: "12,400 orders/sec peak",
   },
 ];
 
 export function CaseStudies() {
   return (
-    <section id="cases" className="py-20 md:py-28">
-      <div className="container-x">
-        <SectionHeader
-          eyebrow="Case Studies"
-          title="Outcomes our customers measure in basis points and minutes."
-        />
-        <div className="mt-12 grid lg:grid-cols-3 gap-5">
-          <motion.a
-            href="#contact"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="group lg:col-span-2 lg:row-span-2 relative overflow-hidden rounded-2xl border border-border bg-card"
-          >
-            <div className="aspect-[16/10] overflow-hidden">
-              <img
-                src={featured.image}
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </div>
-            <div className="p-6 md:p-8">
-              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[var(--brand)]">
-                {featured.industry} · Featured
-              </div>
-              <h3 className="mt-3 font-display text-2xl md:text-3xl font-bold text-[var(--ink)]">
-                {featured.outcome}
-              </h3>
-              <p className="mt-3 text-muted-foreground">{featured.challenge}</p>
-              <div className="mt-5 flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">{featured.client}</span>
-                <span className="inline-flex items-center gap-1 text-sm font-medium text-[var(--brand)]">
-                  Read case study <ArrowUpRight className="h-4 w-4" />
-                </span>
-              </div>
-            </div>
-          </motion.a>
+    <section id="cases" className="bg-[var(--ink)] text-white py-20 md:py-28 overflow-hidden relative">
+      <div aria-hidden className="absolute inset-0 grid-mesh opacity-30 pointer-events-none" />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 right-0 h-[420px] w-[420px] rounded-full bg-[var(--brand)]/25 blur-[120px]"
+        animate={{ scale: [1, 1.18, 1], opacity: [0.5, 0.85, 0.5] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-          {others.map((c, i) => (
-            <motion.a
-              key={c.client}
-              href="#contact"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
-              className="group rounded-2xl border border-border bg-card overflow-hidden flex flex-col"
-            >
-              <div className="aspect-[16/10] overflow-hidden">
-                <img src={c.image} alt="" loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              </div>
-              <div className="p-5 flex-1 flex flex-col">
-                <div className="text-xs font-mono uppercase tracking-widest text-[var(--brand)]">{c.industry}</div>
-                <h4 className="mt-2 font-display font-semibold text-lg text-[var(--ink)]">{c.outcome}</h4>
-                <span className="mt-auto pt-3 text-sm text-muted-foreground">{c.client}</span>
-              </div>
-            </motion.a>
-          ))}
+      <div className="container-x relative z-10">
+        <Reveal>
+          <SectionHeader eyebrow="Case studies" light title="Selected work. Real outcomes." />
+        </Reveal>
+
+        <div className="mt-12 grid gap-5 lg:grid-cols-12 lg:gap-6">
+          {/* Featured */}
+          <Reveal direction="right" className="lg:col-span-7">
+            <Link to="/case-studies" className="block group">
+              <motion.article
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 280, damping: 22 }}
+                className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-6 md:p-8 h-full min-h-[380px] flex flex-col"
+              >
+                {/* Drifting gradient mesh */}
+                <motion.div
+                  aria-hidden
+                  className="pointer-events-none absolute -inset-20 bg-[radial-gradient(circle_at_20%_30%,oklch(0.58_0.22_258/0.4),transparent_60%),radial-gradient(circle_at_80%_70%,oklch(0.78_0.16_175/0.3),transparent_60%)]"
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                />
+                <div className="relative flex items-center justify-between gap-4">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--innovation)]">
+                    Featured · {featured.industry}
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 text-white/40 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </div>
+                <h3 className="relative mt-4 font-display text-2xl md:text-3xl font-bold text-white text-balance">
+                  {featured.title}
+                </h3>
+                <p className="relative mt-2 text-sm text-white/60">{featured.client}</p>
+                <p className="relative mt-4 text-base text-white/80 leading-relaxed max-w-2xl">
+                  {featured.body}
+                </p>
+                <dl className="relative mt-auto pt-6 grid grid-cols-3 gap-4 border-t border-white/10">
+                  {featured.metrics.map((m) => (
+                    <div key={m.label}>
+                      <m.icon className="h-4 w-4 text-[var(--innovation)]" />
+                      <dd className="mt-2 font-mono text-base md:text-lg font-bold text-white">{m.value}</dd>
+                      <dt className="text-[10px] uppercase tracking-widest text-white/45">{m.label}</dt>
+                    </div>
+                  ))}
+                </dl>
+              </motion.article>
+            </Link>
+          </Reveal>
+
+          {/* Thumbnails */}
+          <StaggerContainer stagger={0.08} className="lg:col-span-5 grid gap-4">
+            {thumbs.map((t) => (
+              <StaggerItem key={t.title}>
+                <Link to="/case-studies" className="block group">
+                  <motion.article
+                    whileHover={{ x: 4 }}
+                    transition={{ type: "spring", stiffness: 280, damping: 22 }}
+                    className="rounded-xl border border-white/10 bg-white/[0.04] p-4 md:p-5 hover:bg-white/[0.07] hover:border-white/20 transition-colors"
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--innovation)]">
+                        {t.industry}
+                      </span>
+                      <ArrowUpRight className="h-3.5 w-3.5 text-white/40 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </div>
+                    <h4 className="mt-2 font-display text-base font-semibold text-white text-balance">
+                      {t.title}
+                    </h4>
+                    <div className="mt-2 inline-block text-xs font-mono text-white/55">{t.metric}</div>
+                  </motion.article>
+                </Link>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </div>
+
+        <Reveal delay={0.2}>
+          <div className="mt-12 text-center">
+            <Link
+              to="/case-studies"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/10 group"
+            >
+              Read all 6 case studies
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
