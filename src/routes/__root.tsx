@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Amstag - Accelerating Accessibility" },
+      { name: "description", content: "AMSTAG Elevate is a premium B2B website for an IT infrastructure and managed services company." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Amstag - Accelerating Accessibility" },
+      { property: "og:description", content: "AMSTAG Elevate is a premium B2B website for an IT infrastructure and managed services company." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Amstag - Accelerating Accessibility" },
+      { name: "twitter:description", content: "AMSTAG Elevate is a premium B2B website for an IT infrastructure and managed services company." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f01b1778-4d7d-4330-8b97-b8d034d784d3/id-preview-9593faee--b6655e22-9517-464b-97dc-91ece4fe48bb.lovable.app-1778208101688.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f01b1778-4d7d-4330-8b97-b8d034d784d3/id-preview-9593faee--b6655e22-9517-464b-97dc-91ece4fe48bb.lovable.app-1778208101688.png" },
     ],
     links: [
       {
