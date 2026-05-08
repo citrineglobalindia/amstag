@@ -100,15 +100,26 @@ export function FooterGlow({
               href={brand.href ?? "#"}
               className="mb-4 flex items-center gap-2 group"
             >
-              <motion.span
-                whileHover={{ rotate: -10, scale: 1.08 }}
-                transition={{ type: "spring", stiffness: 320, damping: 14 }}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand)] to-[var(--innovation)] text-white shadow-md"
-              >
-                {brand.logo ?? (
+              {/* If a logo node is provided, render it neutrally so brand
+                  artwork (e.g. AMSTAG's deer-and-A) doesn't clash with the
+                  gradient. Otherwise fall back to a gradient initials chip. */}
+              {brand.logo ? (
+                <motion.span
+                  whileHover={{ rotate: -8, scale: 1.06 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 14 }}
+                  className="inline-flex shrink-0"
+                >
+                  {brand.logo}
+                </motion.span>
+              ) : (
+                <motion.span
+                  whileHover={{ rotate: -10, scale: 1.08 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 14 }}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand)] to-[var(--innovation)] text-white shadow-md"
+                >
                   <span className="text-base font-extrabold">{brand.name.slice(0, 1)}</span>
-                )}
-              </motion.span>
+                </motion.span>
+              )}
               <span className="bg-gradient-to-br from-[var(--ink)] to-[var(--brand)] bg-clip-text text-xl font-semibold tracking-tight text-transparent dark:from-white dark:to-[var(--innovation)]">
                 {brand.name}
               </span>

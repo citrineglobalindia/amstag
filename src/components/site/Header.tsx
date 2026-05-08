@@ -19,6 +19,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ServicesRadialMenu } from "./ServicesRadialMenu";
+import { AmstagLogo } from "./AmstagLogo";
 
 type NavItem = { label: string; href: string; kind?: "menu" };
 
@@ -109,15 +110,17 @@ export function Header() {
         <div className="container-x flex items-center justify-between h-16 md:h-20">
           <Link to="/" className="flex items-center gap-2 group" aria-label="AMSTAG home">
             <motion.span
-              whileHover={{ rotate: -8, scale: 1.05 }}
+              whileHover={{ rotate: -6, scale: 1.06 }}
               transition={{ type: "spring", stiffness: 300, damping: 18 }}
-              className={`grid place-items-center w-9 h-9 rounded-lg font-display font-bold transition-colors ${
-                lightMode ? "bg-[var(--ink)] text-white" : "bg-white text-[var(--ink)]"
+              className="inline-flex"
+            >
+              <AmstagLogo size="md" alt="AMSTAG home" />
+            </motion.span>
+            <span
+              className={`font-display text-lg font-bold tracking-tight transition-colors ${
+                lightMode ? "text-[var(--ink)]" : "text-white"
               }`}
             >
-              A
-            </motion.span>
-            <span className={`font-display text-lg font-bold tracking-tight transition-colors ${lightMode ? "text-[var(--ink)]" : "text-white"}`}>
               AMSTAG
             </span>
           </Link>
@@ -251,7 +254,7 @@ export function Header() {
             {/* Top bar */}
             <div className="relative z-[1] flex items-center justify-between h-16 px-5 border-b border-white/10">
               <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-                <span className="grid place-items-center w-9 h-9 rounded-lg bg-gradient-to-br from-[var(--brand)] to-[var(--innovation)] text-white font-display font-bold">A</span>
+                <AmstagLogo size="md" />
                 <span className="font-display text-lg font-bold">AMSTAG</span>
               </Link>
               <button

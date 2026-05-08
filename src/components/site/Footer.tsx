@@ -6,7 +6,6 @@ import {
   Mail,
   Phone,
   MapPin,
-  Zap,
   ArrowUpRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -15,6 +14,7 @@ import { FooterGlow, type FooterGlowSocial } from "@/components/ui/footer-glow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Reveal, StaggerContainer, StaggerItem } from "./motion";
+import { AmstagLogo } from "./AmstagLogo";
 
 const socials: FooterGlowSocial[] = [
   { label: "LinkedIn", href: "https://www.linkedin.com/company/amstag", icon: Linkedin },
@@ -77,7 +77,15 @@ export function Footer() {
             href: "/",
             description:
               "Mission-critical IT infrastructure, cybersecurity, cloud and managed services for India's most demanding enterprises. ACT · ACCELERATE · ACE.",
-            logo: <Zap className="h-5 w-5" strokeWidth={2.5} />,
+            logo: (
+              <img
+                src="/logo.png"
+                alt=""
+                width={28}
+                height={28}
+                className="h-7 w-7 object-contain"
+              />
+            ),
           }}
           columns={columns}
           socials={socials}
@@ -235,11 +243,8 @@ function CompactMobileFooter() {
         <div className="container-x pt-12 pb-6">
           {/* Brand mini-card */}
           <div className="flex items-center gap-3">
-            <motion.span
-              whileTap={{ rotate: -8, scale: 0.95 }}
-              className="grid place-items-center h-10 w-10 rounded-xl bg-gradient-to-br from-[var(--brand)] to-[var(--innovation)] text-white shadow-md"
-            >
-              <Zap className="h-5 w-5" strokeWidth={2.5} />
+            <motion.span whileTap={{ scale: 0.95 }} className="inline-flex">
+              <AmstagLogo size="md" />
             </motion.span>
             <div>
               <div className="font-display text-lg font-bold">AMSTAG</div>

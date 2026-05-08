@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { SiteLoader } from "@/components/site/SiteLoader";
 
 function NotFoundComponent() {
   return (
@@ -95,6 +96,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap",
       },
+      // Favicons + Apple touch icon — all derived from the same logo asset
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "apple-touch-icon", href: "/logo.png" },
+      // Preload the logo so the header / loader display it immediately
+      { rel: "preload", as: "image", href: "/logo.png" },
       {
         rel: "stylesheet",
         href: appCss,
@@ -126,6 +132,8 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      {/* Branded splash overlay — shows once per session over the route */}
+      <SiteLoader />
       <Outlet />
     </QueryClientProvider>
   );
