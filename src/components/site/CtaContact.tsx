@@ -56,7 +56,7 @@ export function CtaContact() {
             <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold text-white text-balance">
               Let's design IT that runs your business — not the other way around.
             </h2>
-            <p className="mt-4 text-white/70 max-w-xl">
+            <p className="mt-4 text-white/85 max-w-xl">
               Tell us about your environment and goals. A senior architect will reach out within one business day.
             </p>
 
@@ -100,27 +100,27 @@ export function CtaContact() {
             <StaggerContainer stagger={0.06} delayChildren={0.2} className="space-y-4">
               <StaggerItem>
                 <Field label="Full name" error={errors.name?.message}>
-                  <Input {...register("name")} placeholder="Jane Doe" className="bg-white/5 border-white/15 text-white placeholder:text-white/40 h-11 focus-visible:ring-[var(--brand)]" />
+                  <Input {...register("name")} placeholder="Jane Doe" className="bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 h-11 focus-visible:ring-[var(--brand)]" />
                 </Field>
               </StaggerItem>
               <StaggerItem>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <Field label="Work email" error={errors.email?.message}>
-                    <Input type="email" {...register("email")} placeholder="jane@company.com" className="bg-white/5 border-white/15 text-white placeholder:text-white/40 h-11 focus-visible:ring-[var(--brand)]" />
+                    <Input type="email" {...register("email")} placeholder="jane@company.com" className="bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 h-11 focus-visible:ring-[var(--brand)]" />
                   </Field>
                   <Field label="Phone" error={errors.phone?.message}>
-                    <Input type="tel" {...register("phone")} placeholder="+91 ..." className="bg-white/5 border-white/15 text-white placeholder:text-white/40 h-11 focus-visible:ring-[var(--brand)]" />
+                    <Input type="tel" {...register("phone")} placeholder="+91 ..." className="bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 h-11 focus-visible:ring-[var(--brand)]" />
                   </Field>
                 </div>
               </StaggerItem>
               <StaggerItem>
                 <Field label="Company" error={errors.company?.message}>
-                  <Input {...register("company")} placeholder="Company name" className="bg-white/5 border-white/15 text-white placeholder:text-white/40 h-11 focus-visible:ring-[var(--brand)]" />
+                  <Input {...register("company")} placeholder="Company name" className="bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 h-11 focus-visible:ring-[var(--brand)]" />
                 </Field>
               </StaggerItem>
               <StaggerItem>
                 <Field label="How can we help?" error={errors.message?.message}>
-                  <Textarea rows={4} {...register("message")} placeholder="Tell us about your environment, goals or compliance needs..." className="bg-white/5 border-white/15 text-white placeholder:text-white/40 focus-visible:ring-[var(--brand)]" />
+                  <Textarea rows={4} {...register("message")} placeholder="Tell us about your environment, goals or compliance needs..." className="bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 focus-visible:ring-[var(--brand)]" />
                 </Field>
               </StaggerItem>
               <StaggerItem>
@@ -156,7 +156,7 @@ export function CtaContact() {
                 Message received. A senior architect will reach out shortly.
               </motion.p>
             )}
-            <p className="mt-3 text-xs text-white/50 text-center">
+            <p className="mt-3 text-xs text-white/65 text-center">
               By submitting, you agree to our privacy policy. We respond within 1 business day.
             </p>
           </motion.form>
@@ -184,7 +184,7 @@ function InfoBlock({ icon, label, children }: { icon: React.ReactNode; label: st
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="text-xs font-medium text-white/70 uppercase tracking-wider">{label}</span>
+      <span className="text-xs font-medium text-white/85 uppercase tracking-wider">{label}</span>
       <div className="mt-1.5">{children}</div>
       {error && (
         <motion.span

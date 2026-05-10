@@ -116,7 +116,7 @@ export function Innovation() {
                 <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
                 <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
                 <span className="h-3 w-3 rounded-full bg-[#28c840]" />
-                <span className="ml-3 inline-flex items-center gap-1.5 text-[11px] text-white/45">
+                <span className="ml-3 inline-flex items-center gap-1.5 text-[11px] text-white/60">
                   <Terminal className="h-3 w-3" /> ops@amstag-noc · zsh
                 </span>
               </div>
@@ -164,7 +164,7 @@ export function Innovation() {
                 </AnimatePresence>
               </div>
               {/* Bottom strip */}
-              <div className="flex items-center justify-between px-4 py-2 border-t border-white/5 bg-white/[0.02] text-[10px] text-white/40">
+              <div className="flex items-center justify-between px-4 py-2 border-t border-white/5 bg-white/[0.02] text-[10px] text-white/55">
                 <span>SOC · NOC · Cloud Ops</span>
                 <span className="inline-flex items-center gap-1.5">
                   <span className="relative flex size-1.5">

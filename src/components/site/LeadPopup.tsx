@@ -180,81 +180,85 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="absolute inset-0 bg-[var(--ink)]/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-[var(--ink)]/75 backdrop-blur-sm"
       />
 
-      {/* Surface — bottom sheet on mobile, centred card on tablet+ */}
+      {/* Surface — bottom sheet on mobile, centred card on tablet+
+          Layout: header (fixed) + scrollable body + sticky footer with CTA.
+          The submit stays on screen even when the soft keyboard pushes
+          content up. */}
       <motion.div
-        // mobile: slide up from bottom
         initial={{ opacity: 0, y: "100%" }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: "100%" }}
-        // override on sm+ to scale-in (no slide)
         transition={{ type: "spring", stiffness: 280, damping: 30 }}
         className="
-          relative z-10 w-full
-          max-h-[92dvh] overflow-hidden
+          relative z-10 w-full flex flex-col
+          max-h-[88dvh] overflow-hidden
           rounded-t-3xl sm:rounded-2xl
           border-t border-white/10 sm:border
           bg-[var(--ink)] text-white
           shadow-[0_-20px_60px_rgba(0,0,0,0.45)] sm:shadow-[0_30px_80px_rgba(0,0,0,0.45)]
-          sm:max-w-md
-          pb-[env(safe-area-inset-bottom)]
+          sm:max-w-md sm:max-h-[88vh]
         "
       >
-        {/* Mobile drag handle (decorative) */}
-        <div className="flex justify-center pt-2.5 sm:hidden" aria-hidden>
-          <span className="block h-1 w-10 rounded-full bg-white/20" />
-        </div>
-
-        {/* Ambient glows */}
+        {/* Ambient glows (clipped by overflow-hidden parent) */}
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute -top-24 -right-20 h-64 w-64 rounded-full bg-[var(--brand)]/35 blur-[80px]"
+          className="pointer-events-none absolute -top-24 -right-20 h-64 w-64 rounded-full bg-[var(--brand)]/40 blur-[80px]"
           animate={{ scale: [1, 1.15, 1], opacity: [0.6, 0.9, 0.6] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute -bottom-24 -left-16 h-56 w-56 rounded-full bg-[var(--innovation)]/30 blur-[80px]"
+          className="pointer-events-none absolute -bottom-24 -left-16 h-56 w-56 rounded-full bg-[var(--innovation)]/35 blur-[80px]"
           animate={{ scale: [1.1, 1, 1.1], opacity: [0.5, 0.8, 0.5] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
         />
-        <div aria-hidden className="absolute inset-0 grid-mesh opacity-30 pointer-events-none" />
+        <div aria-hidden className="absolute inset-0 grid-mesh opacity-25 pointer-events-none" />
 
-        {/* Close button — larger tap target on mobile */}
-        <button
-          aria-label="Close popup"
-          onClick={onClose}
-          className="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full bg-white/5 text-white/70 transition-colors hover:bg-white/10 hover:text-white sm:h-9 sm:w-9 sm:rounded-md sm:bg-transparent"
-        >
-          <X className="h-5 w-5 sm:h-4 sm:w-4" />
-        </button>
+        {/* HEADER (fixed) */}
+        <header className="relative z-[2] shrink-0 px-5 pt-4 pb-3 sm:px-7 sm:pt-6 sm:pb-4 border-b border-white/10">
+          {/* Mobile drag handle (decorative) */}
+          <div className="flex justify-center mb-3 sm:hidden" aria-hidden>
+            <span className="block h-1 w-10 rounded-full bg-white/25" />
+          </div>
 
-        {/* Scrollable body */}
-        <div className="relative z-[1] overflow-y-auto px-5 pt-4 pb-6 sm:px-7 sm:py-7 max-h-[92dvh]">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em] text-[var(--innovation)]">
+          {/* Close button */}
+          <button
+            aria-label="Close popup"
+            onClick={onClose}
+            className="absolute right-3 top-3 sm:top-5 grid h-9 w-9 place-items-center rounded-full bg-white/10 text-white/85 transition-colors hover:bg-white/15 hover:text-white"
+          >
+            <X className="h-4 w-4" />
+          </button>
+
+          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--innovation)]/40 bg-[var(--innovation)]/10 px-3 py-1 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--innovation)]">
             <Sparkles className="h-3 w-3" />
             Free architecture review
           </div>
 
           <h2
             id="lead-popup-title"
-            className="mt-3 font-display text-xl leading-tight text-balance sm:text-2xl md:text-3xl font-bold"
+            className="mt-2.5 font-display text-[1.35rem] leading-[1.15] text-balance sm:text-2xl md:text-[1.65rem] font-bold pr-10"
           >
             Get a 30-min review of your IT estate — on us.
           </h2>
-          <p className="mt-2 text-sm text-white/70 leading-relaxed sm:mt-3">
-            A senior AMSTAG architect walks through your current setup and
-            sends back a one-page resilience + security scorecard. No pitch.
+        </header>
+
+        {/* BODY (scrollable) */}
+        <div className="relative z-[1] flex-1 min-h-0 overflow-y-auto px-5 py-4 sm:px-7 sm:py-5">
+          <p className="text-sm text-white/85 leading-relaxed">
+            A senior architect walks through your setup and sends back a
+            one-page resilience + security scorecard. No pitch.
           </p>
 
           {/* Trust badges row */}
-          <ul className="mt-4 flex flex-wrap gap-2">
+          <ul className="mt-3 flex flex-wrap gap-1.5">
             {trustBadges.map((b) => (
               <li
                 key={b.label}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-white/70"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/8 px-2.5 py-1 text-[11px] text-white/85"
               >
                 <b.icon className="h-3 w-3 text-[var(--innovation)]" />
                 {b.label}
@@ -262,7 +266,12 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
             ))}
           </ul>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-5 space-y-3" noValidate>
+          <form
+            id="lead-popup-form"
+            onSubmit={handleSubmit(onSubmit)}
+            className="mt-5 space-y-3"
+            noValidate
+          >
             <input
               type="text"
               tabIndex={-1}
@@ -277,7 +286,7 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
                 placeholder="Jane Doe"
                 autoComplete="name"
                 inputMode="text"
-                className="h-12 sm:h-11 bg-white/5 border-white/15 text-white placeholder:text-white/40 text-base sm:text-sm"
+                className="h-12 bg-white/[0.07] border-white/20 text-white placeholder:text-white/45 text-base"
               />
             </FormField>
             <FormField label="Work email" error={errors.email?.message}>
@@ -287,7 +296,7 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
                 autoComplete="email"
                 {...register("email")}
                 placeholder="jane@company.com"
-                className="h-12 sm:h-11 bg-white/5 border-white/15 text-white placeholder:text-white/40 text-base sm:text-sm"
+                className="h-12 bg-white/[0.07] border-white/20 text-white placeholder:text-white/45 text-base"
               />
             </FormField>
             <FormField label="Company" error={errors.company?.message}>
@@ -295,37 +304,45 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
                 {...register("company")}
                 placeholder="Company name"
                 autoComplete="organization"
-                className="h-12 sm:h-11 bg-white/5 border-white/15 text-white placeholder:text-white/40 text-base sm:text-sm"
+                className="h-12 bg-white/[0.07] border-white/20 text-white placeholder:text-white/45 text-base"
               />
             </FormField>
-            <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="mt-1 h-12 w-full rounded-lg bg-[var(--brand)] font-medium text-white hover:bg-[var(--brand-hover)] group"
-              >
-                {isSubmitting ? (
-                  <span className="inline-flex items-center">
-                    <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
-                    Booking…
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center">
-                    Book my review
-                    <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                )}
-              </Button>
-            </motion.div>
-            <button
-              type="button"
-              onClick={onClose}
-              className="block w-full py-2 text-center text-xs text-white/50 transition-colors hover:text-white/80"
-            >
-              No thanks — I'm just browsing
-            </button>
           </form>
         </div>
+
+        {/* FOOTER (sticky CTA) */}
+        <footer
+          className="relative z-[2] shrink-0 px-5 pt-3 pb-4 sm:px-7 sm:pt-4 sm:pb-6 border-t border-white/10 bg-[var(--ink)]/80 backdrop-blur-sm"
+          style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
+        >
+          <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+            <Button
+              type="submit"
+              form="lead-popup-form"
+              disabled={isSubmitting}
+              className="h-12 w-full rounded-xl bg-[var(--brand)] font-semibold text-white shadow-[0_8px_24px_rgba(0,102,255,0.45)] hover:bg-[var(--brand-hover)] group"
+            >
+              {isSubmitting ? (
+                <span className="inline-flex items-center">
+                  <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                  Booking your review…
+                </span>
+              ) : (
+                <span className="inline-flex items-center">
+                  Book my free review
+                  <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              )}
+            </Button>
+          </motion.div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="mt-2 block w-full text-center text-xs text-white/65 transition-colors hover:text-white/85"
+          >
+            No thanks — I'm just browsing
+          </button>
+        </footer>
       </motion.div>
     </motion.div>
   );
@@ -342,7 +359,7 @@ function FormField({
 }) {
   return (
     <label className="block">
-      <span className="text-[11px] sm:text-xs font-medium uppercase tracking-wider text-white/70">{label}</span>
+      <span className="text-[11px] sm:text-xs font-medium uppercase tracking-wider text-white/85">{label}</span>
       <div className="mt-1.5">{children}</div>
       {error && (
         <motion.span

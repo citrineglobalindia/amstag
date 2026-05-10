@@ -110,7 +110,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
           <h2 className="mt-3 font-display text-2xl md:text-4xl font-bold leading-tight text-balance">
             Talk to a senior {service.shortLabel} architect.
           </h2>
-          <p className="mt-3 text-sm md:text-base text-white/70 leading-relaxed">
+          <p className="mt-3 text-sm md:text-base text-white/85 leading-relaxed">
             We route enquiries by speciality — your message lands directly with
             the team that runs {service.shortLabel} engagements at AMSTAG.
             Most replies go out within hours.
@@ -148,7 +148,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
             {REASSURANCE.map((r) => (
               <span
                 key={r.label}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-white/75"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.07] px-3 py-1.5 text-[11px] text-white/90"
               >
                 <r.icon className={`h-3 w-3 ${tone.text}`} />
                 {r.label}
@@ -173,7 +173,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
                 <service.icon className="h-5 w-5" strokeWidth={1.8} />
               </span>
               <div>
-                <div className="text-[10px] font-mono uppercase tracking-widest text-white/50">Enquiring about</div>
+                <div className="text-[10px] font-mono uppercase tracking-widest text-white/65">Enquiring about</div>
                 <div className="font-display text-base font-semibold">{service.title}</div>
               </div>
             </div>
@@ -188,7 +188,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
                     defaultValue=""
                     render={({ field }) => (
                       <div>
-                        <span className="text-[11px] sm:text-xs font-medium uppercase tracking-wider text-white/70">
+                        <span className="text-[11px] sm:text-xs font-medium uppercase tracking-wider text-white/85">
                           {q.label}
                         </span>
                         <div className="mt-2 flex flex-wrap gap-1.5">
@@ -203,7 +203,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
                                 className={`px-3 py-1.5 rounded-full border text-xs transition-colors ${
                                   selected
                                     ? `${tone.chipBorder} bg-white/10 text-white`
-                                    : "border-white/10 bg-white/[0.03] text-white/70 hover:bg-white/[0.06]"
+                                    : "border-white/15 bg-white/[0.06] text-white/85 hover:bg-white/[0.10]"
                                 }`}
                               >
                                 {opt}
@@ -224,7 +224,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
                     {...register("name")}
                     placeholder="Jane Doe"
                     autoComplete="name"
-                    className="h-12 sm:h-11 bg-white/5 border-white/15 text-white placeholder:text-white/40 text-base sm:text-sm"
+                    className="h-12 sm:h-11 bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 text-base sm:text-sm"
                   />
                 </Field>
               </StaggerItem>
@@ -237,7 +237,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
                       autoComplete="email"
                       {...register("email")}
                       placeholder="jane@company.com"
-                      className="h-12 sm:h-11 bg-white/5 border-white/15 text-white placeholder:text-white/40 text-base sm:text-sm"
+                      className="h-12 sm:h-11 bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 text-base sm:text-sm"
                     />
                   </Field>
                   <Field label="Phone" error={errors.phone?.message}>
@@ -246,7 +246,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
                       inputMode="tel"
                       {...register("phone")}
                       placeholder="+91 ..."
-                      className="h-12 sm:h-11 bg-white/5 border-white/15 text-white placeholder:text-white/40 text-base sm:text-sm"
+                      className="h-12 sm:h-11 bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 text-base sm:text-sm"
                     />
                   </Field>
                 </div>
@@ -257,7 +257,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
                     {...register("company")}
                     placeholder="Company name"
                     autoComplete="organization"
-                    className="h-12 sm:h-11 bg-white/5 border-white/15 text-white placeholder:text-white/40 text-base sm:text-sm"
+                    className="h-12 sm:h-11 bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 text-base sm:text-sm"
                   />
                 </Field>
               </StaggerItem>
@@ -267,7 +267,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
                     rows={4}
                     {...register("message")}
                     placeholder={`Briefly: where you are with ${service.shortLabel}, the outcomes you need, timelines…`}
-                    className="bg-white/5 border-white/15 text-white placeholder:text-white/40 text-base sm:text-sm"
+                    className="bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 text-base sm:text-sm"
                   />
                 </Field>
               </StaggerItem>
@@ -306,7 +306,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
                 Enquiry received. A senior {service.shortLabel} architect will reach out shortly.
               </motion.p>
             )}
-            <p className="mt-3 text-[11px] text-white/50 text-center">
+            <p className="mt-3 text-[11px] text-white/65 text-center">
               By submitting, you agree to our privacy policy. We respond within 1 business day.
             </p>
           </motion.form>
@@ -346,9 +346,9 @@ function QuickAction({
       </span>
       <span className="flex-1 min-w-0">
         <span className="block text-sm font-semibold text-white">{label}</span>
-        <span className="block text-[11px] text-white/55 truncate">{sub}</span>
+        <span className="block text-[11px] text-white/70 truncate">{sub}</span>
       </span>
-      <ArrowRight className="h-4 w-4 text-white/40 transition-transform group-hover:translate-x-1" />
+      <ArrowRight className="h-4 w-4 text-white/55 transition-transform group-hover:translate-x-1" />
     </motion.a>
   );
 }

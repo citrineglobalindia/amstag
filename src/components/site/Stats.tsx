@@ -156,7 +156,7 @@ function StatCard({ stat, index }: { stat: Stat; index: number }) {
           <h3 className="mt-2 font-display text-sm md:text-base font-semibold text-[var(--ink)] leading-tight">
             {stat.label}
           </h3>
-          <p className="mt-1 text-[11px] md:text-xs text-foreground/60 leading-snug">{stat.sub}</p>
+          <p className="mt-1 text-[11px] md:text-xs text-foreground/75 leading-snug">{stat.sub}</p>
         </div>
       </div>
     </motion.div>

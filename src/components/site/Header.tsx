@@ -364,7 +364,7 @@ export function Header() {
                         className="flex items-center justify-between px-4 py-4 text-lg font-display font-semibold text-white border-b border-white/5 active:bg-white/5"
                       >
                         <span>{n.label}</span>
-                        <ArrowUpRight className="h-4 w-4 text-white/40" />
+                        <ArrowUpRight className="h-4 w-4 text-white/55" />
                       </Link>
                     </motion.div>
                   );

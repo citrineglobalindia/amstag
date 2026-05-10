@@ -123,7 +123,7 @@ export function Footer() {
                 <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[var(--innovation)]">
                   <MapPin className="h-4 w-4" /> Bangalore HQ
                 </div>
-                <p className="mt-2 text-sm text-white/70 leading-relaxed">
+                <p className="mt-2 text-sm text-white/85 leading-relaxed">
                   217, 8th Cross, BHEL Layout, II Stage,
                   <br />
                   Pattanagere, R.R. Nagar, Bangalore 560098
@@ -165,7 +165,7 @@ export function Footer() {
                 <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[var(--innovation)]">
                   <Mail className="h-4 w-4" /> Quarterly insights
                 </div>
-                <p className="mt-2 text-xs text-white/60">
+                <p className="mt-2 text-xs text-white/75">
                   For IT leaders. No spam — unsubscribe any time.
                 </p>
                 <form onSubmit={(e) => e.preventDefault()} className="mt-3 flex gap-2">
@@ -173,7 +173,7 @@ export function Footer() {
                     type="email"
                     required
                     placeholder="you@company.com"
-                    className="bg-white/5 border-white/15 text-white placeholder:text-white/40 h-10"
+                    className="bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 h-10"
                   />
                   <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.92 }}>
                     <Button
@@ -194,7 +194,7 @@ export function Footer() {
 
       {/* Bottom legal bar — shared across both layouts */}
       <div className="border-t border-white/10 relative z-10">
-        <div className="container-x py-4 md:py-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-[11px] md:text-xs text-white/50">
+        <div className="container-x py-4 md:py-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-[11px] md:text-xs text-white/65">
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1">
             <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5">
               ISO 27001
@@ -222,7 +222,7 @@ export function Footer() {
 
         {/* Stepstones credit row */}
         <div className="border-t border-white/5">
-          <div className="container-x py-3 text-center text-[11px] text-white/45">
+          <div className="container-x py-3 text-center text-[11px] text-white/60">
             Designed and developed by{" "}
             <motion.a
               href="https://stepstones.in"
@@ -269,7 +269,7 @@ function CompactMobileFooter() {
             </div>
           </div>
 
-          <p className="mt-4 text-sm text-white/65 leading-relaxed">
+          <p className="mt-4 text-sm text-white/80 leading-relaxed">
             Mission-critical IT, engineered for India's enterprises.
           </p>
 
@@ -356,7 +356,7 @@ function CompactMobileFooter() {
                             <li key={l.label}>
                               <Link
                                 to={l.href}
-                                className="block py-1 text-sm text-white/70 active:text-white"
+                                className="block py-1 text-sm text-white/85 active:text-white"
                               >
                                 {l.label}
                               </Link>
@@ -384,7 +384,7 @@ function CompactMobileFooter() {
                 type="email"
                 required
                 placeholder="you@company.com"
-                className="bg-white/5 border-white/15 text-white placeholder:text-white/40 h-10 text-base"
+                className="bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 h-10 text-base"
               />
               <Button
                 type="submit"
@@ -415,7 +415,7 @@ function CompactMobileFooter() {
             ))}
           </div>
 
-          <p className="mt-5 text-center text-[11px] text-white/45">
+          <p className="mt-5 text-center text-[11px] text-white/60">
             &copy; {new Date().getFullYear()} AMSTAG Tech Pvt. Ltd.
           </p>
         </div>

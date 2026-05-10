@@ -76,12 +76,12 @@ export function CaseStudies() {
                   <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--innovation)]">
                     Featured · {featured.industry}
                   </span>
-                  <ArrowUpRight className="h-4 w-4 text-white/40 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  <ArrowUpRight className="h-4 w-4 text-white/55 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </div>
                 <h3 className="relative mt-4 font-display text-2xl md:text-3xl font-bold text-white text-balance">
                   {featured.title}
                 </h3>
-                <p className="relative mt-2 text-sm text-white/60">{featured.client}</p>
+                <p className="relative mt-2 text-sm text-white/75">{featured.client}</p>
                 <p className="relative mt-4 text-base text-white/80 leading-relaxed max-w-2xl">
                   {featured.body}
                 </p>
@@ -90,7 +90,7 @@ export function CaseStudies() {
                     <div key={m.label}>
                       <m.icon className="h-4 w-4 text-[var(--innovation)]" />
                       <dd className="mt-2 font-mono text-base md:text-lg font-bold text-white">{m.value}</dd>
-                      <dt className="text-[10px] uppercase tracking-widest text-white/45">{m.label}</dt>
+                      <dt className="text-[10px] uppercase tracking-widest text-white/65">{m.label}</dt>
                     </div>
                   ))}
                 </dl>
@@ -112,12 +112,12 @@ export function CaseStudies() {
                       <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--innovation)]">
                         {t.industry}
                       </span>
-                      <ArrowUpRight className="h-3.5 w-3.5 text-white/40 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                      <ArrowUpRight className="h-3.5 w-3.5 text-white/55 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                     </div>
                     <h4 className="mt-2 font-display text-base font-semibold text-white text-balance">
                       {t.title}
                     </h4>
-                    <div className="mt-2 inline-block text-xs font-mono text-white/55">{t.metric}</div>
+                    <div className="mt-2 inline-block text-xs font-mono text-white/70">{t.metric}</div>
                   </motion.article>
                 </Link>
               </StaggerItem>

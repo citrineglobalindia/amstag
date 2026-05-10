@@ -110,7 +110,7 @@ export function EngagementModels() {
         </StaggerContainer>
 
         <Reveal delay={0.2}>
-          <p className="mt-10 text-center text-sm text-foreground/60">
+          <p className="mt-10 text-center text-sm text-foreground/75">
             Not sure which fits?{" "}
             <Link to="/contact" className="text-[var(--brand)] hover:underline">
               Talk to a senior architect
@@ -157,13 +157,13 @@ function TierCard({ tier }: { tier: Tier }) {
       </div>
 
       <h3 className="mt-5 font-display text-xl font-bold text-[var(--ink)]">{tier.name}</h3>
-      <p className="mt-1 text-sm text-foreground/65">{tier.tagline}</p>
+      <p className="mt-1 text-sm text-foreground/80">{tier.tagline}</p>
 
       <div className="mt-5 rounded-lg bg-[var(--surface)] border border-border px-3 py-2.5">
         <span className="text-[10px] font-mono uppercase tracking-widest text-foreground/50">
           Best for
         </span>
-        <p className="mt-0.5 text-xs text-foreground/75 leading-relaxed">{tier.bestFor}</p>
+        <p className="mt-0.5 text-xs text-foreground/85 leading-relaxed">{tier.bestFor}</p>
       </div>
 
       <ul className="mt-5 space-y-2.5">
