@@ -1,20 +1,20 @@
-// LeadPopup — adaptive lead-capture surface.
+// LeadPopup — service-aware lead capture surface.
 //
-// On mobile (< 640px) it's a bottom sheet that slides up from the safe-area
-// edge — fills the width of the viewport, has a drag handle, and never
-// overflows the screen because the form column scrolls internally.
-// On tablet+ it's a centred modal card with the same content.
+// Surfaces three things in a tight, scrollable card:
+//   1. A short prompt ("What can we help with?")
+//   2. A service picker — 8 colour-coded tiles drawn from the SERVICES
+//      catalogue. The selected tile becomes the "I want to talk about ___"
+//      context that's submitted with the lead.
+//   3. A compact 3-field form (name + work email + phone) with a sticky CTA
+//      so the submit button never scrolls off, even when the soft keyboard
+//      pushes content up on mobile.
 //
-// Triggers: dwell timer (delayMs prop, default 25s) OR exit-intent.
+// Layout: bottom sheet on mobile, centred card on tablet+. Three regions:
+// fixed header, scrollable body, sticky footer.
 //
-// Dismissal model:
-//   - SUBMITTED → localStorage 30-day cooldown (don't bother fresh leads)
-//   - DISMISSED → sessionStorage only (resets per browser session, so
-//     visitors get another chance on a fresh visit)
-//
-// Storage keys are version-suffixed; bumping invalidates older entries
-// without us having to write any migration logic.
-import { useEffect, useRef, useState } from "react";
+// Dismissal model: SUBMITTED → 30-day localStorage cooldown.
+//                  DISMISSED → sessionStorage only (resets per browser tab).
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -23,25 +23,25 @@ import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles, X } from "lucide-react
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SERVICES, type Service } from "@/lib/services";
 
-const SUBMITTED_KEY = "amstag.leadPopup.submitted.v2";
-const DISMISSED_KEY = "amstag.leadPopup.dismissed.v2";
+const SUBMITTED_KEY = "amstag.leadPopup.submitted.v3";
+const DISMISSED_KEY = "amstag.leadPopup.dismissed.v3";
 const SUBMISSION_COOLDOWN_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
-// Default dwell delay (used on secondary pages); home page overrides via prop.
 const APPEAR_DELAY_MS = 25_000;
 
 const schema = z.object({
+  service: z.string().min(1, "Pick a service first"),
   name: z.string().trim().min(2, "Enter your name").max(100),
   email: z.string().trim().email("Enter a valid work email").max(255),
-  company: z.string().trim().min(2, "Enter your company").max(150),
+  phone: z.string().trim().min(7, "Enter a valid phone").max(20),
   website: z.string().max(0).optional(), // honeypot
 });
 type FormData = z.infer<typeof schema>;
 
 function shouldShow(): boolean {
   if (typeof window === "undefined") return false;
-  // Check submission cooldown (localStorage, 30-day TTL)
   try {
     const raw = window.localStorage.getItem(SUBMITTED_KEY);
     if (raw) {
@@ -49,17 +49,15 @@ function shouldShow(): boolean {
       if (parsed?.submittedAt && Date.now() - parsed.submittedAt < SUBMISSION_COOLDOWN_MS) {
         return false;
       }
-      // Cooldown elapsed → drop the entry
       window.localStorage.removeItem(SUBMITTED_KEY);
     }
   } catch {
-    // ignore
+    /* ignore */
   }
-  // Check session dismissal (resets when browser tab closes)
   try {
     if (window.sessionStorage.getItem(DISMISSED_KEY)) return false;
   } catch {
-    // ignore
+    /* ignore */
   }
   return true;
 }
@@ -69,19 +67,19 @@ function recordDismissed(): void {
   try {
     window.sessionStorage.setItem(DISMISSED_KEY, String(Date.now()));
   } catch {
-    // ignore privacy mode
+    /* ignore */
   }
 }
 
-function recordSubmitted(email: string): void {
+function recordSubmitted(payload: { email: string; service: string }): void {
   if (typeof window === "undefined") return;
   try {
     window.localStorage.setItem(
       SUBMITTED_KEY,
-      JSON.stringify({ submittedAt: Date.now(), email })
+      JSON.stringify({ submittedAt: Date.now(), ...payload })
     );
   } catch {
-    // ignore
+    /* ignore */
   }
 }
 
@@ -119,7 +117,7 @@ export function LeadPopup({ delayMs }: { delayMs?: number } = {}) {
     recordDismissed();
   };
 
-  // Lock background scroll while open so the body doesn't peek past the sheet
+  // Lock background scroll while open
   useEffect(() => {
     if (!open) return;
     const original = document.body.style.overflow;
@@ -143,22 +141,38 @@ export function LeadPopup({ delayMs }: { delayMs?: number } = {}) {
   return <AnimatePresence>{open && <LeadPopupSurface onClose={close} />}</AnimatePresence>;
 }
 
-const trustBadges = [
-  { icon: ShieldCheck, label: "ISO 27001" },
-  { icon: CheckCircle2, label: "No commitment" },
-  { icon: Sparkles, label: "30 minutes" },
-];
-
 function LeadPopupSurface({ onClose }: { onClose: () => void }) {
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
+  const [serviceSlug, setServiceSlug] = useState<string>("");
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: { service: "" },
   });
+
+  const onPickService = (slug: string) => {
+    setServiceSlug(slug);
+    setValue("service", slug, { shouldValidate: true });
+  };
+
+  const selected = useMemo<Service | undefined>(
+    () => SERVICES.find((s) => s.slug === serviceSlug),
+    [serviceSlug]
+  );
 
   const onSubmit = async (data: FormData) => {
     if (data.website) return;
     await new Promise((r) => setTimeout(r, 600));
-    recordSubmitted(data.email);
-    toast.success("Got it — a senior architect will reach out within one business day.");
+    recordSubmitted({ email: data.email, service: data.service });
+    toast.success(
+      `Thanks — a senior ${selected?.shortLabel ?? "AMSTAG"} architect will reach out within one business day.`
+    );
+    reset();
     onClose();
   };
 
@@ -183,10 +197,7 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
         className="absolute inset-0 bg-[var(--ink)]/75 backdrop-blur-sm"
       />
 
-      {/* Surface — bottom sheet on mobile, centred card on tablet+
-          Layout: header (fixed) + scrollable body + sticky footer with CTA.
-          The submit stays on screen even when the soft keyboard pushes
-          content up. */}
+      {/* Surface */}
       <motion.div
         initial={{ opacity: 0, y: "100%" }}
         animate={{ opacity: 1, y: 0 }}
@@ -199,10 +210,10 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
           border-t border-white/10 sm:border
           bg-[var(--ink)] text-white
           shadow-[0_-20px_60px_rgba(0,0,0,0.45)] sm:shadow-[0_30px_80px_rgba(0,0,0,0.45)]
-          sm:max-w-md sm:max-h-[88vh]
+          sm:max-w-lg sm:max-h-[88vh]
         "
       >
-        {/* Ambient glows (clipped by overflow-hidden parent) */}
+        {/* Ambient glows */}
         <motion.div
           aria-hidden
           className="pointer-events-none absolute -top-24 -right-20 h-64 w-64 rounded-full bg-[var(--brand)]/40 blur-[80px]"
@@ -219,12 +230,10 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
 
         {/* HEADER (fixed) */}
         <header className="relative z-[2] shrink-0 px-5 pt-4 pb-3 sm:px-7 sm:pt-6 sm:pb-4 border-b border-white/10">
-          {/* Mobile drag handle (decorative) */}
           <div className="flex justify-center mb-3 sm:hidden" aria-hidden>
             <span className="block h-1 w-10 rounded-full bg-white/25" />
           </div>
 
-          {/* Close button */}
           <button
             aria-label="Close popup"
             onClick={onClose}
@@ -233,45 +242,73 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
             <X className="h-4 w-4" />
           </button>
 
-          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--innovation)]/40 bg-[var(--innovation)]/10 px-3 py-1 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--innovation)]">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-[var(--innovation)]/40 bg-[var(--innovation)]/10 px-2.5 py-1 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--innovation)]">
             <Sparkles className="h-3 w-3" />
-            Free architecture review
+            Talk to an architect
           </div>
 
           <h2
             id="lead-popup-title"
-            className="mt-2.5 font-display text-[1.35rem] leading-[1.15] text-balance sm:text-2xl md:text-[1.65rem] font-bold pr-10"
+            className="mt-2.5 font-display text-[1.25rem] sm:text-2xl leading-[1.15] font-bold pr-10"
           >
-            Get a 30-min review of your IT estate — on us.
+            What can we help with?
           </h2>
         </header>
 
         {/* BODY (scrollable) */}
         <div className="relative z-[1] flex-1 min-h-0 overflow-y-auto px-5 py-4 sm:px-7 sm:py-5">
-          <p className="text-sm text-white/85 leading-relaxed">
-            A senior architect walks through your setup and sends back a
-            one-page resilience + security scorecard. No pitch.
-          </p>
-
-          {/* Trust badges row */}
-          <ul className="mt-3 flex flex-wrap gap-1.5">
-            {trustBadges.map((b) => (
-              <li
-                key={b.label}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/8 px-2.5 py-1 text-[11px] text-white/85"
+          {/* Service picker — 8 colour-coded tiles in 4×2 grid (4-col on
+              desktop, 2-col on mobile for thumb reach) */}
+          <div>
+            <ServicePicker selectedSlug={serviceSlug} onPick={onPickService} />
+            {errors.service && (
+              <motion.span
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-2 block text-xs text-red-300"
               >
-                <b.icon className="h-3 w-3 text-[var(--innovation)]" />
-                {b.label}
-              </li>
-            ))}
-          </ul>
+                {errors.service.message}
+              </motion.span>
+            )}
+          </div>
 
+          {/* Selected service banner — appears when a tile is picked */}
+          <AnimatePresence>
+            {selected && (
+              <motion.div
+                key={selected.slug}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="mt-4 flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/[0.06] px-3 py-2.5"
+              >
+                <span
+                  className={`grid place-items-center h-8 w-8 rounded-lg border bg-gradient-to-br ${selected.tone.gradient} ${selected.tone.chipBorder} text-white shrink-0`}
+                >
+                  <selected.icon className="h-4 w-4" strokeWidth={1.8} />
+                </span>
+                <div className="min-w-0">
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-[var(--innovation)]">
+                    Talking about
+                  </div>
+                  <div className="font-display text-sm font-semibold truncate">
+                    {selected.title}
+                  </div>
+                </div>
+                <CheckCircle2 className="ml-auto h-4 w-4 text-[var(--innovation)] shrink-0" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Compact form */}
           <form
             id="lead-popup-form"
             onSubmit={handleSubmit(onSubmit)}
             className="mt-5 space-y-3"
             noValidate
           >
+            {/* Honeypot + hidden service field for RHF */}
             <input
               type="text"
               tabIndex={-1}
@@ -280,15 +317,27 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
               className="hidden"
               aria-hidden
             />
-            <FormField label="Full name" error={errors.name?.message}>
-              <Input
-                {...register("name")}
-                placeholder="Jane Doe"
-                autoComplete="name"
-                inputMode="text"
-                className="h-12 bg-white/[0.07] border-white/20 text-white placeholder:text-white/45 text-base"
-              />
-            </FormField>
+            <input type="hidden" {...register("service")} />
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <FormField label="Full name" error={errors.name?.message}>
+                <Input
+                  {...register("name")}
+                  placeholder="Jane Doe"
+                  autoComplete="name"
+                  className="h-12 bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 text-base"
+                />
+              </FormField>
+              <FormField label="Phone" error={errors.phone?.message}>
+                <Input
+                  type="tel"
+                  inputMode="tel"
+                  {...register("phone")}
+                  placeholder="+91 ..."
+                  className="h-12 bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 text-base"
+                />
+              </FormField>
+            </div>
             <FormField label="Work email" error={errors.email?.message}>
               <Input
                 type="email"
@@ -296,17 +345,25 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
                 autoComplete="email"
                 {...register("email")}
                 placeholder="jane@company.com"
-                className="h-12 bg-white/[0.07] border-white/20 text-white placeholder:text-white/45 text-base"
+                className="h-12 bg-white/[0.07] border-white/20 text-white placeholder:text-white/55 text-base"
               />
             </FormField>
-            <FormField label="Company" error={errors.company?.message}>
-              <Input
-                {...register("company")}
-                placeholder="Company name"
-                autoComplete="organization"
-                className="h-12 bg-white/[0.07] border-white/20 text-white placeholder:text-white/45 text-base"
-              />
-            </FormField>
+
+            {/* Trust micro-row */}
+            <ul className="pt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-white/65">
+              <li className="inline-flex items-center gap-1">
+                <ShieldCheck className="h-3 w-3 text-[var(--innovation)]" />
+                ISO 27001
+              </li>
+              <li className="inline-flex items-center gap-1">
+                <CheckCircle2 className="h-3 w-3 text-[var(--innovation)]" />
+                1-day reply
+              </li>
+              <li className="inline-flex items-center gap-1">
+                <Sparkles className="h-3 w-3 text-[var(--innovation)]" />
+                No commitment
+              </li>
+            </ul>
           </form>
         </div>
 
@@ -325,11 +382,13 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
               {isSubmitting ? (
                 <span className="inline-flex items-center">
                   <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
-                  Booking your review…
+                  Sending…
                 </span>
               ) : (
                 <span className="inline-flex items-center">
-                  Book my free review
+                  {selected
+                    ? `Send ${selected.shortLabel} enquiry`
+                    : "Send enquiry"}
                   <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
               )}
@@ -348,6 +407,100 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
   );
 }
 
+/* ───────────────────── ServicePicker ───────────────────── */
+
+function ServicePicker({
+  selectedSlug,
+  onPick,
+}: {
+  selectedSlug: string;
+  onPick: (slug: string) => void;
+}) {
+  return (
+    <div
+      role="radiogroup"
+      aria-label="Pick a service"
+      className="grid grid-cols-2 sm:grid-cols-4 gap-2"
+    >
+      {SERVICES.map((s, i) => (
+        <ServiceTile
+          key={s.slug}
+          service={s}
+          selected={selectedSlug === s.slug}
+          onPick={() => onPick(s.slug)}
+          delay={i * 0.03}
+        />
+      ))}
+    </div>
+  );
+}
+
+function ServiceTile({
+  service,
+  selected,
+  onPick,
+  delay,
+}: {
+  service: Service;
+  selected: boolean;
+  onPick: () => void;
+  delay: number;
+}) {
+  const Icon = service.icon;
+  return (
+    <motion.button
+      type="button"
+      role="radio"
+      aria-checked={selected}
+      onClick={onPick}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, delay }}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.97 }}
+      className={`relative group flex flex-col items-start gap-2 rounded-xl border px-3 py-2.5 text-left transition-colors overflow-hidden ${
+        selected
+          ? `bg-gradient-to-br ${service.tone.gradient} ${service.tone.chipBorder}`
+          : "border-white/10 bg-white/[0.04] hover:bg-white/[0.08]"
+      }`}
+    >
+      {/* Tone-tinted glow on hover for unselected tiles */}
+      {!selected && (
+        <span
+          aria-hidden
+          className={`pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br ${service.tone.gradient}`}
+        />
+      )}
+      <span
+        className={`relative grid place-items-center h-8 w-8 rounded-lg border bg-white/[0.08] ${
+          selected ? "border-white/20" : "border-white/10"
+        } text-white`}
+      >
+        <Icon className="h-4 w-4" strokeWidth={1.8} />
+      </span>
+      <span
+        className={`relative text-xs font-medium ${
+          selected ? "text-white" : "text-white/85"
+        }`}
+      >
+        {service.shortLabel}
+      </span>
+      {/* Selected-state corner check */}
+      {selected && (
+        <motion.span
+          aria-hidden
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 320, damping: 14 }}
+          className="absolute top-1.5 right-1.5 grid h-5 w-5 place-items-center rounded-full bg-[var(--innovation)] text-[var(--ink)]"
+        >
+          <CheckCircle2 className="h-3 w-3" strokeWidth={3} />
+        </motion.span>
+      )}
+    </motion.button>
+  );
+}
+
 function FormField({
   label,
   error,
@@ -359,7 +512,9 @@ function FormField({
 }) {
   return (
     <label className="block">
-      <span className="text-[11px] sm:text-xs font-medium uppercase tracking-wider text-white/85">{label}</span>
+      <span className="text-[11px] sm:text-xs font-medium uppercase tracking-wider text-white/85">
+        {label}
+      </span>
       <div className="mt-1.5">{children}</div>
       {error && (
         <motion.span
