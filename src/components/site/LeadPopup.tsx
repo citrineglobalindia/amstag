@@ -14,12 +14,20 @@
 //
 // Dismissal model: SUBMITTED → 30-day localStorage cooldown.
 //                  DISMISSED → sessionStorage only (resets per browser tab).
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles, X } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  CheckCircle2,
+  ChevronDown,
+  ShieldCheck,
+  Sparkles,
+  X,
+} from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -251,55 +259,18 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
             id="lead-popup-title"
             className="mt-2.5 font-display text-[1.25rem] sm:text-2xl leading-[1.15] font-bold pr-10"
           >
-            What can we help with?
+            Get a senior architect on the call.
           </h2>
         </header>
 
         {/* BODY (scrollable) */}
         <div className="relative z-[1] flex-1 min-h-0 overflow-y-auto px-5 py-4 sm:px-7 sm:py-5">
-          {/* Service picker — 8 colour-coded tiles in 4×2 grid (4-col on
-              desktop, 2-col on mobile for thumb reach) */}
-          <div>
-            <ServicePicker selectedSlug={serviceSlug} onPick={onPickService} />
-            {errors.service && (
-              <motion.span
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-2 block text-xs text-red-300"
-              >
-                {errors.service.message}
-              </motion.span>
-            )}
-          </div>
-
-          {/* Selected service banner — appears when a tile is picked */}
-          <AnimatePresence>
-            {selected && (
-              <motion.div
-                key={selected.slug}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="mt-4 flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/[0.06] px-3 py-2.5"
-              >
-                <span
-                  className={`grid place-items-center h-8 w-8 rounded-lg border bg-gradient-to-br ${selected.tone.gradient} ${selected.tone.chipBorder} text-white shrink-0`}
-                >
-                  <selected.icon className="h-4 w-4" strokeWidth={1.8} />
-                </span>
-                <div className="min-w-0">
-                  <div className="text-[10px] font-mono uppercase tracking-widest text-[var(--innovation)]">
-                    Talking about
-                  </div>
-                  <div className="font-display text-sm font-semibold truncate">
-                    {selected.title}
-                  </div>
-                </div>
-                <CheckCircle2 className="ml-auto h-4 w-4 text-[var(--innovation)] shrink-0" />
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {/* Service dropdown — custom select with icon + tagline per option.
+              Replaces the previous 8-tile grid; saves vertical space and is
+              easier to scan on mobile. */}
+          <FormField label="What can we help with?" error={errors.service?.message}>
+            <ServiceSelect selectedSlug={serviceSlug} onPick={onPickService} />
+          </FormField>
 
           {/* Compact form */}
           <form
@@ -407,97 +378,147 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
   );
 }
 
-/* ───────────────────── ServicePicker ───────────────────── */
+/* ───────────────────── ServiceSelect ─────────────────────
+ * Custom dropdown — semantically a button + listbox so keyboard users get
+ * Enter/Escape/click-outside, and so we can render the selected service
+ * with its icon + tone gradient (a native <select> can't show inline
+ * artwork). Each option in the open panel shows the service icon,
+ * short label, and tagline.
+ */
 
-function ServicePicker({
+function ServiceSelect({
   selectedSlug,
   onPick,
 }: {
   selectedSlug: string;
   onPick: (slug: string) => void;
 }) {
-  return (
-    <div
-      role="radiogroup"
-      aria-label="Pick a service"
-      className="grid grid-cols-2 sm:grid-cols-4 gap-2"
-    >
-      {SERVICES.map((s, i) => (
-        <ServiceTile
-          key={s.slug}
-          service={s}
-          selected={selectedSlug === s.slug}
-          onPick={() => onPick(s.slug)}
-          delay={i * 0.03}
-        />
-      ))}
-    </div>
-  );
-}
+  const [open, setOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const listboxId = useId();
 
-function ServiceTile({
-  service,
-  selected,
-  onPick,
-  delay,
-}: {
-  service: Service;
-  selected: boolean;
-  onPick: () => void;
-  delay: number;
-}) {
-  const Icon = service.icon;
+  const selected = SERVICES.find((s) => s.slug === selectedSlug);
+
+  // Close on outside click + Escape
+  useEffect(() => {
+    if (!open) return;
+    const onPointer = (e: PointerEvent) => {
+      if (!wrapperRef.current) return;
+      if (wrapperRef.current.contains(e.target as Node)) return;
+      setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    // Defer attaching pointer listener so the click that opened us
+    // doesn't immediately close.
+    const t = window.setTimeout(() => document.addEventListener("pointerdown", onPointer), 0);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      window.clearTimeout(t);
+      document.removeEventListener("pointerdown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   return (
-    <motion.button
-      type="button"
-      role="radio"
-      aria-checked={selected}
-      onClick={onPick}
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25, delay }}
-      whileHover={{ y: -2 }}
-      whileTap={{ scale: 0.97 }}
-      className={`relative group flex flex-col items-start gap-2 rounded-xl border px-3 py-2.5 text-left transition-colors overflow-hidden ${
-        selected
-          ? `bg-gradient-to-br ${service.tone.gradient} ${service.tone.chipBorder}`
-          : "border-white/10 bg-white/[0.04] hover:bg-white/[0.08]"
-      }`}
-    >
-      {/* Tone-tinted glow on hover for unselected tiles */}
-      {!selected && (
-        <span
-          aria-hidden
-          className={`pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br ${service.tone.gradient}`}
-        />
-      )}
-      <span
-        className={`relative grid place-items-center h-8 w-8 rounded-lg border bg-white/[0.08] ${
-          selected ? "border-white/20" : "border-white/10"
-        } text-white`}
-      >
-        <Icon className="h-4 w-4" strokeWidth={1.8} />
-      </span>
-      <span
-        className={`relative text-xs font-medium ${
-          selected ? "text-white" : "text-white/85"
+    <div ref={wrapperRef} className="relative">
+      {/* Trigger */}
+      <button
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={listboxId}
+        onClick={() => setOpen((v) => !v)}
+        className={`group w-full h-12 flex items-center gap-2.5 rounded-md border px-3 text-left transition-colors ${
+          open
+            ? "border-[var(--innovation)] bg-white/[0.10]"
+            : "border-white/20 bg-white/[0.07] hover:bg-white/[0.10]"
         }`}
       >
-        {service.shortLabel}
-      </span>
-      {/* Selected-state corner check */}
-      {selected && (
+        {selected ? (
+          <>
+            <span
+              className={`grid place-items-center h-8 w-8 rounded-lg border bg-gradient-to-br ${selected.tone.gradient} ${selected.tone.chipBorder} text-white shrink-0`}
+            >
+              <selected.icon className="h-4 w-4" strokeWidth={1.8} />
+            </span>
+            <span className="flex-1 min-w-0">
+              <span className="block text-base font-medium text-white truncate leading-tight">
+                {selected.title}
+              </span>
+              <span className="block text-[11px] text-white/65 truncate leading-tight">
+                {selected.tagline}
+              </span>
+            </span>
+          </>
+        ) : (
+          <span className="flex-1 text-base text-white/55">Select a service…</span>
+        )}
         <motion.span
           aria-hidden
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 320, damping: 14 }}
-          className="absolute top-1.5 right-1.5 grid h-5 w-5 place-items-center rounded-full bg-[var(--innovation)] text-[var(--ink)]"
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="grid h-6 w-6 shrink-0 place-items-center rounded-md text-white/65"
         >
-          <CheckCircle2 className="h-3 w-3" strokeWidth={3} />
+          <ChevronDown className="h-4 w-4" />
         </motion.span>
-      )}
-    </motion.button>
+      </button>
+
+      {/* Panel */}
+      <AnimatePresence>
+        {open && (
+          <motion.ul
+            key="select-panel"
+            id={listboxId}
+            role="listbox"
+            aria-label="Select a service"
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute z-20 mt-2 w-full max-h-72 overflow-y-auto rounded-xl border border-white/15 bg-[var(--ink)]/95 backdrop-blur-xl shadow-[0_24px_60px_rgba(0,0,0,0.45)] py-1.5"
+          >
+            {SERVICES.map((s) => {
+              const isSelected = s.slug === selectedSlug;
+              return (
+                <li key={s.slug} role="option" aria-selected={isSelected}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onPick(s.slug);
+                      setOpen(false);
+                    }}
+                    className={`group w-full flex items-center gap-3 px-3 py-2.5 text-left transition-colors ${
+                      isSelected ? "bg-white/[0.08]" : "hover:bg-white/[0.06]"
+                    }`}
+                  >
+                    <span
+                      className={`grid place-items-center h-9 w-9 shrink-0 rounded-lg border bg-gradient-to-br ${s.tone.gradient} ${s.tone.chipBorder} text-white`}
+                    >
+                      <s.icon className="h-4 w-4" strokeWidth={1.8} />
+                    </span>
+                    <span className="flex-1 min-w-0">
+                      <span className="block text-sm font-medium text-white truncate leading-tight">
+                        {s.title}
+                      </span>
+                      <span className="block text-[11px] text-white/65 truncate leading-tight mt-0.5">
+                        {s.tagline}
+                      </span>
+                    </span>
+                    {isSelected && (
+                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[var(--innovation)] text-[var(--ink)]">
+                        <Check className="h-3 w-3" strokeWidth={3} />
+                      </span>
+                    )}
+                  </button>
+                </li>
+              );
+            })}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
