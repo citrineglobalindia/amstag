@@ -257,7 +257,7 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
 
           <h2
             id="lead-popup-title"
-            className="mt-2.5 font-display text-[1.25rem] sm:text-2xl leading-[1.15] font-bold pr-10"
+            className="mt-2.5 font-display text-[1.25rem] sm:text-2xl leading-[1.15] font-bold pr-10 text-white"
           >
             Get a senior architect on the call.
           </h2>
