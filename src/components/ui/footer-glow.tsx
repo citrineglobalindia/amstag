@@ -1,4 +1,4 @@
-// FooterGlow — glassmorphism footer with animated brand-glow blobs.
+// FooterGlow, glassmorphism footer with animated brand-glow blobs.
 // Adapted from mvpblocks/FooterGlow for TanStack Start (no Next.js, no styled-jsx).
 // The `.glass` utility is defined in src/styles.css. Animations powered by
 // framer-motion and respect prefers-reduced-motion via the Reveal/Stagger
@@ -58,7 +58,7 @@ export function FooterGlow({
     <footer
       className={`relative z-10 mt-8 w-full overflow-hidden pt-16 pb-8 ${className ?? ""}`}
     >
-      {/* Ambient glow blobs — gently pulse and drift */}
+      {/* Ambient glow blobs, gently pulse and drift */}
       <div className="pointer-events-none absolute top-0 left-1/2 z-0 h-full w-full -translate-x-1/2 select-none">
         <motion.div
           className={`absolute -top-32 left-1/4 h-72 w-72 rounded-full blur-3xl ${glows.topLeft}`}
@@ -101,7 +101,7 @@ export function FooterGlow({
               className="mb-4 flex items-center gap-2 group"
             >
               {/* If a logo node is provided, render it neutrally so brand
-                  artwork (e.g. AMSTAG's deer-and-A) doesn't clash with the
+                  artwork (e.g. Amstag's deer-and-A) doesn't clash with the
                   gradient. Otherwise fall back to a gradient initials chip. */}
               {brand.logo ? (
                 <motion.span

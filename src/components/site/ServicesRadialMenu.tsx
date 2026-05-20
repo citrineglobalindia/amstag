@@ -1,4 +1,4 @@
-// ServicesRadialMenu — a Mac-Dock-meets-orbital mega-menu.
+// ServicesRadialMenu, a Mac-Dock-meets-orbital mega-menu.
 // Eight service icons sit on a circle around a central focal element. Each
 // icon springs in from the centre on open with a per-icon delay, hovers up
 // when targeted, and pulses on the centre to indicate "pick one".
@@ -88,7 +88,7 @@ export function ServicesRadialMenu({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          // Defensive: this is a desktop-only mega-menu — even if state
+          // Defensive: this is a desktop-only mega-menu, even if state
           // somehow leaks across viewport changes, hide on mobile.
           className="hidden lg:block fixed left-1/2 top-20 z-40 -translate-x-1/2 w-[min(96vw,720px)] rounded-3xl border border-white/10 bg-[var(--ink)]/95 backdrop-blur-xl shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden"
         >
@@ -148,7 +148,7 @@ export function ServicesRadialMenu({
               transition={reduce ? undefined : { duration: 60, repeat: Infinity, ease: "linear" }}
             />
 
-            {/* Centre focal element — AMSTAG glyph */}
+            {/* Centre focal element, Amstag glyph */}
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -168,7 +168,7 @@ export function ServicesRadialMenu({
                 <Zap className="h-10 w-10" strokeWidth={2.4} />
               </motion.div>
               <div className="mt-3 text-center">
-                <div className="font-display text-sm font-bold text-white">AMSTAG</div>
+                <div className="font-display text-sm font-bold text-white">Amstag</div>
                 <div className="font-mono text-[10px] uppercase tracking-widest text-white/50">Engineered IT</div>
               </div>
             </motion.div>

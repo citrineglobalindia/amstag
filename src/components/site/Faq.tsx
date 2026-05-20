@@ -1,4 +1,4 @@
-// Faq — accordion of the eight questions sales actually gets asked.
+// Faq, accordion of the eight questions sales actually gets asked.
 // Layout: 2-column on desktop (questions split between columns), single
 // column on mobile. Each item smoothly expands its body via AnimatePresence
 // height/opacity tween.
@@ -18,7 +18,7 @@ const items: Item[] = [
     q: "How quickly can you respond to an enquiry?",
     a: (
       <>
-        Within one business day a senior architect — not a sales rep — replies
+        Within one business day a senior architect, not a sales rep, replies
         with a calendar link. For active incidents, the SOC line is staffed
         24×7 and we acknowledge within minutes.
       </>
@@ -38,7 +38,7 @@ const items: Item[] = [
     q: "Can you handle multi-cloud and hybrid environments?",
     a: (
       <>
-        Yes — most of our largest customers are hybrid. Our cloud practice
+        Yes, most of our largest customers are hybrid. Our cloud practice
         runs on AWS, Azure, GCP and VMware Cloud, with a unified posture for
         identity, networking, observability and FinOps across all of them.
       </>
@@ -67,7 +67,7 @@ const items: Item[] = [
     ),
   },
   {
-    q: "What about compliance — RBI, SEBI, HIPAA, PCI?",
+    q: "What about compliance, RBI, SEBI, HIPAA, PCI?",
     a: (
       <>
         Our compliance practice runs continuous-evidence pipelines aligned to
@@ -81,7 +81,7 @@ const items: Item[] = [
     q: "Can we trial before committing?",
     a: (
       <>
-        Yes — most managed-services engagements start with a 30 / 60 / 90 day
+        Yes, most managed-services engagements start with a 30 / 60 / 90 day
         proof-of-value covering one site or one workload, with measurable exit
         criteria. We'd rather earn the next phase than lock you in upfront.
       </>
@@ -117,7 +117,7 @@ export function Faq() {
               The eight questions sales actually gets asked.
             </h2>
             <p className="mt-4 text-base text-foreground/70 leading-relaxed">
-              The honest answers — the kind we'd give on a call. If your
+              The honest answers, the kind we'd give on a call. If your
               question isn't here, our chatbot or the contact form will route
               you to the right architect.
             </p>

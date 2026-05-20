@@ -18,8 +18,8 @@ import { SectionHeader } from "@/components/site/Offerings";
 import { Button } from "@/components/ui/button";
 
 const perks = [
-  { icon: HeartPulse, title: "Family health cover", body: "Comprehensive medical for you, partner, kids and parents — from day one." },
-  { icon: GraduationCap, title: "Learning budget", body: "₹60,000/year for certifications, conferences and books — pre-approved." },
+  { icon: HeartPulse, title: "Family health cover", body: "Comprehensive medical for you, partner, kids and parents, from day one." },
+  { icon: GraduationCap, title: "Learning budget", body: "₹60,000/year for certifications, conferences and books, pre-approved." },
   { icon: Laptop, title: "Best-in-class kit", body: "MacBook Pro / Dell Precision, dual monitors, ergonomic chair, work-from-home setup." },
   { icon: Plane, title: "Earned sabbatical", body: "Four weeks of paid sabbatical after every four years. Use them, don't bank them." },
   { icon: ShieldCheck, title: "Senior on-call respect", body: "Real comp days for after-hours work. We protect engineering focus time." },
@@ -28,10 +28,10 @@ const perks = [
 
 const openings = [
   { title: "Senior SOC Analyst (Tier 3)", team: "Cybersecurity", location: "Bangalore", type: "Full-time" },
-  { title: "Cloud Solutions Architect — AWS/Azure", team: "Cloud", location: "Bangalore / Remote India", type: "Full-time" },
-  { title: "Network Engineer — SD-WAN/SASE", team: "Networking", location: "Bangalore / Mumbai", type: "Full-time" },
+  { title: "Cloud Solutions Architect, AWS/Azure", team: "Cloud", location: "Bangalore / Remote India", type: "Full-time" },
+  { title: "Network Engineer, SD-WAN/SASE", team: "Networking", location: "Bangalore / Mumbai", type: "Full-time" },
   { title: "Site Reliability Engineer", team: "Platform", location: "Bangalore", type: "Full-time" },
-  { title: "Customer Success Manager — BFSI", team: "Customer Success", location: "Mumbai", type: "Full-time" },
+  { title: "Customer Success Manager, BFSI", team: "Customer Success", location: "Mumbai", type: "Full-time" },
   { title: "Service Desk Analyst (24×7 rotation)", team: "Managed Services", location: "Bangalore", type: "Full-time" },
 ];
 
@@ -45,7 +45,7 @@ const principles = [
 export const Route = createFileRoute("/careers")({
   head: () => ({
     meta: [
-      { title: "Careers — AMSTAG | Engineer mission-critical IT for India" },
+      { title: "Careers, Amstag | Engineer mission-critical IT for India" },
       { name: "description", content: "Join the engineering team running enterprise IT for 250+ Indian businesses. Open roles in SOC, cloud, networking and SRE." },
     ],
   }),
@@ -162,7 +162,7 @@ function CareersPage() {
               <a href="mailto:careers@amstag.in" className="text-[var(--brand)] hover:underline">
                 careers@amstag.in
               </a>{" "}
-              — we hire opportunistically for senior engineers.
+             , we hire opportunistically for senior engineers.
             </p>
           </Reveal>
         </div>

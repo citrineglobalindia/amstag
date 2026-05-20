@@ -1,9 +1,9 @@
-// WhatsAppFab — the green message button. Positioning is owned by the parent
+// WhatsAppFab, the green message button. Positioning is owned by the parent
 // FloatingActions row so this component is a self-contained badge that just
 // needs to be placed somewhere; size + animations are baked in.
 //
 // The icon now vibrates continuously (fast micro-shake every 1.6s) so the
-// affordance is unambiguous on a glance — particularly important for users
+// affordance is unambiguous on a glance, particularly important for users
 // who didn't realise it was a live channel.
 import { MessageCircle } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
@@ -20,7 +20,7 @@ export function WhatsAppFab() {
       href="https://wa.me/919945645909"
       target="_blank"
       rel="noreferrer"
-      aria-label="Chat with AMSTAG on WhatsApp"
+      aria-label="Chat with Amstag on WhatsApp"
       title="Message us on WhatsApp"
       initial={{ scale: 0, opacity: 0, y: 30 }}
       animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -29,7 +29,7 @@ export function WhatsAppFab() {
       whileTap={{ scale: 0.92 }}
       className={`relative grid place-items-center ${SIZE_CLASS} shrink-0 rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_rgba(37,211,102,0.45)] outline-none ring-offset-2 focus-visible:ring-2 focus-visible:ring-[#25D366]`}
     >
-      {/* Continuous vibration — short, fast micro-shake every ~1.6s.
+      {/* Continuous vibration, short, fast micro-shake every ~1.6s.
           Translation gives a real "buzzing" effect; rotation alone reads
           more as a wave. We combine both for a subtle hand-trembling feel. */}
       <motion.span
@@ -57,7 +57,7 @@ export function WhatsAppFab() {
         <MessageCircle className="h-[18px] w-[18px] sm:h-6 sm:w-6" strokeWidth={2.2} />
       </motion.span>
 
-      {/* Expanding pulse ring — confirms the button is "live" */}
+      {/* Expanding pulse ring, confirms the button is "live" */}
       <motion.span
         aria-hidden
         className="absolute inset-0 rounded-full ring-2 ring-[#25D366]/40"
@@ -65,7 +65,7 @@ export function WhatsAppFab() {
         transition={reduce ? undefined : { duration: 1.8, repeat: Infinity, ease: "easeOut" }}
       />
 
-      {/* Online dot — small green sentinel in the corner */}
+      {/* Online dot, small green sentinel in the corner */}
       <span
         aria-hidden
         className="absolute -top-0.5 -right-0.5 grid h-3 w-3 sm:h-3.5 sm:w-3.5 place-items-center rounded-full bg-white"

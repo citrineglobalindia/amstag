@@ -1,4 +1,4 @@
-// Source of truth for AMSTAG's eight service practices.
+// Source of truth for Amstag's eight service practices.
 // Powers /services (overview), /services/$slug (per-service deep-dive),
 // the desktop ServicesRadialMenu and the mobile Header drawer Services
 // submenu. Adding a new service = adding one entry here.
@@ -138,7 +138,7 @@ export const SERVICES: Service[] = [
     title: "Data Center Engineering",
     tagline: "Greenfield builds, brownfield migrations, audit-grade uptime.",
     description:
-      "We design, build and run on-prem and colocation data centres for India's most demanding enterprises — from Tier III reference architectures to no-downtime petabyte migrations.",
+      "We design, build and run on-prem and colocation data centres for India's most demanding enterprises, from Tier III reference architectures to no-downtime petabyte migrations.",
     icon: Server,
     tone: TONES.sky,
     hero: {
@@ -194,7 +194,7 @@ export const SERVICES: Service[] = [
     slug: "networking",
     shortLabel: "Networking",
     title: "Networking",
-    tagline: "Campus, branch, datacentre fabric and SD-WAN — designed and run.",
+    tagline: "Campus, branch, datacentre fabric and SD-WAN, designed and run.",
     description:
       "From core switches to last-mile failover, we engineer enterprise networks that hold up under audit and don't make Sunday support pages.",
     icon: Network,
@@ -210,12 +210,12 @@ export const SERVICES: Service[] = [
     },
     overview: {
       headline: "Networks designed for the worst case.",
-      body: "We design, deploy and run enterprise networks across data centres, branches and plants — including SD-WAN and SASE migrations that pay back in months, not years.",
+      body: "We design, deploy and run enterprise networks across data centres, branches and plants, including SD-WAN and SASE migrations that pay back in months, not years.",
     },
     capabilities: [
       { title: "Campus + branch design", body: "Reference architectures for office, branch and remote-site connectivity." },
       { title: "DC fabric", body: "Spine-leaf, EVPN-VXLAN, Cisco ACI / NSX micro-segmentation." },
-      { title: "SD-WAN / SASE", body: "Cisco Viptela, Versa, Fortinet, Cato — design, rollout and run." },
+      { title: "SD-WAN / SASE", body: "Cisco Viptela, Versa, Fortinet, Cato, design, rollout and run." },
       { title: "OT / IT segmentation", body: "Plant-floor segmentation with passive monitoring. Zero line stoppages." },
       { title: "Wireless + IoT", body: "High-density Wi-Fi 6/6E, IoT segmentation, captive portals." },
       { title: "Network security", body: "Next-gen firewalls, IDS/IPS, NAC, DDoS posture." },
@@ -252,7 +252,7 @@ export const SERVICES: Service[] = [
     slug: "cloud",
     shortLabel: "Cloud",
     title: "Cloud & Hosting",
-    tagline: "AWS, Azure, GCP, VMware Cloud — landing zones, FinOps, full ops.",
+    tagline: "AWS, Azure, GCP, VMware Cloud, landing zones, FinOps, full ops.",
     description:
       "Landing-zone architecture, lift-shift-modernise migrations, FinOps and 24×7 cloud operations across the hyperscalers and VMware Cloud.",
     icon: Cloud,
@@ -310,9 +310,9 @@ export const SERVICES: Service[] = [
     slug: "cybersecurity",
     shortLabel: "Cybersecurity",
     title: "Cybersecurity",
-    tagline: "24×7 SOC, EDR/XDR, identity, compliance — red-team validated.",
+    tagline: "24×7 SOC, EDR/XDR, identity, compliance, red-team validated.",
     description:
-      "A full-stack cybersecurity practice — vulnerability management, EDR/XDR, identity, SIEM and a 24×7 SOC out of Bangalore. RBI / SEBI / HIPAA / PCI DSS aligned.",
+      "A full-stack cybersecurity practice, vulnerability management, EDR/XDR, identity, SIEM and a 24×7 SOC out of Bangalore. RBI / SEBI / HIPAA / PCI DSS aligned.",
     icon: ShieldCheck,
     tone: TONES.rose,
     hero: {
@@ -326,15 +326,15 @@ export const SERVICES: Service[] = [
     },
     overview: {
       headline: "Posture you can prove. Defence you can call.",
-      body: "Our SOC is staffed by senior analysts with red-team certifications. We don't sell tools — we run the programmes that put them to work.",
+      body: "Our SOC is staffed by senior analysts with red-team certifications. We don't sell tools, we run the programmes that put them to work.",
     },
     capabilities: [
       { title: "24×7 SOC", body: "Tier 1 → 3 staffed in Bangalore. SLAs with measured detection + response times." },
       { title: "EDR / XDR", body: "Deployment, tuning and operations of CrowdStrike, SentinelOne, Defender." },
-      { title: "SIEM", body: "Splunk, Sentinel, Wazuh — including detection engineering and use-case library." },
+      { title: "SIEM", body: "Splunk, Sentinel, Wazuh, including detection engineering and use-case library." },
       { title: "Vulnerability management", body: "Continuous scanning, prioritisation, evidence-based remediation." },
       { title: "Identity + zero-trust", body: "Entra ID / Okta, MFA, conditional access, privileged access mgmt." },
-      { title: "VAPT + red team", body: "Network, web, mobile, cloud — reports with prioritised remediation, not just findings." },
+      { title: "VAPT + red team", body: "Network, web, mobile, cloud, reports with prioritised remediation, not just findings." },
     ],
     methodology: [
       { title: "Posture assessment", body: "Control gap analysis vs the framework you operate under." },
@@ -370,7 +370,7 @@ export const SERVICES: Service[] = [
     title: "Managed IT Services",
     tagline: "Full-stack ITSM with senior on-call ownership and measurable SLAs.",
     description:
-      "Endpoint, server, network, identity and user support — run by a senior team with named owners on every account and SLAs that hold up under audit.",
+      "Endpoint, server, network, identity and user support, run by a senior team with named owners on every account and SLAs that hold up under audit.",
     icon: HeadphonesIcon,
     tone: TONES.emerald,
     hero: {
@@ -388,7 +388,7 @@ export const SERVICES: Service[] = [
     },
     capabilities: [
       { title: "Service desk", body: "Tier 1 → 3 across endpoint, M365, identity. Local-language support." },
-      { title: "Server + workload ops", body: "Patch, monitor, backup, performance — Linux + Windows." },
+      { title: "Server + workload ops", body: "Patch, monitor, backup, performance, Linux + Windows." },
       { title: "Network ops", body: "Switch, router, firewall, Wi-Fi monitoring + management." },
       { title: "Identity + endpoint", body: "Entra ID / Intune / JAMF lifecycle, conditional access, posture." },
       { title: "Major incident management", body: "Senior IM lead + war room within 30 min of P1." },
@@ -426,7 +426,7 @@ export const SERVICES: Service[] = [
     slug: "compliance",
     shortLabel: "Compliance",
     title: "Compliance & Governance",
-    tagline: "ISO 27001, RBI, SEBI, HIPAA, PCI DSS — gap analysis to audit pass.",
+    tagline: "ISO 27001, RBI, SEBI, HIPAA, PCI DSS, gap analysis to audit pass.",
     description:
       "From gap analysis to continuous evidence pipelines, we make audit week a non-event for India's regulators and global frameworks.",
     icon: Workflow,
@@ -500,12 +500,12 @@ export const SERVICES: Service[] = [
     },
     overview: {
       headline: "Backups that survive your worst day.",
-      body: "We've recovered customers from ransomware incidents in hours instead of weeks because we design for the worst case — air-gapped, immutable, drilled.",
+      body: "We've recovered customers from ransomware incidents in hours instead of weeks because we design for the worst case, air-gapped, immutable, drilled.",
     },
     capabilities: [
-      { title: "Backup architecture", body: "Veeam, Commvault, Rubrik — designed for your RTO/RPO and budget." },
+      { title: "Backup architecture", body: "Veeam, Commvault, Rubrik, designed for your RTO/RPO and budget." },
       { title: "Immutable storage", body: "Object lock, air-gapped vaults, off-site replication." },
-      { title: "DR design", body: "Active-active, warm-standby, cold-site — modelled against your appetite." },
+      { title: "DR design", body: "Active-active, warm-standby, cold-site, modelled against your appetite." },
       { title: "Recovery drills", body: "Quarterly tabletop + technical drills with measured RTO/RPO." },
       { title: "Ransomware playbooks", body: "Detection, isolation, recovery and forensics workflows." },
       { title: "Compliance evidence", body: "Backup + recovery evidence integrated with audit pipelines." },
@@ -558,12 +558,12 @@ export const SERVICES: Service[] = [
     },
     overview: {
       headline: "A workplace that's productive AND audit-ready.",
-      body: "We build the workplace stack — identity, devices, collaboration — so your distributed teams stay productive and your CISO sleeps.",
+      body: "We build the workplace stack, identity, devices, collaboration, so your distributed teams stay productive and your CISO sleeps.",
     },
     capabilities: [
       { title: "M365 / Workspace ops", body: "Tenant design, licensing, governance, lifecycle." },
       { title: "Identity federation", body: "Entra ID, Okta, federation, SCIM, SSO across SaaS estate." },
-      { title: "MDM / device management", body: "Intune for Windows, JAMF for Apple — full lifecycle + compliance." },
+      { title: "MDM / device management", body: "Intune for Windows, JAMF for Apple, full lifecycle + compliance." },
       { title: "Zero-trust posture", body: "Conditional access, device compliance, risk-based access." },
       { title: "Collaboration", body: "Teams + Workspace governance, retention, eDiscovery." },
       { title: "User experience", body: "Onboarding, named-account support, productivity analytics." },

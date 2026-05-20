@@ -44,7 +44,7 @@ export function Hero() {
             </span>
           </h1>
           <p className="mt-6 text-base md:text-lg text-white/70 max-w-xl">
-            Managed services, cybersecurity, cloud and 24×7 support — delivered with the rigor, partnerships, and uptime
+            Managed services, cybersecurity, cloud and 24×7 support, delivered with the rigor, partnerships, and uptime
             India's leaders in BFSI, healthcare, government and manufacturing depend on.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -119,7 +119,7 @@ function FloatingStat({
 
 /* ───────────────────── ServicesOrbit ─────────────────────
  * Replaces the abstract NetworkMesh with a services-themed orbital system.
- * 8 service icons orbit a central AMSTAG core; each icon counter-rotates so
+ * 8 service icons orbit a central Amstag core; each icon counter-rotates so
  * it stays upright. Pulses, dashed orbital paths, and a beating brand-glow
  * on the core sell the "always-on, multi-discipline" story without being
  * literal about any one product.
@@ -191,7 +191,7 @@ function ServicesOrbit() {
           })}
       </svg>
 
-      {/* Centre core — pulses through brand and innovation glow */}
+      {/* Centre core, pulses through brand and innovation glow */}
       <motion.div
         className="relative grid place-items-center w-24 h-24 rounded-full bg-gradient-to-br from-[var(--brand)] to-[var(--innovation)] text-white"
         animate={

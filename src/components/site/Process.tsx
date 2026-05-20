@@ -1,4 +1,4 @@
-// Process — SVG line-drawing timeline.
+// Process, SVG line-drawing timeline.
 // Each phase node sits on a curved SVG path that draws itself in as the
 // section enters the viewport. Nodes pop on scroll progress, and a moving
 // "build pulse" travels along the path on a loop.
@@ -44,13 +44,13 @@ export function Process() {
           <SectionHeader
             eyebrow="How we deliver"
             title="Five phases. One accountable team."
-            desc="Every engagement runs through the same playbook — from discovery to continuous optimisation."
+            desc="Every engagement runs through the same playbook, from discovery to continuous optimisation."
           />
         </Reveal>
 
         {/* Timeline stage */}
         <div ref={ref} className="relative mt-16 md:mt-24">
-          {/* SVG line — desktop only */}
+          {/* SVG line, desktop only */}
           <div className="hidden md:block absolute inset-x-0 top-12 h-32 pointer-events-none" aria-hidden>
             <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-full">
               <defs>

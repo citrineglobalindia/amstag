@@ -1,9 +1,9 @@
-// Chatbot — branded support assistant for AMSTAG.
+// Chatbot, branded support assistant for Amstag.
 //
 // Implementation: a deterministic, scripted dialog tree with smart quick-reply
 // branches. Every leaf either provides an answer or escalates to a human via
 // WhatsApp / phone / contact form. We intentionally avoid runtime LLM calls
-// here — no API key, no per-message cost, no PII leaving the page, and zero
+// here, no API key, no per-message cost, no PII leaving the page, and zero
 // cold-start latency. The conversation state lives entirely in the browser.
 //
 // To upgrade to a live LLM later, replace `findReply()` with an API call to
@@ -73,7 +73,7 @@ const NODES: Record<string, Node> = {
   cyber: {
     id: "cyber",
     body: [
-      "Our cybersecurity practice runs a 24×7 SOC out of Bangalore — covering EDR/XDR, SIEM, identity, vulnerability management and incident response.",
+      "Our cybersecurity practice runs a 24×7 SOC out of Bangalore, covering EDR/XDR, SIEM, identity, vulnerability management and incident response.",
       "We're ISO 27001 certified and align with RBI cyber-resilience, SEBI, HIPAA and PCI DSS depending on your sector.",
     ],
     quickReplies: [
@@ -87,7 +87,7 @@ const NODES: Record<string, Node> = {
   cloud: {
     id: "cloud",
     body: [
-      "We design landing zones and run operations on AWS, Azure, GCP and VMware Cloud — including FinOps, modernisation and full 24×7 managed cloud.",
+      "We design landing zones and run operations on AWS, Azure, GCP and VMware Cloud, including FinOps, modernisation and full 24×7 managed cloud.",
       "Most engagements start with either a migration assessment or a cost-optimisation review.",
     ],
     quickReplies: [
@@ -100,7 +100,7 @@ const NODES: Record<string, Node> = {
   managed: {
     id: "managed",
     body: [
-      "Managed IT means full-stack ITSM with senior on-call ownership: endpoint, server, network, identity and user support — all under measurable SLAs.",
+      "Managed IT means full-stack ITSM with senior on-call ownership: endpoint, server, network, identity and user support, all under measurable SLAs.",
       "Coverage runs 24×7×365 from our NOC and we publish quarterly business reviews to every customer.",
     ],
     quickReplies: [
@@ -163,7 +163,7 @@ const NODES: Record<string, Node> = {
 
   manufacturing: {
     id: "manufacturing",
-    body: "For manufacturing we bring IT and OT onto a single network plan — passive OT monitoring, segmentation, and resilient WAN across plants. Zero line stoppages on cutover.",
+    body: "For manufacturing we bring IT and OT onto a single network plan, passive OT monitoring, segmentation, and resilient WAN across plants. Zero line stoppages on cutover.",
     quickReplies: [
       { label: "Manufacturing case study", action: { kind: "link", href: "/case-studies" } },
       { label: "Talk to an OT specialist", action: { kind: "reply", nodeId: "human" } },
@@ -185,7 +185,7 @@ const NODES: Record<string, Node> = {
 
   audit: {
     id: "audit",
-    body: "We run VAPT, red-team and cloud security assessments — typically 2 to 4 weeks depending on scope. Reports are delivered with prioritised remediation plans, not just findings.",
+    body: "We run VAPT, red-team and cloud security assessments, typically 2 to 4 weeks depending on scope. Reports are delivered with prioritised remediation plans, not just findings.",
     quickReplies: [
       { label: "Get a quote", action: { kind: "reply", nodeId: "human" } },
       { label: "↩ Back to cybersecurity", action: { kind: "reply", nodeId: "cyber" } },
@@ -211,7 +211,7 @@ const NODES: Record<string, Node> = {
   human: {
     id: "human",
     body: [
-      "Pick the channel that suits — we'll get the right person on the call:",
+      "Pick the channel that suits, we'll get the right person on the call:",
       "📞 Sales · +91 90357 38956",
       "📞 Support · +91 99456 45909",
       "✉ sales@amstag.in",
@@ -225,7 +225,7 @@ const NODES: Record<string, Node> = {
 
   fallback: {
     id: "fallback",
-    body: "I can't answer that one directly — but a human can. Want me to point you at the team?",
+    body: "I can't answer that one directly, but a human can. Want me to point you at the team?",
     quickReplies: [
       { label: "Yes, talk to a human", action: { kind: "reply", nodeId: "human" } },
       { label: "↩ Start over", action: { kind: "reply", nodeId: "welcome" } },
@@ -346,14 +346,14 @@ export function Chatbot() {
 
   return (
     <>
-      {/* Launcher — positioning is owned by <FloatingActions> so it sits
+      {/* Launcher, positioning is owned by <FloatingActions> so it sits
           in a clean flex row alongside the WhatsApp FAB. Same exact size
           (h-14 w-14) as the WhatsApp button for visual symmetry. */}
       <motion.button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "Close chat" : "Open chat with AMSTAG assistant"}
-        title={open ? "Close chat" : "Chat with AMSTAG"}
+        aria-label={open ? "Close chat" : "Open chat with Amstag assistant"}
+        title={open ? "Close chat" : "Chat with Amstag"}
         aria-expanded={open}
         initial={{ scale: 0, opacity: 0, y: 30 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -422,7 +422,7 @@ export function Chatbot() {
             style={{
               right: "max(1.25rem, env(safe-area-inset-right))",
               // Panel sits above the FAB column. Mobile column ≈ 108px tall,
-              // desktop ≈ 124px tall — both clear with bottom: 9.5rem (152px).
+              // desktop ≈ 124px tall, both clear with bottom: 9.5rem (152px).
               bottom: "max(9.5rem, calc(9.5rem + env(safe-area-inset-bottom)))",
             }}
             className="fixed z-50 flex h-[calc(100dvh-11rem)] max-h-[640px] w-[min(96vw,400px)] flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-[0_24px_60px_rgba(10,22,40,0.25)]"
@@ -442,7 +442,7 @@ export function Chatbot() {
                   </span>
                   <div>
                     <h3 id={titleId} className="font-display text-sm font-semibold">
-                      AMSTAG Assistant
+                      Amstag Assistant
                     </h3>
                     <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-white/60 font-mono">
                       <span className="relative flex size-1.5">
@@ -497,7 +497,7 @@ export function Chatbot() {
               </div>
               <div className="mt-2 flex items-center justify-between text-[10px] text-foreground/50">
                 <span>
-                  Powered by AMSTAG ·{" "}
+                  Powered by Amstag ·{" "}
                   <button type="button" onClick={reset} className="underline-offset-2 hover:underline">
                     reset
                   </button>

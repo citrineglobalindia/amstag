@@ -74,29 +74,29 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Amstag - Accelerating Accessibility" },
-      { name: "description", content: "AMSTAG Elevate is a premium B2B website for an IT infrastructure and managed services company." },
+      { name: "description", content: "Amstag Elevate is a premium B2B website for an IT infrastructure and managed services company." },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "Amstag - Accelerating Accessibility" },
-      { property: "og:description", content: "AMSTAG Elevate is a premium B2B website for an IT infrastructure and managed services company." },
+      { property: "og:description", content: "Amstag Elevate is a premium B2B website for an IT infrastructure and managed services company." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Amstag - Accelerating Accessibility" },
-      { name: "twitter:description", content: "AMSTAG Elevate is a premium B2B website for an IT infrastructure and managed services company." },
+      { name: "twitter:description", content: "Amstag Elevate is a premium B2B website for an IT infrastructure and managed services company." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f01b1778-4d7d-4330-8b97-b8d034d784d3/id-preview-9593faee--b6655e22-9517-464b-97dc-91ece4fe48bb.lovable.app-1778208101688.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f01b1778-4d7d-4330-8b97-b8d034d784d3/id-preview-9593faee--b6655e22-9517-464b-97dc-91ece4fe48bb.lovable.app-1778208101688.png" },
     ],
     links: [
-      // Preconnect + font CSS in document <head> — most reliable way to load
+      // Preconnect + font CSS in document <head>, most reliable way to load
       // Google Fonts (avoids reliance on the in-CSS @import which can be
       // silently dropped if it ever ends up after another rule).
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap",
       },
-      // Favicons + Apple touch icon — all derived from the same logo asset
+      // Favicons + Apple touch icon, all derived from the same logo asset
       { rel: "icon", type: "image/png", href: "/favicon.png" },
       { rel: "apple-touch-icon", href: "/logo.png" },
       // Preload the logo so the header / loader display it immediately
@@ -132,7 +132,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Branded splash overlay — shows once per session over the route */}
+      {/* Branded splash overlay, shows once per session over the route */}
       <SiteLoader />
       <Outlet />
     </QueryClientProvider>

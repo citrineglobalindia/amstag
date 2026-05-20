@@ -1,4 +1,4 @@
-// Testimonials — single auto-cycling stage with avatar reel.
+// Testimonials, single auto-cycling stage with avatar reel.
 // One large quote occupies centre stage; a row of avatars below acts as a
 // dot-style selector. The active testimonial cross-fades on a 6s timer.
 // Signature animation: AnimatePresence cross-fade + active-avatar ring pulse.
@@ -21,7 +21,7 @@ type Testimonial = {
 const items: Testimonial[] = [
   {
     quote:
-      "AMSTAG runs our DC like clockwork. Their NOC catches incidents before our internal teams even page.",
+      "Amstag runs our DC like clockwork. Their NOC catches incidents before our internal teams even page.",
     name: "Rajiv Menon",
     title: "CTO",
     company: "Aarav Capital",
@@ -30,7 +30,7 @@ const items: Testimonial[] = [
   },
   {
     quote:
-      "They didn't just migrate workloads — they rebuilt our resilience model. We sleep better.",
+      "They didn't just migrate workloads, they rebuilt our resilience model. We sleep better.",
     name: "Dr. Priya Iyer",
     title: "CIO",
     company: "Suvarna Hospitals",
@@ -39,7 +39,7 @@ const items: Testimonial[] = [
   },
   {
     quote:
-      "Pragmatic, senior, accountable. AMSTAG fits in like an in-house team and ships like a product company.",
+      "Pragmatic, senior, accountable. Amstag fits in like an in-house team and ships like a product company.",
     name: "Vikram Shetty",
     title: "Head of IT",
     company: "NorthStar Logistics",
@@ -48,7 +48,7 @@ const items: Testimonial[] = [
   },
   {
     quote:
-      "RBI audits used to take quarters. With AMSTAG's posture, we close them in weeks.",
+      "RBI audits used to take quarters. With Amstag's posture, we close them in weeks.",
     name: "Anjali Krishnan",
     title: "Head of InfoSec",
     company: "Pragati Bank",

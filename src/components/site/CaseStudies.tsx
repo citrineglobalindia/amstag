@@ -1,4 +1,4 @@
-// CaseStudies — featured engagement + 3 thumbnail tiles.
+// CaseStudies, featured engagement + 3 thumbnail tiles.
 // One large card with a generative gradient backdrop highlights the
 // signature case; three compact tiles tease additional outcomes. A single
 // "Read all case studies →" CTA goes to /case-studies.

@@ -1,8 +1,8 @@
-// LeadPopup — service-aware lead capture surface.
+// LeadPopup, service-aware lead capture surface.
 //
 // Surfaces three things in a tight, scrollable card:
 //   1. A short prompt ("What can we help with?")
-//   2. A service picker — 8 colour-coded tiles drawn from the SERVICES
+//   2. A service picker, 8 colour-coded tiles drawn from the SERVICES
 //      catalogue. The selected tile becomes the "I want to talk about ___"
 //      context that's submitted with the lead.
 //   3. A compact 3-field form (name + work email + phone) with a sticky CTA
@@ -178,7 +178,7 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
     await new Promise((r) => setTimeout(r, 600));
     recordSubmitted({ email: data.email, service: data.service });
     toast.success(
-      `Thanks — a senior ${selected?.shortLabel ?? "AMSTAG"} architect will reach out within one business day.`
+      `Thanks, a senior ${selected?.shortLabel ?? "Amstag"} architect will reach out within one business day.`
     );
     reset();
     onClose();
@@ -265,7 +265,7 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
 
         {/* BODY (scrollable) */}
         <div className="relative z-[1] flex-1 min-h-0 overflow-y-auto px-5 py-4 sm:px-7 sm:py-5">
-          {/* Service dropdown — custom select with icon + tagline per option.
+          {/* Service dropdown, custom select with icon + tagline per option.
               Replaces the previous 8-tile grid; saves vertical space and is
               easier to scan on mobile. */}
           <FormField label="What can we help with?" error={errors.service?.message}>
@@ -370,7 +370,7 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
             onClick={onClose}
             className="mt-2 block w-full text-center text-xs text-white/65 transition-colors hover:text-white/85"
           >
-            No thanks — I'm just browsing
+            No thanks, I'm just browsing
           </button>
         </footer>
       </motion.div>
@@ -379,7 +379,7 @@ function LeadPopupSurface({ onClose }: { onClose: () => void }) {
 }
 
 /* ───────────────────── ServiceSelect ─────────────────────
- * Custom dropdown — semantically a button + listbox so keyboard users get
+ * Custom dropdown, semantically a button + listbox so keyboard users get
  * Enter/Escape/click-outside, and so we can render the selected service
  * with its icon + tone gradient (a native <select> can't show inline
  * artwork). Each option in the open panel shows the service icon,

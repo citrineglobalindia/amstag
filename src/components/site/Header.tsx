@@ -33,7 +33,7 @@ const nav: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-// Mobile sub-menu for Services — pulls from the canonical SERVICES catalogue
+// Mobile sub-menu for Services, pulls from the canonical SERVICES catalogue
 // so links go straight to each individual service page (/services/$slug).
 const mobileServices = [
   { icon: Server, label: "Data Center", slug: "data-center", tone: "from-sky-500/20 to-sky-500/5 border-sky-400/40", text: "text-sky-200" },
@@ -108,20 +108,20 @@ export function Header() {
         }`}
       >
         <div className="container-x flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="flex items-center gap-2 group" aria-label="AMSTAG home">
+          <Link to="/" className="flex items-center gap-2 group" aria-label="Amstag home">
             <motion.span
               whileHover={{ rotate: -6, scale: 1.06 }}
               transition={{ type: "spring", stiffness: 300, damping: 18 }}
               className="inline-flex"
             >
-              <AmstagLogo size="md" alt="AMSTAG home" />
+              <AmstagLogo size="md" alt="Amstag home" />
             </motion.span>
             <span
               className={`font-display text-lg font-bold tracking-tight transition-colors ${
                 lightMode ? "text-[var(--ink)]" : "text-white"
               }`}
             >
-              AMSTAG
+              Amstag
             </span>
           </Link>
 
@@ -222,7 +222,7 @@ export function Header() {
 
       <ServicesRadialMenu open={servicesOpen} onClose={() => setServicesOpen(false)} />
 
-      {/* Mobile mega-drawer — full-height immersive overlay */}
+      {/* Mobile mega-drawer, full-height immersive overlay */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -255,7 +255,7 @@ export function Header() {
             <div className="relative z-[1] flex items-center justify-between h-16 px-5 border-b border-white/10">
               <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
                 <AmstagLogo size="md" />
-                <span className="font-display text-lg font-bold">AMSTAG</span>
+                <span className="font-display text-lg font-bold">Amstag</span>
               </Link>
               <button
                 aria-label="Close menu"

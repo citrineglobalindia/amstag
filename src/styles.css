@@ -1,7 +1,7 @@
-/* Google Fonts MUST come before any other @rule per CSS spec — Chrome silently
+/* Google Fonts MUST come before any other @rule per CSS spec - Chrome silently
    drops @import statements that appear after non-@import rules, which leaves
    the page rendering in fallback fonts only. */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap');
 
 @import "tailwindcss" source(none);
 @source "../src";
@@ -17,7 +17,7 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
 
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-display: 'Lobster Two', 'Space Grotesk', system-ui, sans-serif;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
@@ -52,7 +52,7 @@
 :root {
   --radius: 0.875rem;
 
-  /* AMSTAG palette */
+  /* Amstag palette */
   --ink: oklch(0.205 0.04 255);            /* #0A1628 */
   --ink-soft: oklch(0.265 0.05 255);       /* #0F2547 */
   --brand: oklch(0.58 0.22 258);           /* #0066FF */
@@ -126,11 +126,15 @@
   }
   h1, h2, h3, h4, h5 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    /* Lobster Two has tighter natural tracking - drop the negative letter
+       spacing so the script doesn't crowd. Always render at bold (700). */
+    letter-spacing: 0;
+    line-height: 1.15;
     color: var(--ink);
     font-weight: 700;
   }
+  /* Same default for any .font-display element using a weight other than bold */
+  .font-display { font-weight: 700; }
   ::selection { background: var(--brand); color: white; }
 }
 

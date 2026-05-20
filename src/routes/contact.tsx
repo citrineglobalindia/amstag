@@ -74,7 +74,7 @@ const channels = [
 ];
 
 const reassurance = [
-  { icon: CheckCircle2, label: "1 business day reply", body: "A senior architect responds — not a generic sales rep." },
+  { icon: CheckCircle2, label: "1 business day reply", body: "A senior architect responds, not a generic sales rep." },
   { icon: ShieldCheck, label: "Confidential by default", body: "Conversations covered by mutual NDA on request." },
   { icon: Sparkles, label: "No commitment", body: "First call is free; we scope before we propose." },
 ];
@@ -106,8 +106,8 @@ const offices = [
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact AMSTAG | Talk to a senior architect" },
-      { name: "description", content: "Talk to AMSTAG about IT infrastructure, cybersecurity, cloud and managed services. A senior architect responds within 1 business day." },
+      { title: "Contact Amstag | Talk to a senior architect" },
+      { name: "description", content: "Talk to Amstag about IT infrastructure, cybersecurity, cloud and managed services. A senior architect responds within 1 business day." },
     ],
   }),
   component: ContactPage,
@@ -122,7 +122,7 @@ function ContactPage() {
   const onSubmit = async (data: FormData) => {
     if (data.website) return;
     await new Promise((r) => setTimeout(r, 700));
-    toast.success("Thanks — a senior architect will reach out within one business day.");
+    toast.success("Thanks, a senior architect will reach out within one business day.");
     reset();
     setSubmitted(true);
   };
@@ -135,11 +135,11 @@ function ContactPage() {
           <>
             Let's design IT that{" "}
             <span className="bg-gradient-to-r from-white via-white to-[var(--innovation)] bg-clip-text text-transparent">
-              runs your business — not the other way around.
+              runs your business, not the other way around.
             </span>
           </>
         }
-        description="Tell us about your environment and goals. We'll route you to a senior architect who's worked in your industry — and respond within one business day."
+        description="Tell us about your environment and goals. We'll route you to a senior architect who's worked in your industry, and respond within one business day."
       >
         <StaggerContainer
           stagger={0.06}
@@ -157,12 +157,12 @@ function ContactPage() {
         </StaggerContainer>
       </PageHero>
 
-      {/* Channels grid — quick pick */}
+      {/* Channels grid, quick pick */}
       <section className="border-b border-border bg-[var(--surface)] py-12 md:py-16">
         <div className="container-x">
           <Reveal>
             <h2 className="text-xs font-mono uppercase tracking-[0.25em] text-[var(--brand)] text-center">
-              Pick your channel — we'll route you
+              Pick your channel, we'll route you
             </h2>
           </Reveal>
           <StaggerContainer stagger={0.06} className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -203,7 +203,7 @@ function ContactPage() {
               What happens next.
             </h2>
             <p className="mt-2 text-sm text-foreground/70">
-              You'll hear from a real architect — not a queue, not a chatbot.
+              You'll hear from a real architect, not a queue, not a chatbot.
               Here's how the conversation usually goes.
             </p>
             <ol className="mt-8 space-y-5">
@@ -211,7 +211,7 @@ function ContactPage() {
                 { t: "We acknowledge within hours.", b: "Auto-reply confirms we got your note plus a calendar link." },
                 { t: "You meet a senior architect.", b: "30-min call to map your goals, environment and constraints." },
                 { t: "We send a one-page scope.", b: "Outcomes, milestones, SLA bands. No 40-page proposal theatre." },
-                { t: "You decide what's next.", b: "Pilot, full engagement, or just our notes — your call." },
+                { t: "You decide what's next.", b: "Pilot, full engagement, or just our notes, your call." },
               ].map((step, i) => (
                 <Reveal key={i} delay={i * 0.06}>
                   <li className="flex gap-4">

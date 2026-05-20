@@ -79,7 +79,7 @@ const cases = [
 export const Route = createFileRoute("/case-studies")({
   head: () => ({
     meta: [
-      { title: "Case Studies — AMSTAG | Real outcomes for India's enterprises" },
+      { title: "Case Studies, Amstag | Real outcomes for India's enterprises" },
       { name: "description", content: "Selected engagements across BFSI, healthcare, government, manufacturing, retail and logistics." },
     ],
   }),
@@ -99,7 +99,7 @@ function CaseStudiesPage() {
             </span>
           </>
         }
-        description="A representative slice of engagements — most of our work is under NDA. Numbers are the client's, methodology is ours."
+        description="A representative slice of engagements, most of our work is under NDA. Numbers are the client's, methodology is ours."
       />
 
       <section className="py-20 md:py-28">
@@ -150,7 +150,7 @@ function CaseStudiesPage() {
         <div className="container-x text-center">
           <Reveal>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-[var(--ink)] text-balance">
-              Want a closer look — under NDA?
+              Want a closer look, under NDA?
             </h2>
           </Reveal>
           <Reveal delay={0.1}>

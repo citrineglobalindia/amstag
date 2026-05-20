@@ -1,5 +1,5 @@
-// EngagementModels — three commercial tiers showing how customers buy from
-// AMSTAG. Each tier ships its inclusions, ideal-fit conditions, and a CTA.
+// EngagementModels, three commercial tiers showing how customers buy from
+// Amstag. Each tier ships its inclusions, ideal-fit conditions, and a CTA.
 // The middle tier is highlighted as the most-chosen option (visual anchor).
 //
 // Layout: 1-col on mobile, 3-col on lg. Featured card is full-width on mobile
@@ -88,10 +88,10 @@ export function EngagementModels() {
               How we engage
             </div>
             <h2 className="mt-3 font-display text-3xl md:text-4xl font-bold text-[var(--ink)] text-balance">
-              Three ways to work with AMSTAG.
+              Three ways to work with Amstag.
             </h2>
             <p className="mt-4 text-base md:text-lg text-foreground/70">
-              From a single project to a multi-year programme — the commercial
+              From a single project to a multi-year programme, the commercial
               shape adapts to the work, not the other way around.
             </p>
           </div>
@@ -115,7 +115,7 @@ export function EngagementModels() {
             <Link to="/contact" className="text-[var(--brand)] hover:underline">
               Talk to a senior architect
             </Link>{" "}
-            — we'll help you scope it on a 30-min call.
+           , we'll help you scope it on a 30-min call.
           </p>
         </Reveal>
       </div>

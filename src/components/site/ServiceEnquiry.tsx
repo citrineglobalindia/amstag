@@ -1,4 +1,4 @@
-// ServiceEnquiry — service-aware enquiry surface used at the bottom of every
+// ServiceEnquiry, service-aware enquiry surface used at the bottom of every
 // individual service page. Three patterns combined into one component:
 //
 //  1. Quick-actions row (Call · WhatsApp · Email) with the *service name*
@@ -67,19 +67,19 @@ export function ServiceEnquiry({ service }: { service: Service }) {
     // eslint-disable-next-line no-console
     console.info("Service enquiry submitted", { service: service.slug, ...data });
     await new Promise((r) => setTimeout(r, 700));
-    toast.success(`Thanks — a senior ${service.shortLabel} architect will reach out within one business day.`);
+    toast.success(`Thanks, a senior ${service.shortLabel} architect will reach out within one business day.`);
     reset({ name: "", email: "", company: "", phone: "", message: "", answers: {} });
     setSubmitted(true);
   };
 
   // Pre-filled WhatsApp + email deep-links carry service context
   const whatsappLink = `https://wa.me/919945645909?text=${encodeURIComponent(
-    `Hi AMSTAG, I'd like to talk about ${service.title}.`
+    `Hi Amstag, I'd like to talk about ${service.title}.`
   )}`;
   const mailLink = `mailto:sales@amstag.in?subject=${encodeURIComponent(
     `Enquiry · ${service.title}`
   )}&body=${encodeURIComponent(
-    `Hi AMSTAG team,\n\nI'd like to discuss your ${service.title} practice. Some context:\n\n— `
+    `Hi Amstag team,\n\nI'd like to discuss your ${service.title} practice. Some context:\n\n,  `
   )}`;
 
   return (
@@ -102,7 +102,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
       />
 
       <div className="container-x relative z-10 grid gap-10 lg:grid-cols-12 lg:gap-14">
-        {/* Left column — context + quick actions */}
+        {/* Left column, context + quick actions */}
         <Reveal direction="right" className="lg:col-span-5">
           <div className="text-xs font-mono uppercase tracking-[0.25em] text-[var(--innovation)]">
             Enquire · {service.shortLabel}
@@ -111,8 +111,8 @@ export function ServiceEnquiry({ service }: { service: Service }) {
             Talk to a senior {service.shortLabel} architect.
           </h2>
           <p className="mt-3 text-sm md:text-base text-white/85 leading-relaxed">
-            We route enquiries by speciality — your message lands directly with
-            the team that runs {service.shortLabel} engagements at AMSTAG.
+            We route enquiries by speciality, your message lands directly with
+            the team that runs {service.shortLabel} engagements at Amstag.
             Most replies go out within hours.
           </p>
 
@@ -157,7 +157,7 @@ export function ServiceEnquiry({ service }: { service: Service }) {
           </div>
         </Reveal>
 
-        {/* Right column — form */}
+        {/* Right column, form */}
         <Reveal direction="left" delay={0.05} className="lg:col-span-7">
           <motion.form
             onSubmit={handleSubmit(onSubmit)}

@@ -1,4 +1,4 @@
-// Industries — horizontal auto-scrolling marquee.
+// Industries, horizontal auto-scrolling marquee.
 // A continuous-scroll reel of industry chips with a pinned featured card on
 // the left. The reel pauses on hover (CSS-driven) and links to /industries.
 // Signature animation: continuous translateX loop on a duplicated track.
@@ -68,9 +68,9 @@ export function Industries() {
             </div>
           </Reveal>
 
-          {/* Reel — desktop. On mobile we stack a compact wrap layout instead. */}
+          {/* Reel, desktop. On mobile we stack a compact wrap layout instead. */}
           <Reveal direction="left" delay={0.1} className="lg:col-span-7">
-            {/* Mobile: condensed wrap of chips (no marquee — feels janky on small screens) */}
+            {/* Mobile: condensed wrap of chips (no marquee, feels janky on small screens) */}
             <div className="md:hidden flex flex-wrap gap-2">
               {industries.slice(0, 9).map((it) => (
                 <Link

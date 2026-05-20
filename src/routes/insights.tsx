@@ -12,7 +12,7 @@ const featured = {
   category: "Cybersecurity",
   title: "The first 90 days of an enterprise SOC: what actually moves the needle",
   excerpt:
-    "Most SOC programs spend their first quarter assembling tools. The ones that work spend it agreeing on what 'normal' looks like — and how the business will be told when it isn't.",
+    "Most SOC programs spend their first quarter assembling tools. The ones that work spend it agreeing on what 'normal' looks like, and how the business will be told when it isn't.",
   date: "Apr 24, 2026",
   read: "11 min",
 };
@@ -21,7 +21,7 @@ const articles = [
   {
     category: "Cloud",
     title: "FinOps in Indian enterprises: where the rupee actually leaks",
-    excerpt: "Six waste patterns we keep finding inside AWS, Azure and GCP estates — and the controls that stop them.",
+    excerpt: "Six waste patterns we keep finding inside AWS, Azure and GCP estates, and the controls that stop them.",
     date: "Apr 12, 2026",
     read: "8 min",
   },
@@ -42,7 +42,7 @@ const articles = [
   {
     category: "Healthcare",
     title: "HIS uptime is a network problem before it's an application problem",
-    excerpt: "Why the bedside experience usually breaks at layer 2 — and the network designs that prevent it.",
+    excerpt: "Why the bedside experience usually breaks at layer 2, and the network designs that prevent it.",
     date: "Mar 6, 2026",
     read: "7 min",
   },
@@ -56,7 +56,7 @@ const articles = [
   {
     category: "Operations",
     title: "What a senior on-call rotation actually looks like",
-    excerpt: "How AMSTAG's NOC structures its first-30-minute response — and why most outages don't reach a customer notification.",
+    excerpt: "How Amstag's NOC structures its first-30-minute response, and why most outages don't reach a customer notification.",
     date: "Feb 8, 2026",
     read: "6 min",
   },
@@ -65,8 +65,8 @@ const articles = [
 export const Route = createFileRoute("/insights")({
   head: () => ({
     meta: [
-      { title: "Insights — AMSTAG | Field notes from enterprise IT" },
-      { name: "description", content: "Practical writing from AMSTAG engineers and architects on cybersecurity, cloud, networking and operations." },
+      { title: "Insights, Amstag | Field notes from enterprise IT" },
+      { name: "description", content: "Practical writing from Amstag engineers and architects on cybersecurity, cloud, networking and operations." },
     ],
   }),
   component: InsightsPage,
@@ -85,7 +85,7 @@ function InsightsPage() {
             </span>
           </>
         }
-        description="No vendor talking points. Just what we're seeing in production — across 250+ enterprise accounts — written by the architects and operators inside the work."
+        description="No vendor talking points. Just what we're seeing in production, across 250+ enterprise accounts, written by the architects and operators inside the work."
       />
 
       {/* Featured article */}

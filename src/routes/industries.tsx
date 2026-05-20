@@ -70,7 +70,7 @@ const industries = [
 export const Route = createFileRoute("/industries")({
   head: () => ({
     meta: [
-      { title: "Industries — AMSTAG | BFSI, Healthcare, Government, Manufacturing & more" },
+      { title: "Industries, Amstag | BFSI, Healthcare, Government, Manufacturing & more" },
       { name: "description", content: "Industry-specific IT engineering for BFSI, healthcare, government, manufacturing, retail, telecom, logistics and hospitality." },
     ],
   }),
@@ -90,7 +90,7 @@ function IndustriesPage() {
             </span>
           </>
         }
-        description="Each sector brings its own regulators, peak loads and failure modes. We bring the playbooks — refined across 250+ enterprise accounts — and adapt them to yours."
+        description="Each sector brings its own regulators, peak loads and failure modes. We bring the playbooks, refined across 250+ enterprise accounts, and adapt them to yours."
       />
 
       <section className="py-20 md:py-28">

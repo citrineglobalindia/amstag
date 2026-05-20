@@ -24,11 +24,11 @@ import { Toaster } from "@/components/ui/sonner";
 const orgJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "AMSTAG Tech Pvt. Ltd.",
+  name: "Amstag Tech Pvt. Ltd.",
   url: "https://www.amstag.in",
   logo: "https://www.amstag.in/logo.png",
   description:
-    "AMSTAG is a Bangalore-based IT infrastructure and managed services company delivering cybersecurity, cloud, data center and 24×7 support to India's leading enterprises.",
+    "Amstag is a Bangalore-based IT infrastructure and managed services company delivering cybersecurity, cloud, data center and 24×7 support to India's leading enterprises.",
   address: {
     "@type": "PostalAddress",
     streetAddress: "217, 8th Cross, BHEL Layout, II Stage, Pattanagere, R.R. Nagar",
@@ -45,9 +45,9 @@ const orgJsonLd = {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AMSTAG — Mission-critical IT for India's enterprises" },
+      { title: "Amstag, Mission-critical IT for India's enterprises" },
       { name: "description", content: "Managed services, cybersecurity, cloud and 24×7 support for BFSI, healthcare, government and manufacturing leaders. ACT · ACCELERATE · ACE." },
-      { property: "og:title", content: "AMSTAG — Your IT Partner" },
+      { property: "og:title", content: "Amstag, Your IT Partner" },
       { property: "og:description", content: "Enterprise IT infrastructure, cybersecurity, cloud and managed services. Bangalore HQ." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

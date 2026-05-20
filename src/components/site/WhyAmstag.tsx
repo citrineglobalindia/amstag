@@ -1,4 +1,4 @@
-// WhyAmstag — animated metric bars.
+// WhyAmstag, animated metric bars.
 // Four "proof bars" that fill on scroll into view, each tied to an outcome
 // metric (audit-finding reduction, MTTR, uptime, OEM partnerships). The
 // bar percentages animate via framer-motion `whileInView` with eased fills.
@@ -13,7 +13,7 @@ type Pillar = {
   icon: React.ComponentType<{ className?: string }>;
   title: string;
   blurb: string;
-  /** 0–100 — visualises the outcome strength. */
+  /** 0–100, visualises the outcome strength. */
   fill: number;
   /** Numerator metric (the actual value beside the bar). */
   metric: string;
@@ -69,7 +69,7 @@ export function WhyAmstag() {
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-12 items-start">
           <Reveal direction="right" className="lg:col-span-5">
             <SectionHeader
-              eyebrow="Why AMSTAG"
+              eyebrow="Why Amstag"
               title="Built for boards. Trusted by operators."
               desc="Four operating principles, each with a measurable proof point we publish to customers every quarter."
             />

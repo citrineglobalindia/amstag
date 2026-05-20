@@ -71,11 +71,11 @@ export function Footer() {
           three quick-link chip rows, contact, socials, legal. */}
       <CompactMobileFooter />
 
-      {/* Desktop footer (md+) — FooterGlow centrepiece + 3 detail cards */}
+      {/* Desktop footer (md+), FooterGlow centrepiece + 3 detail cards */}
       <div className="hidden md:block">
         <FooterGlow
           brand={{
-            name: "AMSTAG",
+            name: "Amstag",
             href: "/",
             description:
               "Mission-critical IT infrastructure, cybersecurity, cloud and managed services for India's most demanding enterprises. ACT · ACCELERATE · ACE.",
@@ -107,7 +107,7 @@ export function Footer() {
                 </span>
               </motion.span>
               <span className="opacity-50">·</span>
-              <span>&copy; {new Date().getFullYear()} AMSTAG Tech Pvt. Ltd.</span>
+              <span>&copy; {new Date().getFullYear()} Amstag Tech Pvt. Ltd.</span>
             </span>
           }
         />
@@ -166,7 +166,7 @@ export function Footer() {
                   <Mail className="h-4 w-4" /> Quarterly insights
                 </div>
                 <p className="mt-2 text-xs text-white/75">
-                  For IT leaders. No spam — unsubscribe any time.
+                  For IT leaders. No spam, unsubscribe any time.
                 </p>
                 <form onSubmit={(e) => e.preventDefault()} className="mt-3 flex gap-2">
                   <Input
@@ -192,7 +192,7 @@ export function Footer() {
         </StaggerContainer>
       </div>
 
-      {/* Bottom legal bar — shared across both layouts */}
+      {/* Bottom legal bar, shared across both layouts */}
       <div className="border-t border-white/10 relative z-10">
         <div className="container-x py-4 md:py-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-[11px] md:text-xs text-white/65">
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1">
@@ -258,7 +258,7 @@ function CompactMobileFooter() {
           <div className="flex items-center gap-3">
             <AmstagLogo size="md" />
             <div className="min-w-0">
-              <div className="font-display text-lg font-bold leading-tight">AMSTAG</div>
+              <div className="font-display text-lg font-bold leading-tight">Amstag</div>
               <div className="mt-0.5 inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-[var(--innovation)]">
                 <span className="relative flex size-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--innovation)] opacity-75" />
@@ -293,7 +293,7 @@ function CompactMobileFooter() {
             </motion.a>
           </div>
 
-          {/* Contact card — single source of address + email */}
+          {/* Contact card, single source of address + email */}
           <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.04] p-4 space-y-3">
             <div className="flex items-start gap-2.5 text-sm">
               <MapPin className="h-4 w-4 text-[var(--innovation)] shrink-0 mt-0.5" />
@@ -311,7 +311,7 @@ function CompactMobileFooter() {
             </a>
           </div>
 
-          {/* Accordion nav — Services / Industries / Company */}
+          {/* Accordion nav, Services / Industries / Company */}
           <nav aria-label="Footer navigation" className="mt-5 rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden">
             {columns.map((col, i) => {
               const isOpen = openIdx === i;
@@ -371,7 +371,7 @@ function CompactMobileFooter() {
             })}
           </nav>
 
-          {/* Newsletter — compact 1-line form */}
+          {/* Newsletter, compact 1-line form */}
           <form
             onSubmit={(e) => e.preventDefault()}
             className="mt-5 rounded-xl border border-white/10 bg-white/[0.04] p-3"
@@ -416,7 +416,7 @@ function CompactMobileFooter() {
           </div>
 
           <p className="mt-5 text-center text-[11px] text-white/60">
-            &copy; {new Date().getFullYear()} AMSTAG Tech Pvt. Ltd.
+            &copy; {new Date().getFullYear()} Amstag Tech Pvt. Ltd.
           </p>
         </div>
       </Reveal>

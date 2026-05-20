@@ -1,4 +1,4 @@
-// FloatingActions — single fixed-position container that stacks the chatbot
+// FloatingActions, single fixed-position container that stacks the chatbot
 // launcher above the WhatsApp FAB in a clean vertical column at the bottom-right
 // of every page. Both children are size-locked (h-14 w-14, see WhatsAppFab.tsx
 // and Chatbot.tsx) so they share a centre line and visually read as a pair.

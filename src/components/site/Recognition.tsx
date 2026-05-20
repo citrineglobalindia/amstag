@@ -1,4 +1,4 @@
-// Recognition — three rolled-up trust signals on one section:
+// Recognition, three rolled-up trust signals on one section:
 //   1. Partner tier strip (40+ OEM partnerships, 12 highlighted)
 //   2. Award timeline (selected industry recognition)
 //   3. Press / media-mentions row
@@ -34,17 +34,17 @@ const TIER_TONE: Record<NonNullable<typeof PARTNERS[number]["tier"]>, string> = 
 };
 
 const AWARDS = [
-  { year: "2024", title: "CMMI Maturity Level 3", body: "Re-certified — global delivery maturity benchmark." },
-  { year: "2023", title: "AWS Partner — Advanced Tier", body: "Promoted from Select Tier after 200+ certifications." },
+  { year: "2024", title: "CMMI Maturity Level 3", body: "Re-certified, global delivery maturity benchmark." },
+  { year: "2023", title: "AWS Partner, Advanced Tier", body: "Promoted from Select Tier after 200+ certifications." },
   { year: "2022", title: "Microsoft Solutions Partner", body: "Modern Work + Security + Azure Infrastructure." },
-  { year: "2021", title: "Best Managed Service Provider · South India", body: "Awarded by CIO Tech Asia — Enterprise IT Awards." },
+  { year: "2021", title: "Best Managed Service Provider · South India", body: "Awarded by CIO Tech Asia, Enterprise IT Awards." },
 ];
 
 const PRESS = [
   { quote: "...redefined what 'managed' means for the Indian mid-market.", outlet: "CIO Tech Asia" },
   { quote: "Their SOC stopped a credential-stuffing wave in real time.", outlet: "ETCISO Quarterly" },
   { quote: "Senior accountability without enterprise-consultancy bloat.", outlet: "Express Computer" },
-  { quote: "RBI cyber-resilience scoring 87/100 — top-decile for an NBFC.", outlet: "Financial Express" },
+  { quote: "RBI cyber-resilience scoring 87/100, top-decile for an NBFC.", outlet: "Financial Express" },
 ];
 
 export function Recognition() {
@@ -73,7 +73,7 @@ export function Recognition() {
               <div>
                 <h3 className="font-display text-xl font-bold text-[var(--ink)]">OEM Partners</h3>
                 <p className="text-sm text-foreground/60">
-                  12 of our 40+ OEM partnerships shown — tiers reflect certification depth.
+                  12 of our 40+ OEM partnerships shown, tiers reflect certification depth.
                 </p>
               </div>
               <span className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-[10px] font-mono uppercase tracking-widest text-foreground/60">
@@ -172,7 +172,7 @@ export function Recognition() {
                       "{p.quote}"
                     </blockquote>
                     <figcaption className="mt-3 text-[10px] font-mono uppercase tracking-widest text-[var(--brand)]">
-                      — {p.outlet}
+                     , {p.outlet}
                     </figcaption>
                   </motion.figure>
                 </StaggerItem>

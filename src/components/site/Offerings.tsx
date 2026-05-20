@@ -1,4 +1,4 @@
-// Offerings — featured-current showcase. One headline service occupies the
+// Offerings, featured-current showcase. One headline service occupies the
 // large left tile and animates a focused inner illustration; three smaller
 // tiles on the right surface the next-most-relevant practices. Hovering or
 // tapping a small tile swaps it into the featured slot. A single "explore
@@ -23,13 +23,13 @@ export function Offerings() {
         <Reveal>
           <SectionHeader
             eyebrow="Offerings"
-            title="A full-stack IT partner — from copper to cloud."
+            title="A full-stack IT partner, from copper to cloud."
             desc="Eight integrated practices, one accountable team. Browse the highlights here, then explore each one in depth."
           />
         </Reveal>
 
         <div className="mt-12 grid gap-5 lg:grid-cols-12 lg:gap-6">
-          {/* Featured tile — animates on swap */}
+          {/* Featured tile, animates on swap */}
           <Reveal direction="right" className="lg:col-span-7">
             <AnimatePresence mode="wait">
               <motion.article
@@ -106,7 +106,7 @@ export function Offerings() {
             </AnimatePresence>
           </Reveal>
 
-          {/* Right column — selectable mini cards */}
+          {/* Right column, selectable mini cards */}
           <div className="lg:col-span-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
             {FEATURED.map((s, i) => (
               <Reveal key={s.slug} direction="left" delay={i * 0.06}>

@@ -1,8 +1,8 @@
-// AmstagLogo — single source of truth for the AMSTAG brand mark.
+// AmstagLogo, single source of truth for the Amstag brand mark.
 // Renders the official logo asset (public/logo.png) and exposes two
 // presentation variants:
 //   - mark: just the deer-and-A badge (square)
-//   - lockup: badge + AMSTAG wordmark side by side
+//   - lockup: badge + Amstag wordmark side by side
 // Wordmark colour adapts to the parent's `dark` prop so the logo works on
 // both light surfaces and the dark hero / footer.
 import * as React from "react";
@@ -31,7 +31,7 @@ export type AmstagLogoProps = {
   /** Use light wordmark colour (white) for dark backgrounds. */
   dark?: boolean;
   className?: string;
-  /** Override accessible label. Defaults to "AMSTAG". */
+  /** Override accessible label. Defaults to "Amstag". */
   alt?: string;
 };
 
@@ -40,7 +40,7 @@ export function AmstagLogo({
   withWordmark = false,
   dark = false,
   className = "",
-  alt = "AMSTAG",
+  alt = "Amstag",
 }: AmstagLogoProps) {
   const px = SIZE_PX[size];
   return (
@@ -61,7 +61,7 @@ export function AmstagLogo({
             WORDMARK_TEXT_CLASS[size]
           } ${dark ? "text-white" : "text-[var(--ink)]"}`}
         >
-          AMSTAG
+          Amstag
         </span>
       )}
     </span>

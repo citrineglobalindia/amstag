@@ -1,4 +1,4 @@
-// SiteLoader — first-paint branded splash screen.
+// SiteLoader, first-paint branded splash screen.
 //
 // Lifecycle:
 //   1. Renders immediately on mount (covers the page during initial hydration).
@@ -12,7 +12,7 @@
 // Visuals:
 //   - Dark ink background with breathing brand+innovation glow blobs and
 //     grid mesh.
-//   - The AMSTAG logo sits in the centre with two animated rings around it
+//   - The Amstag logo sits in the centre with two animated rings around it
 //     (orbital dashed ring + expanding ping ring) and a sweeping highlight
 //     across the wordmark.
 //   - An indeterminate gradient progress bar runs along the bottom while
@@ -65,7 +65,7 @@ export function SiteLoader() {
       }, remaining);
     };
 
-    // Failsafe — never trap the user behind the splash
+    // Failsafe, never trap the user behind the splash
     const failsafe = window.setTimeout(finish, FAILSAFE_MS);
 
     if (imgLoaded) {
@@ -103,7 +103,7 @@ export function SiteLoader() {
           key="site-loader"
           role="status"
           aria-live="polite"
-          aria-label="Loading AMSTAG"
+          aria-label="Loading Amstag"
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -202,19 +202,19 @@ export function SiteLoader() {
 
             {/* Wordmark with gradient sheen */}
             <div className="mt-6 relative">
-              <span className="font-display text-2xl md:text-3xl font-bold tracking-[0.2em] text-white/90">
-                AMSTAG
+              <span className="font-display text-3xl md:text-4xl font-bold text-white/90">
+                Amstag
               </span>
               {!reduce && (
                 <motion.span
                   aria-hidden
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent bg-clip-text text-transparent font-display text-2xl md:text-3xl font-bold tracking-[0.2em]"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent bg-clip-text text-transparent font-display text-3xl md:text-4xl font-bold"
                   initial={{ backgroundPosition: "-200% 0" }}
                   animate={{ backgroundPosition: ["-200% 0", "200% 0"] }}
                   transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
                   style={{ backgroundSize: "200% 100%" }}
                 >
-                  AMSTAG
+                  Amstag
                 </motion.span>
               )}
             </div>

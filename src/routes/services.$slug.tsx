@@ -27,9 +27,9 @@ export const Route = createFileRoute("/services/$slug")({
     if (!s) return {};
     return {
       meta: [
-        { title: `${s.title} — AMSTAG | ${s.tagline}` },
+        { title: `${s.title}, Amstag | ${s.tagline}` },
         { name: "description", content: s.description },
-        { property: "og:title", content: `${s.title} — AMSTAG` },
+        { property: "og:title", content: `${s.title}, Amstag` },
         { property: "og:description", content: s.description },
       ],
     };
@@ -124,7 +124,7 @@ function ServiceHero({ service }: { service: Service }) {
           </Reveal>
         </div>
 
-        {/* Right column — animated icon focal */}
+        {/* Right column, animated icon focal */}
         <Reveal direction="left" delay={0.15} className="lg:col-span-5">
           <div className="relative h-[320px] md:h-[420px] grid place-items-center">
             {/* Concentric guide rings */}
@@ -379,5 +379,5 @@ function Related({ service }: { service: Service }) {
   );
 }
 
-// Pre-warm imports for SSR linking — TanStack tree-shakes these otherwise.
+// Pre-warm imports for SSR linking, TanStack tree-shakes these otherwise.
 export const _allServices = SERVICES;

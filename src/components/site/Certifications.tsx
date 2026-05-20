@@ -1,4 +1,4 @@
-// Certifications — animated badge / medal reveals.
+// Certifications, animated badge / medal reveals.
 // Each cert renders as a circular medallion with a rotating dashed ring,
 // a check-mark that draws itself in, and a moving sheen on the badge face.
 // OEM partners are a smaller secondary row of stagger-fade chips.
@@ -119,7 +119,7 @@ function CertBadge({
           <Icon className="relative h-7 w-7 text-[var(--brand)]" strokeWidth={2} />
         </div>
 
-        {/* Tick badge — top-right corner */}
+        {/* Tick badge, top-right corner */}
         <motion.svg
           viewBox="0 0 24 24"
           className="absolute -bottom-1 -right-1 h-7 w-7 rounded-full bg-[var(--innovation)] text-white shadow-md p-1"

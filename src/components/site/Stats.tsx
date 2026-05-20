@@ -1,4 +1,4 @@
-// Stats — animated progress-ring counters.
+// Stats, animated progress-ring counters.
 // Each stat draws an SVG arc + a counting number that synchronously fills
 // from 0 → target value over 1.6s on first scroll into view. Each ring has
 // its own tone, and the cards lift when hovered.
@@ -14,7 +14,7 @@ type Stat = {
   decimals?: number;
   /** What to append after the count (e.g. "+", "%"). */
   suffix?: string;
-  /** What goes before (e.g. "ISO " for non-numeric stats — see below). */
+  /** What goes before (e.g. "ISO " for non-numeric stats, see below). */
   prefix?: string;
   label: string;
   sub: string;
@@ -27,10 +27,10 @@ type Stat = {
 
 const stats: Stat[] = [
   {
-    to: 18,
+    to: 8,
     suffix: "+",
     label: "Years of engineering",
-    sub: "Since 2007 · Bangalore HQ",
+    sub: "Since 2018 · Bangalore HQ",
     icon: Building2,
     ring: "text-[var(--brand)]",
     stroke: "oklch(0.58 0.22 258)",
@@ -75,7 +75,7 @@ export function Stats() {
               By the numbers
             </div>
             <h2 className="mt-3 font-display text-3xl md:text-4xl font-bold text-[var(--ink)] text-balance">
-              Eighteen years, measured.
+              Eight years, measured.
             </h2>
           </div>
         </Reveal>

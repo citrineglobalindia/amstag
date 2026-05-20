@@ -21,17 +21,17 @@ import { SectionHeader } from "@/components/site/Offerings";
 import { Button } from "@/components/ui/button";
 
 const milestones = [
-  { year: "2007", title: "Founded in Bangalore", body: "Started as a 4-person systems integration shop on the BHEL Layout campus." },
-  { year: "2011", title: "First enterprise BFSI win", body: "Onboarded a top-15 NBFC; built our managed-services playbook around it." },
-  { year: "2015", title: "ISO 27001 certified", body: "Formalised our security posture; opened the 24×7 NOC/SOC." },
-  { year: "2018", title: "100th enterprise client", body: "Crossed the 100-customer mark; expanded coverage to South India + Mumbai." },
-  { year: "2021", title: "Cloud Centre of Excellence", body: "Launched dedicated AWS, Azure, GCP and VMware practices." },
-  { year: "2024", title: "CMMI Level 3", body: "Re-engineered delivery to a global maturity standard." },
+  { year: "2018", title: "Founded in Bangalore", body: "Started as a 4-person systems integration shop on the BHEL Layout campus." },
+  { year: "2019", title: "First enterprise BFSI win", body: "Onboarded a top-15 NBFC; built our managed-services playbook around it." },
+  { year: "2021", title: "ISO 27001 certified", body: "Formalised our security posture; opened the 24×7 NOC/SOC." },
+  { year: "2022", title: "100th enterprise client", body: "Crossed the 100-customer mark; expanded coverage to South India and Mumbai." },
+  { year: "2024", title: "Cloud Centre of Excellence", body: "Launched dedicated AWS, Azure, GCP and VMware practices." },
+  { year: "2026", title: "CMMI Level 3", body: "Re-engineered delivery to a global maturity standard." },
 ];
 
 const values = [
   { icon: ShieldCheck, title: "Resilience first", body: "We design for the worst case so your business never sees one." },
-  { icon: HeartHandshake, title: "Senior accountability", body: "Every account has a senior owner — escalation isn't a queue." },
+  { icon: HeartHandshake, title: "Senior accountability", body: "Every account has a senior owner, escalation isn't a queue." },
   { icon: Sparkles, title: "Engineered, not assembled", body: "We solve root causes with custom playbooks, not stitched-together tools." },
   { icon: Compass, title: "Outcome over output", body: "We measure success by your uptime, audits passed, threats blocked." },
 ];
@@ -51,7 +51,7 @@ const leadership: Array<{
   {
     name: "Anand M.",
     role: "Founder & CEO",
-    bio: "20+ years in enterprise IT. Architect of the AMSTAG operating model. Ex-IBM, ex-Wipro Infrastructure Services.",
+    bio: "20+ years in enterprise IT. Architect of the Amstag operating model. Ex-IBM, ex-Wipro Infrastructure Services.",
     expertise: ["Strategy", "BFSI", "Operating model"],
     tone: "brand",
     linkedin: "#",
@@ -113,8 +113,8 @@ const TONE: Record<LeaderTone, { gradient: string; ring: string; chip: string }>
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About AMSTAG — Bangalore IT infrastructure & managed services" },
-      { name: "description", content: "Founded in 2007, AMSTAG runs mission-critical IT for India's enterprises. Meet the team, mission and milestones." },
+      { title: "About Amstag, Bangalore IT infrastructure & managed services" },
+      { name: "description", content: "Founded in 2018, Amstag runs mission-critical IT for India's enterprises. Meet the team, mission and milestones." },
     ],
   }),
   component: AboutPage,
@@ -124,7 +124,7 @@ function AboutPage() {
   return (
     <PageShell>
       <PageHero
-        eyebrow="About AMSTAG"
+        eyebrow="About Amstag"
         title={
           <>
             Engineering trust into{" "}
@@ -133,7 +133,7 @@ function AboutPage() {
             </span>
           </>
         }
-        description="Eighteen years. 250+ enterprise customers. One mandate: keep the systems your business depends on running — quietly, securely, and faster than they did yesterday."
+        description="Eight years. 250+ enterprise customers. One mandate: keep the systems your business depends on running, quietly, securely, and faster than they did yesterday."
       />
 
       {/* Mission strip */}
@@ -146,7 +146,7 @@ function AboutPage() {
             <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
               India's leaders in BFSI, healthcare, government and manufacturing don't have time for IT
               that needs babysitting. We design infrastructure, security and operations that compound in
-              reliability — so your teams can ship the next thing instead of fighting the last incident.
+              reliability, so your teams can ship the next thing instead of fighting the last incident.
             </p>
           </Reveal>
         </div>
@@ -226,7 +226,7 @@ function AboutPage() {
         <div className="container-x">
           <StaggerContainer stagger={0.08} className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
             {[
-              { icon: Building2, value: "18+", label: "Years engineering enterprise IT" },
+              { icon: Building2, value: "8+", label: "Years engineering enterprise IT" },
               { icon: Users, value: "250+", label: "Enterprise customers" },
               { icon: Award, value: "ISO 27001", label: "And ISO 9001 + CMMI L3" },
               { icon: Target, value: "99.99%", label: "Average uptime SLA delivered" },
@@ -281,7 +281,7 @@ function DirectorSpeech() {
               transition={{ type: "spring", stiffness: 200, damping: 22 }}
               className="relative aspect-[4/5] rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-md p-6 flex flex-col justify-end overflow-hidden"
             >
-              {/* Initials avatar — large */}
+              {/* Initials avatar, large */}
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
@@ -304,7 +304,7 @@ function DirectorSpeech() {
               <div className="relative">
                 <div className="text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--innovation)]">Founder & CEO</div>
                 <div className="mt-1 font-display text-2xl font-bold">Anand M.</div>
-                <div className="mt-0.5 text-xs text-white/60">Bangalore, India · 18 years in enterprise IT</div>
+                <div className="mt-0.5 text-xs text-white/60">Bangalore, India · 8 years in enterprise IT</div>
               </div>
             </motion.div>
           </div>
@@ -322,21 +322,21 @@ function DirectorSpeech() {
               Director's address
             </div>
             <h2 className="mt-3 font-display text-2xl md:text-4xl font-bold leading-tight text-balance">
-              "When we started AMSTAG in 2007, we made one promise — that the
+              "When we started Amstag in 2018, we made one promise: that the
               business calling us at 2 a.m. would speak to a senior engineer,
               not a ticket queue."
             </h2>
             <div className="mt-6 space-y-4 text-white/75 leading-relaxed text-base md:text-lg">
               <p>
-                Eighteen years on, that promise still anchors how we hire, how
+                Eight years on, that promise still anchors how we hire, how
                 we structure our NOC, and how we measure ourselves. We've
                 built our practice in plain sight of India's most demanding
-                regulators — RBI, SEBI, MeitY, IRDAI — and we've earned the
+                regulators, RBI, SEBI, MeitY, IRDAI, and we've earned the
                 trust of CIOs by being painfully transparent on the days
                 things get hard.
               </p>
               <p>
-                What you'll find on this site is the work — the case studies,
+                What you'll find on this site is the work, the case studies,
                 the certifications, the team. What you won't find on this
                 site is the texture of how we operate day to day. For that,
                 we'd love a conversation.
@@ -365,7 +365,7 @@ function DirectorSpeech() {
               </motion.svg>
               <div>
                 <div className="font-display text-base font-semibold">Anand M.</div>
-                <div className="text-[11px] font-mono uppercase tracking-widest text-white/50">Founder & CEO, AMSTAG</div>
+                <div className="text-[11px] font-mono uppercase tracking-widest text-white/50">Founder & CEO, Amstag</div>
               </div>
             </div>
 
@@ -428,7 +428,7 @@ function TeamShowcase() {
                       </div>
                     </motion.div>
 
-                    {/* Social row — slides up on hover */}
+                    {/* Social row, slides up on hover */}
                     <motion.div
                       variants={{
                         hover: { opacity: 1, y: 0 },

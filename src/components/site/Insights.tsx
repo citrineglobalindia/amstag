@@ -1,4 +1,4 @@
-// Insights — 1 featured article with rotating gradient + 2 mini articles.
+// Insights, 1 featured article with rotating gradient + 2 mini articles.
 // Replaces the dense card grid with a compact teaser pattern that links
 // straight to /insights for the rest.
 // Signature animation: slow-rotating mesh gradient on the featured cover,
@@ -41,7 +41,7 @@ export function Insights() {
           <SectionHeader
             eyebrow="Insights"
             title="Field notes from production."
-            desc="Practical writing from AMSTAG architects on cybersecurity, cloud, networking and operations. The deep archive lives on the Insights page."
+            desc="Practical writing from Amstag architects on cybersecurity, cloud, networking and operations. The deep archive lives on the Insights page."
           />
         </Reveal>
 

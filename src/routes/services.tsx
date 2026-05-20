@@ -11,7 +11,7 @@ import { SERVICES } from "@/lib/services";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — AMSTAG | Data Center, Cloud, Cybersecurity, Managed IT" },
+      { title: "Services, Amstag | Data Center, Cloud, Cybersecurity, Managed IT" },
       { name: "description", content: "Eight enterprise IT practices: data center, networking, cloud, cybersecurity, managed services, compliance, backup & DR, and modern workplace." },
     ],
   }),
@@ -31,7 +31,7 @@ function ServicesPage() {
             </span>
           </>
         }
-        description="From racks to runbooks, identity to incident response — every service comes with a senior owner, a measurable SLA, and the engineers to back it up. Each practice has its own deep-dive page below."
+        description="From racks to runbooks, identity to incident response, every service comes with a senior owner, a measurable SLA, and the engineers to back it up. Each practice has its own deep-dive page below."
       >
         <Button asChild size="lg" className="bg-[var(--brand)] hover:bg-[var(--brand-hover)] text-white h-12 px-6 rounded-lg group">
           <Link to="/contact">
@@ -43,7 +43,7 @@ function ServicesPage() {
       <section className="py-20 md:py-28">
         <div className="container-x">
           <Reveal>
-            <SectionHeader eyebrow="What we do" title="The full stack — engineered, not assembled." />
+            <SectionHeader eyebrow="What we do" title="The full stack, engineered, not assembled." />
           </Reveal>
           <StaggerContainer stagger={0.06} className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {SERVICES.map((s) => (

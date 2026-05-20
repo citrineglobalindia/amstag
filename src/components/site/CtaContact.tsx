@@ -29,7 +29,7 @@ export function CtaContact() {
   const onSubmit = async (data: FormData) => {
     if (data.website) return; // honeypot
     await new Promise((r) => setTimeout(r, 700));
-    toast.success("Thanks — we'll be in touch within one business day.");
+    toast.success("Thanks, we'll be in touch within one business day.");
     reset();
     setSubmitted(true);
   };
@@ -54,7 +54,7 @@ export function CtaContact() {
           <div>
             <div className="text-xs uppercase tracking-[0.25em] font-mono text-[var(--innovation)]">Let's talk</div>
             <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold text-white text-balance">
-              Let's design IT that runs your business — not the other way around.
+              Let's design IT that runs your business, not the other way around.
             </h2>
             <p className="mt-4 text-white/85 max-w-xl">
               Tell us about your environment and goals. A senior architect will reach out within one business day.

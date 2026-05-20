@@ -1,4 +1,4 @@
-// Innovation — terminal-typewriter section.
+// Innovation, terminal-typewriter section.
 // A faux-terminal panel cycles through three "deploy" lines that type
 // themselves out character-by-character; the right column shows the
 // short pitch with a single "Read more →" CTA into /case-studies.
@@ -75,7 +75,7 @@ export function Innovation() {
       />
 
       <div className="container-x relative z-10 grid gap-10 lg:grid-cols-12 lg:gap-14 items-center">
-        {/* Left — pitch */}
+        {/* Left, pitch */}
         <Reveal direction="right" className="lg:col-span-5">
           <div className="text-xs font-mono uppercase tracking-[0.25em] text-[var(--innovation)]">
             Innovation Lab
@@ -100,7 +100,7 @@ export function Innovation() {
           </Link>
         </Reveal>
 
-        {/* Right — terminal */}
+        {/* Right, terminal */}
         <Reveal direction="left" delay={0.1} className="lg:col-span-7">
           <div className="relative">
             {/* Halo */}
