@@ -202,13 +202,13 @@ export function SiteLoader() {
 
             {/* Wordmark with gradient sheen */}
             <div className="mt-6 relative">
-              <span className="font-display text-3xl md:text-4xl font-bold text-white/90">
+              <span className="font-display text-2xl md:text-3xl font-bold tracking-[0.2em] text-white/90">
                 Amstag
               </span>
               {!reduce && (
                 <motion.span
                   aria-hidden
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent bg-clip-text text-transparent font-display text-3xl md:text-4xl font-bold"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent bg-clip-text text-transparent font-display text-2xl md:text-3xl font-bold tracking-[0.2em]"
                   initial={{ backgroundPosition: "-200% 0" }}
                   animate={{ backgroundPosition: ["-200% 0", "200% 0"] }}
                   transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
