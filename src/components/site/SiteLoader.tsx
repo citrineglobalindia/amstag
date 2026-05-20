@@ -28,20 +28,26 @@ const MIN_DISPLAY_MS = 1100;
 const FAILSAFE_MS = 4500;
 
 export function SiteLoader() {
-  const [visible, setVisible] = useState(true);
+  // CRITICAL: start hidden so SSR doesn't ship a z-[200] overlay covering
+  // the entire page. If JS hydration ever stalls or errors, the user still
+  // sees the real page content (which is fully rendered in the SSR HTML)
+  // instead of being trapped behind the splash forever.
+  const [visible, setVisible] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
   const reduce = useReducedMotion();
 
-  // Suppress on subsequent in-session navigations
+  // After client mount, decide whether to show the splash this session.
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
       if (window.sessionStorage.getItem(SESSION_KEY)) {
-        setVisible(false);
+        // Already shown this session — leave hidden.
+        return;
       }
     } catch {
-      // ignore privacy-mode failures
+      // sessionStorage unavailable — show splash this once.
     }
+    setVisible(true);
   }, []);
 
   // Once mounted, wait for image AND minimum display window
