@@ -1,71 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import {
-  Building2,
-  Factory,
-  HeartPulse,
-  Landmark,
-  Radio,
-  ShoppingBag,
-  Truck,
-  Wallet,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import { PageHero } from "@/components/site/PageHero";
 import { Reveal, StaggerContainer, StaggerItem } from "@/components/site/motion";
 import { SectionHeader } from "@/components/site/Offerings";
 import { Button } from "@/components/ui/button";
-
-const industries = [
-  {
-    icon: Wallet,
-    name: "BFSI",
-    headline: "RBI/SEBI-grade controls. Audit-week confidence.",
-    points: ["Core banking + treasury support", "Continuous compliance pipelines", "24×7 SOC, RBI cyber resilience"],
-  },
-  {
-    icon: HeartPulse,
-    name: "Healthcare",
-    headline: "HIS/EMR uptime that keeps wards moving.",
-    points: ["HIS/PACS/LIS integrations", "HIPAA-aligned data handling", "Bedside-grade endpoint posture"],
-  },
-  {
-    icon: Landmark,
-    name: "Government",
-    headline: "Citizen-scale systems with audit-grade trails.",
-    points: ["e-Gov platform operations", "MeitY guidelines + CERT-In", "Sovereign cloud + on-prem hybrids"],
-  },
-  {
-    icon: Factory,
-    name: "Manufacturing",
-    headline: "OT + IT, finally on the same network plan.",
-    points: ["Plant-floor + ERP integrations", "OT segmentation + visibility", "Resilient WAN across plants"],
-  },
-  {
-    icon: ShoppingBag,
-    name: "Retail",
-    headline: "Storefront uptime, billion-event peak days.",
-    points: ["POS + omnichannel platforms", "Edge networking at scale", "PCI DSS continuous compliance"],
-  },
-  {
-    icon: Radio,
-    name: "Telecom",
-    headline: "Carrier-grade ops without carrier overhead.",
-    points: ["BSS/OSS support", "Edge + core observability", "Resilient backhaul + peering"],
-  },
-  {
-    icon: Truck,
-    name: "Logistics",
-    headline: "Track every parcel; protect every API.",
-    points: ["WMS / TMS operations", "API gateway + bot defense", "Hub-and-spoke connectivity"],
-  },
-  {
-    icon: Building2,
-    name: "Real Estate & Hospitality",
-    headline: "Distributed properties, centralised IT.",
-    points: ["Property-level SD-WAN", "Guest Wi-Fi + PCI", "Centralised identity + helpdesk"],
-  },
-];
+import { INDUSTRIES } from "@/lib/industries";
 
 export const Route = createFileRoute("/industries")({
   head: () => ({
@@ -90,36 +31,58 @@ function IndustriesPage() {
             </span>
           </>
         }
-        description="Each sector brings its own regulators, peak loads and failure modes. We bring the playbooks, refined across 250+ enterprise accounts, and adapt them to yours."
+        description="Each sector brings its own regulators, peak loads and failure modes. We bring the playbooks, refined across 250+ enterprise accounts, and adapt them to yours. Pick a sector below to go deeper."
       />
 
       <section className="py-20 md:py-28">
         <div className="container-x">
           <Reveal>
-            <SectionHeader eyebrow="Where we deliver" title="Eight industries. Specialist teams in each." />
+            <SectionHeader eyebrow="Where we deliver" title="Eight sectors. Specialist teams in each." />
           </Reveal>
           <StaggerContainer stagger={0.06} className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {industries.map((ind) => (
-              <StaggerItem key={ind.name}>
-                <motion.article
-                  whileHover={{ y: -8, borderColor: "var(--brand)" }}
-                  transition={{ type: "spring", stiffness: 280, damping: 22 }}
-                  className="group h-full rounded-xl border border-border bg-card p-6"
+            {INDUSTRIES.map((ind) => (
+              <StaggerItem key={ind.slug}>
+                <Link
+                  to="/industries/$slug"
+                  params={{ slug: ind.slug }}
+                  className="block h-full group outline-none"
                 >
-                  <div className="grid place-items-center w-11 h-11 rounded-lg bg-[var(--innovation)]/10 text-[var(--innovation)] group-hover:bg-[var(--innovation)] group-hover:text-white transition-colors">
-                    <ind.icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="mt-5 font-display text-lg font-bold text-[var(--ink)]">{ind.name}</h3>
-                  <p className="mt-2 text-sm text-[var(--brand)] font-medium">{ind.headline}</p>
-                  <ul className="mt-4 space-y-1.5 text-sm text-foreground/70">
-                    {ind.points.map((p) => (
-                      <li key={p} className="flex items-start gap-2">
-                        <span className="mt-1.5 inline-block w-1.5 h-1.5 rounded-full bg-[var(--brand)] shrink-0" />
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.article>
+                  <motion.article
+                    whileHover={{ y: -8, borderColor: "var(--brand)" }}
+                    transition={{ type: "spring", stiffness: 280, damping: 22 }}
+                    className="relative h-full rounded-xl border border-border bg-card p-6 overflow-hidden"
+                  >
+                    {/* Tone-tinted hover glow */}
+                    <motion.div
+                      aria-hidden
+                      className={`pointer-events-none absolute -top-16 -right-16 h-40 w-40 rounded-full blur-3xl bg-gradient-to-br ${ind.tone.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                    />
+                    <div
+                      className={`relative grid place-items-center w-11 h-11 rounded-lg border bg-gradient-to-br ${ind.tone.gradient} ${ind.tone.chipBorder} text-white`}
+                      style={{ boxShadow: `0 0 24px -6px ${ind.tone.glow}` }}
+                    >
+                      <ind.icon className="h-5 w-5" strokeWidth={1.8} />
+                    </div>
+                    <h3 className="relative mt-5 font-display text-lg font-bold text-[var(--ink)] group-hover:text-[var(--brand)] transition-colors">
+                      {ind.shortLabel}
+                    </h3>
+                    <p className="relative mt-2 text-sm text-[var(--brand)] font-medium">{ind.tagline}</p>
+                    <ul className="relative mt-4 space-y-1.5 text-sm text-foreground/75">
+                      {ind.hero.bullets.slice(0, 3).map((p) => (
+                        <li key={p} className="flex items-start gap-2">
+                          <span className="mt-1.5 inline-block w-1.5 h-1.5 rounded-full bg-[var(--brand)] shrink-0" />
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="relative mt-5 flex items-center justify-between border-t border-border pt-4">
+                      <span className="text-xs font-mono uppercase tracking-widest text-foreground/55">
+                        Explore sector
+                      </span>
+                      <ArrowUpRight className="h-4 w-4 text-foreground/40 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-[var(--brand)]" />
+                    </div>
+                  </motion.article>
+                </Link>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -134,15 +97,19 @@ function IndustriesPage() {
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-4 text-white/70 max-w-2xl mx-auto">
-              Our engineering disciplines transfer. Tell us your operating environment and the
-              outcomes you need; we'll show you which playbooks apply.
+            <p className="mt-4 text-white/75 max-w-2xl mx-auto">
+              Our engineering disciplines transfer. Tell us your operating
+              environment and the outcomes you need; we'll show you which
+              playbooks apply.
             </p>
           </Reveal>
           <Reveal delay={0.2}>
-            <div className="mt-8">
+            <div className="mt-8 flex items-center justify-center gap-3">
               <Button asChild size="lg" className="bg-[var(--brand)] hover:bg-[var(--brand-hover)] text-white">
                 <Link to="/contact">Start a conversation</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white">
+                <Link to="/services">See all services <ArrowRight className="ml-1 h-4 w-4" /></Link>
               </Button>
             </div>
           </Reveal>

@@ -40,19 +40,19 @@ const columns = [
   {
     title: "Industries",
     links: [
-      { label: "BFSI", href: "/industries" },
-      { label: "Healthcare", href: "/industries" },
-      { label: "Government", href: "/industries" },
-      { label: "Manufacturing", href: "/industries" },
-      { label: "Retail", href: "/industries" },
-      { label: "Telecom", href: "/industries" },
+      { label: "BFSI", href: "/industries/bfsi" },
+      { label: "Healthcare", href: "/industries/healthcare" },
+      { label: "Government", href: "/industries/government" },
+      { label: "Manufacturing", href: "/industries/manufacturing" },
+      { label: "Retail", href: "/industries/retail" },
+      { label: "Telecom", href: "/industries/telecom" },
     ],
   },
   {
     title: "Company",
     links: [
       { label: "About", href: "/about" },
-      { label: "Leadership", href: "/about#leadership" },
+      { label: "Leadership", href: "/leadership" },
       { label: "Careers", href: "/careers" },
       { label: "Insights", href: "/insights" },
       { label: "Case Studies", href: "/case-studies" },
