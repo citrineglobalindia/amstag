@@ -23,13 +23,18 @@ import {
 import { SERVICE_BY_SLUG } from "@/lib/services";
 
 export const Route = createFileRoute("/industries_/$slug")({
+  // Loader returns only the slug. INDUSTRY_BY_SLUG entries contain React
+  // component references (lucide icons), which can't be serialised across
+  // the SSR -> client hydration boundary. Passing them through loader data
+  // produces a hydration mismatch and React wipes the DOM (blank page).
+  // The component resolves the full Industry from the catalog itself.
   loader: ({ params }) => {
-    const industry = INDUSTRY_BY_SLUG[params.slug];
-    if (!industry) throw notFound();
-    return { industry };
+    if (!INDUSTRY_BY_SLUG[params.slug]) throw notFound();
+    return { slug: params.slug };
   },
   head: ({ loaderData }) => {
-    const ind = loaderData?.industry;
+    const slug = loaderData?.slug;
+    const ind = slug ? INDUSTRY_BY_SLUG[slug] : undefined;
     if (!ind) return {};
     return {
       meta: [
@@ -44,7 +49,8 @@ export const Route = createFileRoute("/industries_/$slug")({
 });
 
 function IndustryDetailPage() {
-  const { industry } = Route.useLoaderData();
+  const { slug } = Route.useLoaderData();
+  const industry = INDUSTRY_BY_SLUG[slug]!;
   return (
     <PageShell>
       <IndustryHero industry={industry} />

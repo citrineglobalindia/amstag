@@ -17,13 +17,18 @@ import {
 } from "@/lib/services";
 
 export const Route = createFileRoute("/services_/$slug")({
+  // Loader returns only the slug. SERVICE_BY_SLUG entries contain React
+  // component references (lucide icons), which can't be serialised across
+  // the SSR -> client hydration boundary. Passing them through loader data
+  // produces a hydration mismatch and React wipes the DOM (blank page).
+  // The component resolves the full Service from the catalog itself.
   loader: ({ params }) => {
-    const service = SERVICE_BY_SLUG[params.slug];
-    if (!service) throw notFound();
-    return { service };
+    if (!SERVICE_BY_SLUG[params.slug]) throw notFound();
+    return { slug: params.slug };
   },
   head: ({ loaderData }) => {
-    const s = loaderData?.service;
+    const slug = loaderData?.slug;
+    const s = slug ? SERVICE_BY_SLUG[slug] : undefined;
     if (!s) return {};
     return {
       meta: [
@@ -38,7 +43,8 @@ export const Route = createFileRoute("/services_/$slug")({
 });
 
 function ServiceDetailPage() {
-  const { service } = Route.useLoaderData();
+  const { slug } = Route.useLoaderData();
+  const service = SERVICE_BY_SLUG[slug]!;
   return (
     <PageShell>
       <ServiceHero service={service} />
