@@ -16,11 +16,13 @@ const SIZE_PX: Record<Size, number> = {
   xl: 64,
 };
 
+// Lobster Two reads visually smaller than Space Grotesk at the same px,
+// so wordmark sizes are bumped one step up vs. the sans-serif scale.
 const WORDMARK_TEXT_CLASS: Record<Size, string> = {
-  sm: "text-base",
-  md: "text-lg",
-  lg: "text-xl",
-  xl: "text-2xl",
+  sm: "text-lg",
+  md: "text-xl",
+  lg: "text-2xl",
+  xl: "text-3xl",
 };
 
 export type AmstagLogoProps = {
@@ -57,7 +59,7 @@ export function AmstagLogo({
       />
       {withWordmark && (
         <span
-          className={`font-display font-bold tracking-tight ${
+          className={`font-brand font-bold leading-none ${
             WORDMARK_TEXT_CLASS[size]
           } ${dark ? "text-white" : "text-[var(--ink)]"}`}
         >
