@@ -23,11 +23,11 @@ import { Reveal } from "./motion";
 import { SectionHeader } from "./Offerings";
 
 const steps = [
-  { icon: Search, title: "Discover", desc: "Architecture + risk assessment." },
-  { icon: PenTool, title: "Design", desc: "Reference architecture, BoM, runbook." },
-  { icon: Rocket, title: "Deploy", desc: "Phased rollouts. Zero-downtime cutovers." },
-  { icon: Activity, title: "Operate", desc: "24×7 NOC, ITIL-aligned SLAs." },
-  { icon: TrendingUp, title: "Optimise", desc: "Quarterly reviews · FinOps · capacity." },
+  { icon: Search, title: "Discover", desc: "AI-powered architecture + risk assessment. We intelligently map your environment before we propose anything." },
+  { icon: PenTool, title: "Design", desc: "Intelligent reference architecture, BoM, and automated runbook — drafted by senior AI architects, not templates." },
+  { icon: Rocket, title: "Deploy", desc: "AI-assisted phased rollouts. Zero-downtime cutovers with intelligent change management." },
+  { icon: Activity, title: "Operate", desc: "Autonomous 24×7 NOC with AI-driven SLAs. Named senior engineer owns your account and your outcomes." },
+  { icon: TrendingUp, title: "Optimise", desc: "AI-powered quarterly reviews, predictive FinOps, intelligent capacity planning — continuous improvement never stops." },
 ];
 
 export function Process() {
@@ -43,8 +43,8 @@ export function Process() {
         <Reveal>
           <SectionHeader
             eyebrow="How we deliver"
-            title="Five phases. One accountable team."
-            desc="Every engagement runs through the same playbook, from discovery to continuous optimisation."
+            title="Five intelligent phases. One accountable team."
+            desc="Every engagement runs through the same AI-augmented playbook, from intelligent discovery to continuous predictive optimisation."
           />
         </Reveal>
 

@@ -80,16 +80,18 @@ export function Innovation() {
           <div className="text-xs font-mono uppercase tracking-[0.25em] text-[var(--innovation)]">
             Innovation Lab
           </div>
-          <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold leading-tight text-balance">
+          <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold leading-tight text-balance text-white">
             We ship runbooks{" "}
             <span className="bg-gradient-to-r from-white via-white to-[var(--innovation)] bg-clip-text text-transparent">
               like product teams ship code.
             </span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-white/70 leading-relaxed">
-            Every operational playbook lives in version control, runs through
-            CI, and gets re-validated quarterly. The result: ops you can
-            audit, repeat, and improve.
+            Our NOC engineers are trained on the same practices as our architects.
+            There is no handoff gap — the person who designed the runbook is the
+            person who runs it at 3 a.m. Every runbook is version-controlled in
+            Git, CI-validates SLA thresholds before deploy, and gets re-validated
+            quarterly against live environments.
           </p>
           <Link
             to="/case-studies"

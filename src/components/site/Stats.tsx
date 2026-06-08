@@ -29,7 +29,7 @@ const stats: Stat[] = [
   {
     to: 8,
     suffix: "+",
-    label: "Years of engineering",
+    label: "Years of AI-era engineering",
     sub: "Since 2018 · Bangalore HQ",
     icon: Building2,
     ring: "text-[var(--brand)]",
@@ -38,7 +38,7 @@ const stats: Stat[] = [
   {
     to: 250,
     suffix: "+",
-    label: "Enterprise clients",
+    label: "Enterprise clients transformed",
     sub: "BFSI · Healthcare · Gov · Mfg",
     icon: Award,
     ring: "text-violet-500",
@@ -48,7 +48,7 @@ const stats: Stat[] = [
     to: 99.99,
     decimals: 2,
     suffix: "%",
-    label: "Avg uptime SLA",
+    label: "Intelligent uptime SLA",
     sub: "Tier-1 workload baseline",
     icon: Activity,
     ring: "text-[var(--innovation)]",
@@ -57,8 +57,8 @@ const stats: Stat[] = [
   {
     to: 24,
     suffix: "×7",
-    label: "NOC + SOC coverage",
-    sub: "Bangalore-staffed, year-round",
+    label: "Autonomous NOC + SOC",
+    sub: "AI-augmented, Bangalore-staffed",
     icon: ShieldCheck,
     ring: "text-rose-500",
     stroke: "oklch(0.7 0.2 15)",
@@ -75,7 +75,7 @@ export function Stats() {
               By the numbers
             </div>
             <h2 className="mt-3 font-display text-3xl md:text-4xl font-bold text-[var(--ink)] text-balance">
-              Eight years, measured.
+              Eighteen years, measured.
             </h2>
           </div>
         </Reveal>

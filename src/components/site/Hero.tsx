@@ -38,13 +38,14 @@ export function Hero() {
             Act · Accelerate · Ace
           </div>
           <h1 className="mt-6 font-display text-[clamp(2rem,5.5vw,4.5rem)] font-bold leading-[1.05] text-white text-balance">
-            Mission-critical IT,{" "}
+            AI-powered intelligent infrastructure,{" "}
             <span className="bg-gradient-to-r from-white via-white to-[var(--innovation)] bg-clip-text text-transparent">
-              engineered for India's most demanding enterprises.
+              built for India's most demanding enterprises.
             </span>
           </h1>
           <p className="mt-6 text-base md:text-lg text-white/70 max-w-xl">
-            Managed services, cybersecurity, cloud and 24×7 support, delivered with the rigor, partnerships, and uptime
+            Autonomous AI cybersecurity, intelligent cloud operations, and enterprise managed IT
+            delivering the predictive intelligence, engineering rigor, and 24×7 autonomous uptime
             India's leaders in BFSI, healthcare, government and manufacturing depend on.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
