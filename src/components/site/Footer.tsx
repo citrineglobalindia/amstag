@@ -3,6 +3,8 @@ import {
   Linkedin,
   Twitter,
   Youtube,
+  Instagram,
+  Facebook,
   MessageCircle,
   Mail,
   Phone,
@@ -22,6 +24,8 @@ const socials: FooterGlowSocial[] = [
   { label: "LinkedIn", href: "https://www.linkedin.com/company/amstag", icon: Linkedin },
   { label: "Twitter", href: "https://twitter.com/amstag", icon: Twitter },
   { label: "YouTube", href: "https://youtube.com/@amstag", icon: Youtube },
+  { label: "Instagram", href: "https://www.instagram.com/amstag_tech?igsh=MW9lb294ZHlkY21hcg==", icon: Instagram },
+  { label: "Facebook", href: "https://www.facebook.com/share/17Qzhkj7wX/", icon: Facebook },
   { label: "WhatsApp", href: "https://wa.me/919945645909", icon: MessageCircle },
 ];
 
