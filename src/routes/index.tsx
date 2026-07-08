@@ -9,7 +9,6 @@ import { Industries } from "@/components/site/Industries";
 import { WhyAmstag } from "@/components/site/WhyAmstag";
 import { Process } from "@/components/site/Process";
 import { CaseStudies } from "@/components/site/CaseStudies";
-import { Testimonials } from "@/components/site/Testimonials";
 import { Certifications } from "@/components/site/Certifications";
 import { Insights } from "@/components/site/Insights";
 import { EngagementModels } from "@/components/site/EngagementModels";
@@ -74,7 +73,6 @@ function Index() {
         <Process />
         <EngagementModels />
         <CaseStudies />
-        <Testimonials />
         <Certifications />
         <Recognition />
         <Faq />
